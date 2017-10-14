@@ -1,0 +1,14 @@
+{
+  "name": "utilsac",
+  "version": "2.0.0",
+  "description": "tools mostly",
+  "main": "files.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "utilsac"
+  ],
+  "author": "GrosSacASacs",
+  "license": "CC0-1.0"
+}
