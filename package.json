@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "tools mostly",
   "main": "files.js",
   "scripts": {

@@ -74,7 +74,7 @@ export const timeCallback = function (callback) {
     return endTime - startTime;
 };
 
-export const timePromise = function (promiseCreator {
+export const timePromise = function (promiseCreator) {
     // returns a Promise that resolves with
     // the time elapsed for the promise to resolve and its value
     // executes promiseCreator and waits for it to resolve
