@@ -1,5 +1,14 @@
+export {
+    fillArrayWithFunctionResult,
+    chainPromises,
+    doNTimes,
+    chainPromiseNTimes,
+    timeCallback,
+    timePromise
+};
 
-export const fillArrayWithFunctionResult = function (aFunction, times) {
+const fillArrayWithFunctionResult = function (aFunction, times) {
+    //  [].fill is for static values only
     const returnArray = [];
     let i;
     for (i = 0; i < times; i += 1) {
@@ -8,14 +17,14 @@ export const fillArrayWithFunctionResult = function (aFunction, times) {
     return returnArray;
 };
 
-export const doNTimes = function (task, times) {
+const doNTimes = function (task, times) {
     let i;
     for (i = 0; i < times; i += 1) {
         task();
     }
 };
 
-export const chainPromises = function (promiseCreators) {
+const chainPromises = function (promiseCreators) {
     // different than Promise.all
     // only executes promiseCreator one after the previous has resolved
     // resolves with an array of values
@@ -39,7 +48,7 @@ export const chainPromises = function (promiseCreators) {
     });
 };
 
-export const chainPromiseNTimes = function (promiseCreator, times) {
+const chainPromiseNTimes = function (promiseCreator, times) {
     // different than Promise.all
     // only executes promiseCreator one after the previous has resolved
     // useful for testing
@@ -66,7 +75,7 @@ export const chainPromiseNTimes = function (promiseCreator, times) {
     });
 };
 
-export const timeCallback = function (callback) {
+const timeCallback = function (callback) {
     // executes callback and returns time elapsed in ms
     const startTime = performance.now();
     callback();
@@ -74,7 +83,7 @@ export const timeCallback = function (callback) {
     return endTime - startTime;
 };
 
-export const timePromise = function (promiseCreator) {
+const timePromise = function (promiseCreator) {
     // returns a Promise that resolves with
     // the time elapsed for the promise to resolve and its value
     // executes promiseCreator and waits for it to resolve
