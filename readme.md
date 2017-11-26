@@ -15,6 +15,7 @@ Common operands as functions
 
 ```
     export {
+        createCustomRound,
         fillArrayWithFunctionResult,
         chainPromises,
         doNTimes,
