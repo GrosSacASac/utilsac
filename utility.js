@@ -24,7 +24,7 @@ const createThrottledFunction = function (functionToThrottle, minimumTimeSpace) 
         if (ready) {
             ready = false;
             functionToThrottle(...args);
-            timeout = setTimeout(makeReady, minimumTimeSpace); 
+            setTimeout(makeReady, minimumTimeSpace); 
         }
     };
 };
