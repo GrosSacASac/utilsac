@@ -1,4 +1,5 @@
 export {
+    createThrottledFunction,
     createCustomRound,
     fillArrayWithFunctionResult,
     chainPromises,
@@ -6,6 +7,26 @@ export {
     chainPromiseNTimes,
     timeCallback,
     timePromise
+};
+
+const createThrottledFunction = function (functionToThrottle, minimumTimeSpace) {
+    /* creates a function that is throttled,
+    calling it very often during a period less than minimumTimeSpace will only execute it once
+
+    an alternative implementation could use Date.now() , this means less performance
+    but would work for throttling inside a single tick
+    */
+    let ready = true;
+    const makeReady = function() {
+        ready = true;
+    };
+    return function(...args) {
+        if (ready) {
+            ready = false;
+            functionToThrottle(...args);
+            timeout = setTimeout(makeReady, minimumTimeSpace); 
+        }
+    };
 };
 
 const createCustomRound = function (precision) {

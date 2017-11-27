@@ -15,6 +15,7 @@ Common operands as functions
 
 ```
     export {
+        createThrottledFunction,
         createCustomRound,
         fillArrayWithFunctionResult,
         chainPromises,
