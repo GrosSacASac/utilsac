@@ -1,4 +1,5 @@
 export {
+    createDebouncedFunction,
     createThrottledFunction,
     createCustomRound,
     fillArrayWithFunctionResult,
@@ -9,23 +10,46 @@ export {
     timePromise
 };
 
+const createDebouncedFunction = function (functionToDebounce, waitTime) {
+    /* creates a function that is de-bounced,
+    calling it, will eventually execute it, when you stop calling it
+    useful for scroll events, resize, search etc
+
+    the returned function always return undefined
+    
+    TODO
+    */
+    let z = 0;
+    return function(...args) {
+        if ("X") {
+            return
+        }
+        functionToDebounce(...args);
+    };
+};
+
+
 const createThrottledFunction = function (functionToThrottle, minimumTimeSpace) {
     /* creates a function that is throttled,
+    calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
 
+    the returned function always return undefined
+    
     an alternative implementation could use Date.now() , this means less performance
-    but would work for throttling inside a single tick
+    but would work for throttling inside a single long tick
     */
     let ready = true;
     const makeReady = function() {
         ready = true;
     };
     return function(...args) {
-        if (ready) {
-            ready = false;
-            functionToThrottle(...args);
-            setTimeout(makeReady, minimumTimeSpace); 
+        if (!ready) {
+            return;
         }
+        ready = false;
+        functionToThrottle(...args);
+        setTimeout(makeReady, minimumTimeSpace); 
     };
 };
 
@@ -41,16 +65,14 @@ const createCustomRound = function (precision) {
     warning: can have small errors due to fixed precision floats */
     const halfPrecision = precision / 2;
     return function (anyNumber) {
-        const rest  = anyNumber % precision;
+        const rest = anyNumber % precision;
         if (rest === 0) {
             return anyNumber;
-        } else {
-            if (rest > halfPrecision) {
-                return anyNumber + (precision - rest);
-            } else {
-                return anyNumber - rest;
-            }
         }
+        if (rest > halfPrecision) {
+            return anyNumber + (precision - rest);
+        }
+        return anyNumber - rest;
     };
 };
 
