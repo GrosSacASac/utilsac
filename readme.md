@@ -14,7 +14,8 @@ Common operands as functions
 ## utility.js
 
 ```
-    export {
+    import {
+        createDebouncedFunction,
         createThrottledFunction,
         createCustomRound,
         fillArrayWithFunctionResult,
@@ -23,5 +24,18 @@ Common operands as functions
         chainPromiseNTimes,
         timeCallback,
         timePromise
-    };
+    } from "path.../utility.js";
 ```
+
+## About
+
+### License
+
+[CC0](license.txt)
+
+### Related
+
+ * [fnk](https://github.com/seanohue/fnk)
+ * jQuery
+ * lodash
+ * ramda
