@@ -17,17 +17,19 @@ const createDebouncedFunction = function (functionToDebounce, waitTime) {
 
     the returned function always return undefined
     
-    TODO
+    TODO is debounced the correct word ?
     */
-    let z = 0;
+    let timeOutId = 0;
     return function(...args) {
-        if ("X") {
-            return
+        if (timeOutId > 0) {
+            clearTimeout(timeOutId);
+            timeOutId = 0;
         }
-        functionToDebounce(...args);
+        timeOutId = setTimeout(function () {
+            functionToDebounce(...args);
+        }, waitTime);
     };
 };
-
 
 const createThrottledFunction = function (functionToThrottle, minimumTimeSpace) {
     /* creates a function that is throttled,
