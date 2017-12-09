@@ -27,6 +27,15 @@ Common operands as functions
     } from "path.../utility.js";
 ```
 
+
+## blobs.js
+
+```
+    import {
+        downloadBlob
+    } from "path.../blobs.js";
+```
+
 ## About
 
 ### License
