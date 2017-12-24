@@ -31,8 +31,24 @@ const concatenateFiles = function (files, destination, separator=``) {
     });
 };  
 
+const copyFile = function (sourcePath, destination) {
+    return new Promise(function (resolve, reject) {
+        if (!fs.existsSync(sourcePath)) {
+            reject(`${sourcePath} does not exist`);
+        }
+
+        fs.copyFile(sourcePath, destination, (err) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(`${sourcePath} was copied to ${destination}`);
+        });
+    });
+};
+
 module.exports = {
     textFileContentPromiseFromPath,
     writeTextInFilePromiseFromPathAndString,
-    concatenateFiles
+    concatenateFiles,
+    copyFile
 };

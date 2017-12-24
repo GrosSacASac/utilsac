@@ -5,6 +5,15 @@
 
 file-functions for node.js that return Promises
 
+```
+    import {
+        textFileContentPromiseFromPath,
+        writeTextInFilePromiseFromPathAndString,
+        concatenateFiles,
+        copyFile
+    } from "./files.js"
+```
+
 
 ## operators.js
 
