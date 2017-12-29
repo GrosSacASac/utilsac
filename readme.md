@@ -10,7 +10,8 @@ file-functions for node.js that return Promises
         textFileContentPromiseFromPath,
         writeTextInFilePromiseFromPathAndString,
         concatenateFiles,
-        copyFile
+        copyFile,
+        deleteFile
     } from "./files.js"
 ```
 
