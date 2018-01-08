@@ -37,11 +37,13 @@ const copyFile = function (sourcePath, destination) {
     return new Promise(function (resolve, reject) {
         if (!fs.existsSync(sourcePath)) {
             reject(`${sourcePath} does not exist`);
+            return;
         }
 
         fs.copyFile(sourcePath, destination, (err) => {
             if (err) {
                 reject(err);
+                return;
             }
             resolve(`${sourcePath} was copied to ${destination}`);
         });
