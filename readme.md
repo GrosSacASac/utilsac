@@ -33,7 +33,8 @@ Common operands as functions
         doNTimes,
         chainPromiseNTimes,
         timeCallback,
-        timePromise
+        timePromise,
+        memoizeAsStrings
     } from "path.../utility.js";
 ```
 
