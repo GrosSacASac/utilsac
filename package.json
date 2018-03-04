@@ -1,7 +1,7 @@
 {
   "name": "utilsac",
-  "version": "5.5.0",
-  "description": "tools mostly",
+  "version": "5.5.1",
+  "description": "JavaScript General Purpose utility functions",
   "main": "files.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
