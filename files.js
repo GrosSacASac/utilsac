@@ -1,10 +1,20 @@
 /*files.js*/
 "use strict";
 const fs = require("fs");
+const path = require("path");
 
-const textFileContentPromiseFromPath = function (path) {
+const createNecessaryDirectories = function (filePath) {
+    const directoryname = path.dirname(filePath);
+    if (fs.existsSync(directoryname)) {
+      return;
+    }
+    createNecessaryDirectories(directoryname);
+    fs.mkdirSync(directoryname);
+};
+
+const textFileContentPromiseFromPath = function (filePath) {
     return new Promise(function (resolve, reject) {
-        fs.readFile(path, "utf-8", function (error, data) {
+        fs.readFile(filePath, "utf-8", function (error, data) {
             if (error) {
                 reject(error);
             }
@@ -13,9 +23,10 @@ const textFileContentPromiseFromPath = function (path) {
     });
 };
 
-const writeTextInFilePromiseFromPathAndString = function (path, string) {
+const writeTextInFilePromiseFromPathAndString = function (filePath, string) {
     return new Promise(function (resolve, reject) {
-        fs.writeFile(path, string, "utf-8", function (error, notUsed) {
+        createNecessaryDirectories(filePath);
+        fs.writeFile(filePath, string, "utf-8", function (error, notUsed) {
             if (error) {
                 reject(error);
             }
@@ -24,28 +35,33 @@ const writeTextInFilePromiseFromPathAndString = function (path, string) {
     });
 };
 
+
 const concatenateFiles = function (files, destination, separator=``) {
     return Promise.all(files.map(textFileContentPromiseFromPath)).then(
     function (contents) {
-        return writeTextInFilePromiseFromPathAndString(destination, contents.join(separator))
+        return writeTextInFilePromiseFromPathAndString(
+            destination,
+            contents.join(separator)
+        );
     });
-};  
+};
 
-const copyFile = function (sourcePath, destination) {
-    /* fs.copyFile exists in Node 9+ 
+const copyFile = function (filePath, filePathDestination) {
+    /* fs.copyFile exists in Node 9+
     todo if dest cannot be reached created folders until it is*/
     return new Promise(function (resolve, reject) {
-        if (!fs.existsSync(sourcePath)) {
-            reject(`${sourcePath} does not exist`);
+        if (!fs.existsSync(filePath)) {
+            reject(`${filePath} does not exist`);
             return;
         }
 
-        fs.copyFile(sourcePath, destination, (err) => {
-            if (err) {
-                reject(err);
+        createNecessaryDirectories(filePathDestination);
+        fs.copyFile(filePath, filePathDestination, (error) => {
+            if (error) {
+                reject(error);
                 return;
             }
-            resolve(`${sourcePath} was copied to ${destination}`);
+            resolve(`${filePath} was copied to ${filePathDestination}`);
         });
     });
 };
