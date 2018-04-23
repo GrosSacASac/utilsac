@@ -1,4 +1,6 @@
-# Utilities and random js files
+# JavaScript General Purpose Utility Functions
+
+## utilsac
 
 
 ## files.js
@@ -59,3 +61,4 @@ Common operands as functions
  * jQuery
  * lodash
  * ramda
+ * [slugify](https://github.com/sindresorhus/slugify)
