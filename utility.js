@@ -171,28 +171,25 @@ const timePromise = function (promiseCreator) {
     });
 };
 
+// these variables are not global because they are inside a module
+const separator = "-";
+const previousResults = {};
 const memoizeAsStrings = function (functionToMemoize) {
     /*
     todo explain better the limitations and benefits of this approach
     joins together the args as strings to compare
     false possible cache hits when "-" is inside the string
     */
-    const separator = "-";
-    const previousResults = {};
     return function (...args) {
         const argumentsAsStrings = args.map(String).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings
         const argumentsAsStrings = args.join(separator);
         */
-        if (Object.prototype.hasOwnProperty.call(previousResults, argumentsAsStrings)) {
-            // cache hit
-            return previousResults[argumentsAsStrings];
+        if (!Object.prototype.hasOwnProperty.call(previousResults, argumentsAsStrings)) {
+            // not yet in cache
+            previousResults[argumentsAsStrings] = functionToMemoize(...args);
         }
-        // not yet in cache
-        const result = functionToMemoize(...args);
-        // add it for later
-        previousResults[argumentsAsStrings] = result;
-        return result;
+        return previousResults[argumentsAsStrings];
     };
 };
