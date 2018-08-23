@@ -82,7 +82,7 @@ const createCustomRound = function (precision) {
 const fillArrayWithFunctionResult = function (aFunction, times) {
     /*  [].fill is for static values only
 	
-	alternative , return Array.prototype.from({length: times}, aFunction);
+	alternative , return Array.from({length: times}, aFunction);
 	same if aFunction ignores its second argument
 	*/
     const array = [];
