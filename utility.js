@@ -80,18 +80,20 @@ const createCustomRound = function (precision) {
 };
 
 const fillArrayWithFunctionResult = function (aFunction, times) {
-    //  [].fill is for static values only
-    const returnArray = [];
-    let i;
-    for (i = 0; i < times; i += 1) {
-        returnArray.push(aFunction());
+    /*  [].fill is for static values only
+	
+	alternative , return Array.prototype.from({length: times}, aFunction);
+	same if aFunction ignores its second argument
+	*/
+    const array = [];
+    for (let i = 0; i < times; i += 1) {
+        array.push(aFunction());
     }
-    return returnArray;
+    return array;
 };
 
 const doNTimes = function (task, times) {
-    let i;
-    for (i = 0; i < times; i += 1) {
+    for (let i = 0; i < times; i += 1) {
         task();
     }
 };
