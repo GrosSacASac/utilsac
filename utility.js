@@ -40,7 +40,6 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace) {
     calling it very often during a period less than minimumTimeSpace will only execute it once
 
     the returned function always return undefined
-
     */
     let lastTime = Number.MIN_SAFE_INTEGER;
     return function(...args) {
@@ -59,7 +58,6 @@ const createThrottledUsingTimeout = function (functionToThrottle, minimumTimeSpa
     calling it very often during a period less than minimumTimeSpace will only execute it once
 
     the returned function always return undefined
-
     */
     let ready = true;
     const makeReady = function() {
