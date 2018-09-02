@@ -8,7 +8,7 @@ export {
     chainRequestAnimationFrame,
     doNTimes,
     chainPromiseNTimes,
-    timeCallback,
+    timeFunction,
     timePromise,
     memoizeAsStrings
 };
@@ -189,7 +189,7 @@ const chainPromiseNTimes = function (promiseCreator, times) {
     });
 };
 
-const timeCallback = function (callback) {
+const timeFunction = function (callback) {
     // executes callback and returns time elapsed in ms
     const startTime = performance.now();
     callback();

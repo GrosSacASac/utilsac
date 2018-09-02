@@ -35,7 +35,7 @@ Common operands as functions
         chainRequestAnimationFrame,
         doNTimes,
         chainPromiseNTimes,
-        timeCallback,
+        timeFunction,
         timePromise,
         memoizeAsStrings
     } from "path.../utility.js";
