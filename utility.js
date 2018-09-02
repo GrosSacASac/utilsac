@@ -4,6 +4,7 @@ export {
     createCustomRound,
     fillArrayWithFunctionResult,
     chainPromises,
+    chainRequestAnimationFrame,
     doNTimes,
     chainPromiseNTimes,
     timeCallback,
@@ -17,7 +18,7 @@ const createDebouncedFunction = function (functionToDebounce, waitTime) {
     useful for scroll events, resize, search etc
 
     the returned function always return undefined
-    
+
     TODO is debounced the correct word ?
     */
     let timeOutId = 0;
@@ -38,7 +39,7 @@ const createThrottledFunction = function (functionToThrottle, minimumTimeSpace) 
     calling it very often during a period less than minimumTimeSpace will only execute it once
 
     the returned function always return undefined
-    
+
     an alternative implementation could use Date.now() , this means less performance
     but would work for throttling inside a single long tick
     */
@@ -52,7 +53,7 @@ const createThrottledFunction = function (functionToThrottle, minimumTimeSpace) 
         }
         ready = false;
         functionToThrottle(...args);
-        setTimeout(makeReady, minimumTimeSpace); 
+        setTimeout(makeReady, minimumTimeSpace);
     };
 };
 
@@ -64,7 +65,7 @@ const createCustomRound = function (precision) {
         roundStep02(0.12); --> 0.2 (rounded up)
         roundStep02(2.4); --> 2.4000000000000004 (almost not rounded)
         roundStep02(5); --> 5 (already rounded)
-    
+
     warning: can have small errors due to fixed precision floats */
     const halfPrecision = precision / 2;
     return function (anyNumber) {
@@ -81,7 +82,7 @@ const createCustomRound = function (precision) {
 
 const fillArrayWithFunctionResult = function (aFunction, times) {
     /*  [].fill is for static values only
-	
+
 	alternative , return Array.from({length: times}, aFunction);
 	same if aFunction ignores its second argument
 	*/
@@ -122,12 +123,35 @@ const chainPromises = function (promiseCreators) {
     });
 };
 
+const chainRequestAnimationFrame = function (functions) {
+    return new Promise(function (resolve, reject) {
+        const values = [];
+        const length = functions.length;
+        let i = 0;
+        const next = function (timing) {
+            i += 1;
+            if (i < length) {
+                try {
+                    values.push(functions[i]());
+                } catch (error) {
+                    reject(error);
+                    return;
+                }
+                requestAnimationFrame(next);
+            } else {
+                resolve(values);
+            }
+        };
+        next();
+    });
+};
+
 const chainPromiseNTimes = function (promiseCreator, times) {
     // different than Promise.all
     // only executes promiseCreator one after the previous has resolved
     // useful for testing
     // resolves with an array of values
-    
+
     // could be made with chainPromises, but chose not to
     // to avoid an adapter array
     const values = [];
@@ -141,9 +165,9 @@ const chainPromiseNTimes = function (promiseCreator, times) {
             values.push(value);
             if (i < times) {
                 promiseCreator().then(chainer);
-            } else {
-                resolve(values);
+                return;
             }
+            resolve(values);
         };
         promiseCreator().then(chainer);
     });

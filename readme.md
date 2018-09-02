@@ -32,6 +32,7 @@ Common operands as functions
         createCustomRound,
         fillArrayWithFunctionResult,
         chainPromises,
+        chainRequestAnimationFrame,
         doNTimes,
         chainPromiseNTimes,
         timeCallback,

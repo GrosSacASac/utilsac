@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "JavaScript General Purpose Utility Functions",
   "main": "files.js",
   "scripts": {
@@ -8,8 +8,7 @@
   },
   "keywords": [
     "utility",
-    "files",
-    "experimentation"
+    "files"
   ],
   "author": "GrosSacASacs",
   "license": "CC0-1.0",
