@@ -9,8 +9,8 @@ file-functions for node.js that return Promises
 
 ```
     import {
-        textFileContentPromiseFromPath,
-        writeTextInFilePromiseFromPathAndString,
+        textFileContent,
+        writeTextInFile,
         concatenateFiles,
         copyFile,
         deleteFile
@@ -27,10 +27,10 @@ Common operands as functions
 
 ```
     import {
-        createDebouncedFunction,
-        createThrottledFunction,
+        createDebounced,
+        createThrottled,
         createCustomRound,
-        fillArrayWithFunctionResult,
+        arrayWithResults,
         chainPromises,
         chainRequestAnimationFrame,
         doNTimes,

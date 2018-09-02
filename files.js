@@ -12,7 +12,7 @@ const createNecessaryDirectories = function (filePath) {
     fs.mkdirSync(directoryname);
 };
 
-const textFileContentPromiseFromPath = function (filePath) {
+const textFileContent = function (filePath) {
     return new Promise(function (resolve, reject) {
         fs.readFile(filePath, "utf-8", function (error, data) {
             if (error) {
@@ -23,7 +23,7 @@ const textFileContentPromiseFromPath = function (filePath) {
     });
 };
 
-const writeTextInFilePromiseFromPathAndString = function (filePath, string) {
+const writeTextInFile = function (filePath, string) {
     return new Promise(function (resolve, reject) {
         createNecessaryDirectories(filePath);
         fs.writeFile(filePath, string, "utf-8", function (error, notUsed) {
@@ -37,9 +37,9 @@ const writeTextInFilePromiseFromPathAndString = function (filePath, string) {
 
 
 const concatenateFiles = function (files, destination, separator=``) {
-    return Promise.all(files.map(textFileContentPromiseFromPath)).then(
+    return Promise.all(files.map(textFileContent)).then(
     function (contents) {
-        return writeTextInFilePromiseFromPathAndString(
+        return writeTextInFile(
             destination,
             contents.join(separator)
         );
@@ -85,8 +85,8 @@ const deleteFile = function (sourcePath) {
 
 
 module.exports = {
-    textFileContentPromiseFromPath,
-    writeTextInFilePromiseFromPathAndString,
+    textFileContent,
+    writeTextInFile,
     concatenateFiles,
     copyFile,
     deleteFile

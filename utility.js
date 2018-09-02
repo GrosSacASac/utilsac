@@ -1,8 +1,8 @@
 export {
-    createDebouncedFunction,
-    createThrottledFunction,
+    createDebounced,
+    createThrottled,
     createCustomRound,
-    fillArrayWithFunctionResult,
+    arrayWithResults,
     chainPromises,
     chainRequestAnimationFrame,
     doNTimes,
@@ -12,7 +12,7 @@ export {
     memoizeAsStrings
 };
 
-const createDebouncedFunction = function (functionToDebounce, waitTime) {
+const createDebounced = function (functionToDebounce, waitTime) {
     /* creates a function that is de-bounced,
     calling it, will eventually execute it, when you stop calling it
     useful for scroll events, resize, search etc
@@ -33,7 +33,7 @@ const createDebouncedFunction = function (functionToDebounce, waitTime) {
     };
 };
 
-const createThrottledFunction = function (functionToThrottle, minimumTimeSpace) {
+const createThrottled = function (functionToThrottle, minimumTimeSpace) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
@@ -80,7 +80,7 @@ const createCustomRound = function (precision) {
     };
 };
 
-const fillArrayWithFunctionResult = function (aFunction, times) {
+const arrayWithResults = function (aFunction, times) {
     /*  [].fill is for static values only
 
 	alternative , return Array.from({length: times}, aFunction);
