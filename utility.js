@@ -145,7 +145,6 @@ const chainRequestAnimationFrame = function (functions) {
         const length = functions.length;
         let i = 0;
         const next = function (timing) {
-            i += 1;
             if (i < length) {
                 try {
                     values.push(functions[i]());
@@ -153,6 +152,7 @@ const chainRequestAnimationFrame = function (functions) {
                     reject(error);
                     return;
                 }
+                i += 1;
                 requestAnimationFrame(next);
             } else {
                 resolve(values);
@@ -209,7 +209,7 @@ const timePromise = function (promiseCreator) {
                 timeElapsed: endTime - startTime,
                 value
             });
-        });
+        }).catch(reject);
     });
 };
 
