@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "JavaScript General Purpose Utility Functions",
   "main": "files.js",
   "scripts": {

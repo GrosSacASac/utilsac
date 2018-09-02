@@ -1,6 +1,7 @@
 export {
     createDebounced,
     createThrottled,
+    createThrottledUsingTimeout,
     createCustomRound,
     arrayWithResults,
     chainPromises,
@@ -23,11 +24,11 @@ const createDebounced = function (functionToDebounce, waitTime) {
     */
     let timeOutId = 0;
     return function(...args) {
-        if (timeOutId > 0) {
+        if (timeOutId !== 0) {
             clearTimeout(timeOutId);
-            timeOutId = 0;
         }
         timeOutId = setTimeout(function () {
+            timeOutId = 0;
             functionToDebounce(...args);
         }, waitTime);
     };
@@ -40,8 +41,25 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace) {
 
     the returned function always return undefined
 
-    an alternative implementation could use Date.now() , this means less performance
-    but would work for throttling inside a single long tick
+    */
+    let lastTime = Number.MIN_SAFE_INTEGER;
+    return function(...args) {
+        const now = Date.now();
+        if (minimumTimeSpace > now - lastTime) {
+            return;
+        }
+        lastTime = now;
+        functionToThrottle(...args);
+    };
+};
+
+const createThrottledUsingTimeout = function (functionToThrottle, minimumTimeSpace) {
+    /* creates a function that is throttled,
+    calling it once will execute it immediately
+    calling it very often during a period less than minimumTimeSpace will only execute it once
+
+    the returned function always return undefined
+
     */
     let ready = true;
     const makeReady = function() {
