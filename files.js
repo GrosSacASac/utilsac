@@ -29,6 +29,7 @@ const writeTextInFile = function (filePath, string) {
         fs.writeFile(filePath, string, "utf-8", function (error, notUsed) {
             if (error) {
                 reject(error);
+				return;
             }
             resolve();
         });
@@ -47,8 +48,7 @@ const concatenateFiles = function (files, destination, separator=``) {
 };
 
 const copyFile = function (filePath, filePathDestination) {
-    /* fs.copyFile exists in Node 9+
-    todo if dest cannot be reached created folders until it is*/
+    /* fs.copyFile exists in Node 9+ */
     return new Promise(function (resolve, reject) {
         if (!fs.existsSync(filePath)) {
             reject(`${filePath} does not exist`);
