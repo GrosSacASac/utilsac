@@ -1,6 +1,7 @@
 export {
     createDebounced,
     createThrottled,
+	throttledWithLast,
     createThrottledUsingTimeout,
     createCustomRound,
     arrayWithResults,
@@ -13,19 +14,18 @@ export {
     memoizeAsStrings
 };
 
-const createDebounced = function (functionToDebounce, waitTime) {
+const createDebounced = function (functionToDebounce, waitTime = 150) {
     /* creates a function that is de-bounced,
     calling it, will eventually execute it, when you stop calling it
     useful for scroll events, resize, search etc
 
-    the returned function always return undefined
-
-    TODO is debounced the correct word ?
+    the returned function always returns undefined
     */
     let timeOutId = 0;
     return function(...args) {
         if (timeOutId !== 0) {
             clearTimeout(timeOutId);
+            timeOutId = 0;
         }
         timeOutId = setTimeout(function () {
             timeOutId = 0;
@@ -34,12 +34,12 @@ const createDebounced = function (functionToDebounce, waitTime) {
     };
 };
 
-const createThrottled = function (functionToThrottle, minimumTimeSpace) {
+const createThrottled = function (functionToThrottle, minimumTimeSpace = 150) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
 
-    the returned function always return undefined
+    the returned function always returns undefined
     */
     let lastTime = Number.MIN_SAFE_INTEGER;
     return function(...args) {
@@ -52,7 +52,40 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace) {
     };
 };
 
-const createThrottledUsingTimeout = function (functionToThrottle, minimumTimeSpace) {
+
+const throttledWithLast = function (functionToThrottle, minimumTimeSpace = 150) {
+    /* creates a function that is throttled,
+    calling it once will execute it immediately
+    calling it very often during a period less than minimumTimeSpace will only execute it twice:
+	the first and last call
+	The last call is always eventually executed
+	
+    the returned function always returns undefined
+    */
+	
+	let timeOutId = 0;
+    let lastTime = Number.MIN_SAFE_INTEGER;
+    return function(...args) {
+        const now = Date.now();
+		const timeAlreadyWaited = now - lastTime;
+        if (timeOutId !== 0) {
+            clearTimeout(timeOutId);
+			timeOutId = 0;
+        }
+        if (minimumTimeSpace > timeAlreadyWaited) {
+			timeOutId = setTimeout(function () {
+				timeOutId = 0;
+				lastTime = now;
+				functionToThrottle(...args);
+			}, waitTime - timeAlreadyWaited);
+            return;
+        }
+        lastTime = now;
+        functionToThrottle(...args);
+    };
+};
+
+const createThrottledUsingTimeout = function (functionToThrottle, minimumTimeSpace = 150) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
@@ -213,15 +246,16 @@ const timePromise = function (promiseCreator) {
     });
 };
 
-// these variables are not global because they are inside a module
+// not global because they are inside a module
 const separator = "-";
-const previousResults = {};
 const memoizeAsStrings = function (functionToMemoize) {
     /*
     todo explain better the limitations and benefits of this approach
     joins together the args as strings to compare
     false possible cache hits when "-" is inside the string
     */
+	
+	const previousResults = {};
     return function (...args) {
         const argumentsAsStrings = args.map(String).join(separator);
         /*

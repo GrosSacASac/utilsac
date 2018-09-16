@@ -29,6 +29,7 @@ Common operands as functions
     import {
         createDebounced,
         createThrottled,
+		throttledWithLast,
         createCustomRound,
         arrayWithResults,
         chainPromises,
