@@ -274,6 +274,7 @@ const memoizeAsStrings = function (functionToMemoize) {
 /**
 only works with undefined, null, Numbers, Symbols, Objects, Arrays,
 warning does not work with cyclic objects
+does not work with anything created with new
 */
 const deepCopy = (x) => {
     if (!x || typeof x !== 'object') {
