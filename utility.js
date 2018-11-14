@@ -11,7 +11,8 @@ export {
     chainPromiseNTimes,
     timeFunction,
     timePromise,
-    memoizeAsStrings
+    memoizeAsStrings,
+    deepCopy
 };
 
 const createDebounced = function (functionToDebounce, waitTime = 150) {
@@ -59,10 +60,10 @@ const throttledWithLast = function (functionToThrottle, minimumTimeSpace = 150) 
     calling it very often during a period less than minimumTimeSpace will only execute it twice:
 	the first and last call
 	The last call is always eventually executed
-	
+
     the returned function always returns undefined
     */
-	
+
 	let timeOutId = 0;
     let lastTime = Number.MIN_SAFE_INTEGER;
     return function(...args) {
@@ -254,7 +255,7 @@ const memoizeAsStrings = function (functionToMemoize) {
     joins together the args as strings to compare
     false possible cache hits when "-" is inside the string
     */
-	
+
 	const previousResults = {};
     return function (...args) {
         const argumentsAsStrings = args.map(String).join(separator);
@@ -268,4 +269,24 @@ const memoizeAsStrings = function (functionToMemoize) {
         }
         return previousResults[argumentsAsStrings];
     };
+};
+
+/**
+only works with undefined, null, Numbers, Symbols, Objects, Arrays,
+warning does not work with cyclic objects
+*/
+const deepCopy = (x) => {
+    if (!x || typeof x !== 'object') {
+        return x;
+    }
+
+    if (Array.isArray(x)) {
+        return x.map(cloneDeep);
+    }
+
+    const copy = {}
+    for (let key in x) {
+        copy[i] = cloneDeep(x[i]);
+    }
+    return copy;
 };

@@ -38,7 +38,8 @@ Common operands as functions
         chainPromiseNTimes,
         timeFunction,
         timePromise,
-        memoizeAsStrings
+        memoizeAsStrings,
+        deepCopy
     } from "path.../utility.js";
 ```
 
