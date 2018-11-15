@@ -272,7 +272,7 @@ const memoizeAsStrings = function (functionToMemoize) {
 };
 
 /**
-only works with undefined, null, Numbers, Symbols, Objects, Arrays,
+only works with undefined, null, Numbers, Symbols, Strings, Big Ints, Objects, Arrays,
 warning does not work with cyclic objects
 does not work with anything created with new
 */
