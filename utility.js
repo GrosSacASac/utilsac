@@ -273,21 +273,22 @@ const memoizeAsStrings = function (functionToMemoize) {
 
 /**
 only works with undefined, null, Numbers, Symbols, Strings, Big Ints, Objects, Arrays,
-warning does not work with cyclic objects
+warning does not work with cyclic objects, Dates, regexs
 does not work with anything created with new
 */
-const deepCopy = (x) => {
-    if (!x || typeof x !== 'object') {
+const deepCopy = x => {
+    if (!x || typeof x !== "object") {
         return x;
     }
 
     if (Array.isArray(x)) {
-        return x.map(cloneDeep);
+        return x.map(deepCopy);
     }
 
     const copy = {}
-    for (let key in x) {
-        copy[i] = cloneDeep(x[i]);
-    }
+    Object.entries(x).forEach(([key, value]) => {
+        copy[key] = deepCopy(value);
+    });
+
     return copy;
 };
