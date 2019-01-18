@@ -247,13 +247,13 @@ const timePromise = function (promiseCreator) {
     });
 };
 
-// not global because they are inside a module
-const separator = "-";
-const memoizeAsStrings = function (functionToMemoize) {
+
+const memoizeAsStrings = function (functionToMemoize, separator = "-") {
     /*
-    todo explain better the limitations and benefits of this approach
-    joins together the args as strings to compare
-    false possible cache hits when "-" is inside the string
+    joins together the args as strings to
+    decide if arguments are the same
+    fast memoizer
+    but infinitely growing
     */
 
 	const previousResults = {};
