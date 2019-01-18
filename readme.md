@@ -1,5 +1,9 @@
 # JavaScript General Purpose Utility Functions
 
+## Installation
+
+[`npm i utilsac`](https://www.npmjs.com/package/utilsac)
+
 ## utilsac
 
 
