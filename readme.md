@@ -39,7 +39,8 @@ Common operands as functions
         timeFunction,
         timePromise,
         memoizeAsStrings,
-        deepCopy
+        deepCopy,
+        deepAssign
     } from "path.../utility.js";
 ```
 

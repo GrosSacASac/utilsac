@@ -12,7 +12,8 @@ export {
     timeFunction,
     timePromise,
     memoizeAsStrings,
-    deepCopy
+    deepCopy,
+    deepAssign
 };
 
 const createDebounced = function (functionToDebounce, waitTime = 150) {
@@ -291,4 +292,40 @@ const deepCopy = x => {
     });
 
     return copy;
+};
+
+
+/**
+Like Object.assign but deep,
+ does not try to assign partial arrays, they are overwritten
+only works with undefined, null, Numbers, Symbols, Strings, Big Ints, Objects, Arrays,
+warning does not work with cyclic objects, Dates, regexs
+does not work with anything created with new
+
+@param {Object} target must be an object
+@param {Object} source1 should be an object, silently discards if not (like Object.assign)
+
+@return {Object} target
+*/
+const deepAssign = (target, ...sources) => {
+    sources.forEach(source => {
+        if (!source || typeof source !== "object") {
+            return;
+        }
+        Object.entries(source).forEach(([key, value]) => {
+            if (!value || typeof value !== "object") {
+                target[key] = value;
+                return;
+            }
+            if (Array.isArray(value)) {
+                target[key] = [];
+            }
+            // value is an Object
+            if (typeof target[key] !== "object" || !target[key]) {
+                target[key] = {};
+            }
+            deepAssign(target[key], value);
+        });
+    });
+    return target;
 };
