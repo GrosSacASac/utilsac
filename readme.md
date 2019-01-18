@@ -3,26 +3,6 @@
 ## utilsac
 
 
-## files.js
-
-file-functions for node.js that return Promises
-
-```
-    import {
-        textFileContent,
-        writeTextInFile,
-        concatenateFiles,
-        copyFile,
-        deleteFile
-    } from "./files.js"
-```
-
-
-## operators.js
-
-Common operands as functions
-
-
 ## utility.js
 
 ```
@@ -44,6 +24,38 @@ Common operands as functions
     } from "path.../utility.js";
 ```
 
+
+## files.js
+
+file-functions for node.js that return Promises
+
+
+```
+    import {
+        textFileContent,
+        writeTextInFile,
+        concatenateFiles,
+        copyFile,
+        deleteFile
+    } from "./files.js"
+```
+
+
+## operators.js
+
+Common operands as functions
+
+
+
+## random.js
+
+```
+import {
+    randomPositiveInt,
+    randomInt,
+    randomFloat
+} from "path.../random.js";
+```
 
 ## blobs.js
 
