@@ -73,7 +73,7 @@ import {
 
 ### License
 
-[CC0](license.txt)
+[CC0](./license.txt)
 
 ### Related
 
