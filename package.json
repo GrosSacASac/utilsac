@@ -1,17 +1,16 @@
 {
   "name": "utilsac",
-  "version": "9.7.0",
-  "description": "JavaScript General Purpose Utility Functions",
+  "version": "9.7.1",
+  "description": "Utility functions",
   "main": "files.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo see tests"
   },
   "keywords": [
     "utility",
     "files",
-	"random"
+	  "random"
   ],
-  "author": "GrosSacASacs",
   "license": "CC0-1.0",
   "repository": {
     "type": "git",

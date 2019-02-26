@@ -1,4 +1,4 @@
-# JavaScript General Purpose Utility Functions
+# Utility functions
 
 ## Installation
 

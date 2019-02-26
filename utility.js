@@ -21,8 +21,7 @@ const createDebounced = function (functionToDebounce, waitTime = 150) {
     calling it, will eventually execute it, when you stop calling it
     useful for scroll events, resize, search etc
 
-    the returned function always returns undefined
-    */
+    the returned function always returns undefined */
     let timeOutId = 0;
     return function(...args) {
         if (timeOutId !== 0) {
@@ -41,8 +40,7 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace = 150) {
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
 
-    the returned function always returns undefined
-    */
+    the returned function always returns undefined */
     let lastTime = Number.MIN_SAFE_INTEGER;
     return function(...args) {
         const now = Date.now();
@@ -62,8 +60,7 @@ const throttledWithLast = function (functionToThrottle, minimumTimeSpace = 150) 
 	the first and last call
 	The last call is always eventually executed
 
-    the returned function always returns undefined
-    */
+    the returned function always returns undefined */
 
 	let timeOutId = 0;
     let lastTime = Number.MIN_SAFE_INTEGER;
@@ -92,8 +89,7 @@ const createThrottledUsingTimeout = function (functionToThrottle, minimumTimeSpa
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
 
-    the returned function always return undefined
-    */
+    the returned function always return undefined */
     let ready = true;
     const makeReady = function() {
         ready = true;
@@ -132,11 +128,10 @@ const createCustomRound = function (precision) {
 };
 
 const arrayWithResults = function (aFunction, times) {
-    /*  [].fill is for static values only
+    /* [].fill is for static values only
 
 	alternative , return Array.from({length: times}, aFunction);
-	same if aFunction ignores its second argument
-	*/
+	same if aFunction ignores its second argument */
     const array = [];
     for (let i = 0; i < times; i += 1) {
         array.push(aFunction());
@@ -151,9 +146,9 @@ const doNTimes = function (task, times) {
 };
 
 const chainPromises = function (promiseCreators) {
-    // different than Promise.all
-    // only executes promiseCreator one after the previous has resolved
-    // resolves with an array of values
+    /* different than Promise.all
+    only executes promiseCreator one after the previous has resolved
+    resolves with an array of values */
     const length = promiseCreators.length;
     const values = [];
     if (length === 0) {
@@ -198,13 +193,13 @@ const chainRequestAnimationFrame = function (functions) {
 };
 
 const chainPromiseNTimes = function (promiseCreator, times) {
-    // different than Promise.all
-    // only executes promiseCreator one after the previous has resolved
-    // useful for testing
-    // resolves with an array of values
+    /* different than Promise.all
+    only executes promiseCreator one after the previous has resolved
+    useful for testing
+    resolves with an array of values
 
-    // could be made with chainPromises, but chose not to
-    // to avoid an adapter array
+    could be made with chainPromises, but chose not to
+    to avoid an adapter array */
     const values = [];
     if (times === 0) {
         return Promise.resolve(values);
@@ -233,29 +228,25 @@ const timeFunction = function (callback) {
 };
 
 const timePromise = function (promiseCreator) {
-    // returns a Promise that resolves with
-    // the time elapsed for the promise to resolve and its value
-    // executes promiseCreator and waits for it to resolve
-    return new Promise(function (resolve, reject) {
-        const startTime = performance.now();
-        promiseCreator().then(function (value) {
-            const endTime = performance.now();
-            resolve({
-                timeElapsed: endTime - startTime,
-                value
-            });
-        }).catch(reject);
+    /* returns a Promise that resolves with
+    the time elapsed for the promise to resolve and its value
+    executes promiseCreator and waits for it to resolve */
+    const startTime = performance.now();
+    return promiseCreator().then(function (value) {
+        const endTime = performance.now();
+        return {
+            timeElapsed: endTime - startTime,
+            value
+        };
     });
 };
 
 
-const memoizeAsStrings = function (functionToMemoize, separator = "-") {
-    /*
-    joins together the args as strings to
+const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
+    /* joins together the args as strings to
     decide if arguments are the same
     fast memoizer
-    but infinitely growing
-    */
+    but infinitely growing */
 
 	const previousResults = {};
     return function (...args) {
@@ -278,7 +269,7 @@ warning does not work with cyclic objects, Dates, regexs
 does not work with anything created with new
 */
 const deepCopy = x => {
-    if (!x || typeof x !== "object") {
+    if (!x || typeof x !== `object`) {
         return x;
     }
 
@@ -309,11 +300,11 @@ does not work with anything created with new
 */
 const deepAssign = (target, ...sources) => {
     sources.forEach(source => {
-        if (!source || typeof source !== "object") {
+        if (!source || typeof source !== `object`) {
             return;
         }
         Object.entries(source).forEach(([key, value]) => {
-            if (!value || typeof value !== "object") {
+            if (!value || typeof value !== `object`) {
                 target[key] = value;
                 return;
             }
@@ -321,7 +312,7 @@ const deepAssign = (target, ...sources) => {
                 target[key] = [];
             }
             // value is an Object
-            if (typeof target[key] !== "object" || !target[key]) {
+            if (typeof target[key] !== `object` || !target[key]) {
                 target[key] = {};
             }
             deepAssign(target[key], value);
