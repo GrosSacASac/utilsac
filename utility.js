@@ -146,26 +146,27 @@ const doNTimes = function (task, times) {
 };
 
 const chainPromises = function (promiseCreators) {
-    /* different than Promise.all
-    only executes promiseCreator one after the previous has resolved
-    resolves with an array of values */
+    /* different than Promise.all, takes an array of functions that return a promise
+    only executes promiseCreators sequentially
+    resolves with an array of values or reject with the first error*/
     const length = promiseCreators.length;
     const values = [];
-    if (length === 0) {
-        return Promise.resolve(values);
-    }
+    let i = -1;
     return new Promise(function (resolve, reject) {
-        let i = 0;
         const chainer = function (value) {
             i += 1;
-            values.push(value);
+            if (i > 0) {
+                values.push(value);
+            }
             if (i < length) {
-                promiseCreators[i]().then(chainer);
+                const promise = promiseCreators[i]();
+                promise.then(chainer);
+                promise.catch(reject);
             } else {
                 resolve(values);
             }
         };
-        promiseCreators[i]().then(chainer);
+        chainer();
     });
 };
 
