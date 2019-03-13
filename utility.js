@@ -1,7 +1,7 @@
 export {
     createDebounced,
     createThrottled,
-	throttledWithLast,
+    throttledWithLast,
     createThrottledUsingTimeout,
     createCustomRound,
     arrayWithResults,
@@ -13,7 +13,8 @@ export {
     timePromise,
     memoizeAsStrings,
     deepCopy,
-    deepAssign
+    deepAssign,
+    createTemplateTag
 };
 
 const createDebounced = function (functionToDebounce, waitTime = 150) {
@@ -57,26 +58,26 @@ const throttledWithLast = function (functionToThrottle, minimumTimeSpace = 150) 
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it twice:
-	the first and last call
-	The last call is always eventually executed
+    the first and last call
+    The last call is always eventually executed
 
     the returned function always returns undefined */
 
-	let timeOutId = 0;
+    let timeOutId = 0;
     let lastTime = Number.MIN_SAFE_INTEGER;
     return function(...args) {
         const now = Date.now();
-		const timeAlreadyWaited = now - lastTime;
+        const timeAlreadyWaited = now - lastTime;
         if (timeOutId !== 0) {
             clearTimeout(timeOutId);
-			timeOutId = 0;
+            timeOutId = 0;
         }
         if (minimumTimeSpace > timeAlreadyWaited) {
-			timeOutId = setTimeout(function () {
-				timeOutId = 0;
-				lastTime = now;
-				functionToThrottle(...args);
-			}, waitTime - timeAlreadyWaited);
+            timeOutId = setTimeout(function () {
+                timeOutId = 0;
+                lastTime = now;
+                functionToThrottle(...args);
+            }, waitTime - timeAlreadyWaited);
             return;
         }
         lastTime = now;
@@ -129,9 +130,8 @@ const createCustomRound = function (precision) {
 
 const arrayWithResults = function (aFunction, times) {
     /* [].fill is for static values only
-
-	alternative , return Array.from({length: times}, aFunction);
-	same if aFunction ignores its second argument */
+    alternative , return Array.from({length: times}, aFunction);
+    same if aFunction ignores its second argument */
     const array = [];
     for (let i = 0; i < times; i += 1) {
         array.push(aFunction());
@@ -249,7 +249,7 @@ const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
     fast memoizer
     but infinitely growing */
 
-	const previousResults = {};
+    const previousResults = {};
     return function (...args) {
         const argumentsAsStrings = args.map(String).join(separator);
         /*
@@ -320,4 +320,19 @@ const deepAssign = (target, ...sources) => {
         });
     });
     return target;
+};
+
+const createTemplateTag = (mapper) => {
+/* creates a template tag function
+that will map the provided function on all runtime values
+before constructing the string
+example:
+const createURLString = createTemplateTag(encodeURIComponent)
+createURLString`https://example.com/id/${`slashes and spaces are properly escaped ///`}`;
+// -> "https://example.com/id/slashes%20and%20spaces%20are%20properly%20escaped%20%2F%2F%2F" */
+    return (staticStrings, ...parts) => {
+        return Array.from(parts, (part, index) => {
+            return `${staticStrings[index]}${mapper(part)}`
+        }).concat(staticStrings[staticStrings.length - 1]).join(``);
+    };
 };
