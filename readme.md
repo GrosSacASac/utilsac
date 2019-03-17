@@ -24,7 +24,8 @@
         timePromise,
         memoizeAsStrings,
         deepCopy,
-        deepAssign
+        deepAssign,
+        createTemplateTag
     } from "path.../utility.js";
 ```
 
