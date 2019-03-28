@@ -1,11 +1,19 @@
 {
   "name": "utilsac",
-  "version": "9.8.0",
+  "version": "9.8.1",
   "description": "Utility functions",
   "main": "files.js",
   "scripts": {
     "test": "echo see tests"
   },
+  "files": [
+    "blobs.js",
+    "operators.js",
+    "utility.js",
+    "readme.js",
+    "random.js",
+    "license.txt"
+  ],
   "keywords": [
     "utility",
     "files",
