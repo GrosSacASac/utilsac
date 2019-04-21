@@ -24,18 +24,9 @@
         memoizeAsStrings,
         deepCopy,
         deepAssign,
-        createTemplateTag
-    } from "path.../utility.js";
-```
-
-## random.js
-
-```
-import {
-    randomPositiveInt,
-    randomInt,
-    randomFloat
-} from "path.../random.js";
+        createTemplateTag,
+        bytesLengthFromString,
+    } from "utilsac";
 ```
 
 ## blobs.js

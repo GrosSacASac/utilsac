@@ -14,7 +14,8 @@ export {
     memoizeAsStrings,
     deepCopy,
     deepAssign,
-    createTemplateTag
+    createTemplateTag,
+    bytesLengthFromString,
 };
 
 const createDebounced = function (functionToDebounce, waitTime = 150) {
@@ -24,7 +25,7 @@ const createDebounced = function (functionToDebounce, waitTime = 150) {
 
     the returned function always returns undefined */
     let timeOutId = 0;
-    return function(...args) {
+    return function (...args) {
         if (timeOutId !== 0) {
             clearTimeout(timeOutId);
             timeOutId = 0;
@@ -43,7 +44,7 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace = 150) {
 
     the returned function always returns undefined */
     let lastTime = Number.MIN_SAFE_INTEGER;
-    return function(...args) {
+    return function (...args) {
         const now = Date.now();
         if (minimumTimeSpace > now - lastTime) {
             return;
@@ -65,7 +66,7 @@ const throttledWithLast = function (functionToThrottle, minimumTimeSpace = 150) 
 
     let timeOutId = 0;
     let lastTime = Number.MIN_SAFE_INTEGER;
-    return function(...args) {
+    return function (...args) {
         const now = Date.now();
         const timeAlreadyWaited = now - lastTime;
         if (timeOutId !== 0) {
@@ -92,10 +93,10 @@ const createThrottledUsingTimeout = function (functionToThrottle, minimumTimeSpa
 
     the returned function always return undefined */
     let ready = true;
-    const makeReady = function() {
+    const makeReady = function () {
         ready = true;
     };
-    return function(...args) {
+    return function (...args) {
         if (!ready) {
             return;
         }
@@ -323,16 +324,22 @@ const deepAssign = (target, ...sources) => {
 };
 
 const createTemplateTag = (mapper) => {
-/* creates a template tag function
-that will map the provided function on all runtime values
-before constructing the string
-example:
-const createURLString = createTemplateTag(encodeURIComponent)
-createURLString`https://example.com/id/${`slashes and spaces are properly escaped ///`}`;
-// -> "https://example.com/id/slashes%20and%20spaces%20are%20properly%20escaped%20%2F%2F%2F" */
+    /* creates a template tag function
+    that will map the provided function on all runtime values
+    before constructing the string
+    example:
+    const createURLString = createTemplateTag(encodeURIComponent)
+    createURLString`https://example.com/id/${`slashes and spaces are properly escaped ///`}`;
+    // -> "https://example.com/id/slashes%20and%20spaces%20are%20properly%20escaped%20%2F%2F%2F" */
     return (staticStrings, ...parts) => {
         return Array.from(parts, (part, index) => {
             return `${staticStrings[index]}${mapper(part)}`
         }).concat(staticStrings[staticStrings.length - 1]).join(``);
     };
+};
+
+
+const bytesLengthFromString = string => {
+    const textEncoder = new TextEncoder();
+    return textEncoder.encode(string).length;
 };
