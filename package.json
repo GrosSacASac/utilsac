@@ -1,8 +1,9 @@
 {
   "name": "utilsac",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "description": "Utility functions",
-  "module": "utility.js",
+  "type": "module",
+  "main": "utility.js",
   "scripts": {
     "test": "echo see tests"
   },

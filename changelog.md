@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.2.0
+
+Support Node12 modules
+
 ## 10.1.0
 
 +bytesLengthFromString
