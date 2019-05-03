@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "10.2.0",
+  "version": "10.2.1",
   "description": "Utility functions",
   "type": "module",
   "main": "utility.js",
@@ -10,7 +10,7 @@
   "files": [
     "blobs.js",
     "utility.js",
-    "readme.js",
+    "readme.md",
     "license.txt",
     "changelog.md"
   ],
