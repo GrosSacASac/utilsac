@@ -1,0 +1,10 @@
+04/05/2019
+
+> node --experimental-modules ./tests/performance/deepCopy.js
+
+(node:14064) ExperimentalWarning: The ESM module loader is experimental.
+
+        * JSONCopy ran 840 times in 50.01466768980026 ms
+        * deepCopy ran 1087 times in 50.0165533721447 ms
+
+Best: deepCopy at 21.732804975829737 operation/ms

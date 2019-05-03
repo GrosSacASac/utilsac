@@ -1,11 +1,12 @@
 {
   "name": "utilsac",
-  "version": "10.2.1",
+  "version": "10.2.2",
   "description": "Utility functions",
   "type": "module",
   "main": "utility.js",
   "scripts": {
-    "test": "echo see tests"
+    "test": "echo see tests",
+    "perftest": "node --experimental-modules ./tests/performance/deepCopy.js"
   },
   "files": [
     "blobs.js",
@@ -21,5 +22,8 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/GrosSacASac/utilsac.git"
+  },
+  "devDependencies": {
+    "leistung": "^2.0.0"
   }
 }
