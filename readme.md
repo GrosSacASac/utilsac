@@ -12,7 +12,7 @@
     import {
         createDebounced,
         createThrottled,
-		throttledWithLast,
+        throttledWithLast,
         createCustomRound,
         arrayWithResults,
         chainPromises,
@@ -29,12 +29,20 @@
     } from "utilsac";
 ```
 
+## evalGlobal.js
+
+```
+    import {
+        evalGlobal
+    } from "utilsac/evalGlobal.js";
+```
+
 ## blobs.js
 
 ```
     import {
         downloadBlob
-    } from "path.../blobs.js";
+    } from "utilsac/blobs.js";
 ```
 
 ## About

@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.3.0
+
++evalGlobal
+
 ## 10.2.0
 
 Support Node12 modules
