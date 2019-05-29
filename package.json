@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "10.3.2",
+  "version": "10.4.0",
   "description": "Utility functions",
   "type": "module",
   "main": "utility.js",

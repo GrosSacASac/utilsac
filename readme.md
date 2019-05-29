@@ -37,6 +37,22 @@
     } from "utilsac/evalGlobal.js";
 ```
 
+```
+evalGlobal(`window.x = 2 ** 10`);
+```
+
+After the Promise is resolved the code has executed in global scope.
+
+
+```
+evalGlobal(`
+import sin form "./x.js";
+window.x = sin(Math.PI)
+`, `module`);
+```
+
+Use optional second argument with `module` to be able to use static imports
+
 ## blobs.js
 
 ```

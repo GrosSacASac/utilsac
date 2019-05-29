@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.4.0
+
+evalGlobal can be loaded as module
+
 ## 10.3.0
 
 +evalGlobal
