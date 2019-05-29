@@ -23,5 +23,4 @@ const evalGlobal = (code) => {
         evalGlobalResolves.set(thisId, resolve);
         document.body.appendChild(script);
     });
-
 };
