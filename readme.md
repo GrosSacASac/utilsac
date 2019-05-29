@@ -9,32 +9,32 @@
 ## utility.js
 
 ```
-    import {
-        createDebounced,
-        createThrottled,
-        throttledWithLast,
-        createCustomRound,
-        arrayWithResults,
-        chainPromises,
-        chainRequestAnimationFrame,
-        doNTimes,
-        chainPromiseNTimes,
-        timeFunction,
-        timePromise,
-        memoizeAsStrings,
-        deepCopy,
-        deepAssign,
-        createTemplateTag,
-        bytesLengthFromString,
-    } from "utilsac";
+import {
+    createDebounced,
+    createThrottled,
+    throttledWithLast,
+    createCustomRound,
+    arrayWithResults,
+    chainPromises,
+    chainRequestAnimationFrame,
+    doNTimes,
+    chainPromiseNTimes,
+    timeFunction,
+    timePromise,
+    memoizeAsStrings,
+    deepCopy,
+    deepAssign,
+    createTemplateTag,
+    bytesLengthFromString,
+} from "utilsac";
 ```
 
 ## evalGlobal.js
 
 ```
-    import {
-        evalGlobal
-    } from "utilsac/evalGlobal.js";
+import {
+    evalGlobal
+} from "utilsac/evalGlobal.js";
 ```
 
 ```
@@ -56,9 +56,9 @@ Use optional second argument with `module` to be able to use static imports
 ## blobs.js
 
 ```
-    import {
-        downloadBlob
-    } from "utilsac/blobs.js";
+import {
+    downloadBlob
+} from "utilsac/blobs.js";
 ```
 
 ## About
