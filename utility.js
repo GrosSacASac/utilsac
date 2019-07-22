@@ -290,7 +290,7 @@ const deepCopy = x => {
 
 /**
 Like Object.assign but deep,
- does not try to assign partial arrays, they are overwritten
+does not try to assign partial arrays inside, they are overwritten
 only works with undefined, null, Numbers, Symbols, Strings, Big Ints, Objects, Arrays,
 warning does not work with cyclic objects, Dates, regexs
 does not work with anything created with new
