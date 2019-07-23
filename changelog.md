@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.5.0
+
++typeCast
+
 ## 10.4.0
 
 evalGlobal can be loaded as module

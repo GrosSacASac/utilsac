@@ -29,12 +29,21 @@ import {
 } from "utilsac";
 ```
 
-## evalGlobal.js
+## typeCast.js
 
 ```
 import {
-    evalGlobal
-} from "utilsac/evalGlobal.js";
+    stringFromArrayBuffer,
+    arrayBufferFromBlob,
+    stringFromBlob,
+} from "utilsac/typeCast.js";
+```
+
+
+## evalGlobal.js
+
+```
+import { evalGlobal } from "utilsac/evalGlobal.js";
 ```
 
 ```
@@ -56,9 +65,7 @@ Use optional second argument with `module` to be able to use static imports
 ## blobs.js
 
 ```
-import {
-    downloadBlob
-} from "utilsac/blobs.js";
+import { downloadBlob } from "utilsac/blobs.js";
 ```
 
 ## About

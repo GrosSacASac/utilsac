@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "10.4.1",
+  "version": "10.5.0",
   "description": "Utility functions",
   "type": "module",
   "main": "utility.js",
@@ -9,6 +9,7 @@
     "perftest": "node --experimental-modules ./tests/performance/deepCopy.js"
   },
   "files": [
+    "typeCast.js",
     "evalGlobal.js",
     "blobs.js",
     "utility.js",
