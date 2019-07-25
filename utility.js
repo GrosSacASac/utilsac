@@ -306,6 +306,9 @@ const deepAssign = (target, ...sources) => {
             return;
         }
         Object.entries(source).forEach(([key, value]) => {
+            if (key === `__proto__`) {
+                return;
+            }
             if (!value || typeof value !== `object`) {
                 target[key] = value;
                 return;
