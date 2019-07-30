@@ -1,11 +1,11 @@
 {
   "name": "utilsac",
-  "version": "10.5.1",
+  "version": "10.5.2",
   "description": "Utility functions",
   "type": "module",
   "main": "utility.js",
   "scripts": {
-    "test": "echo see tests",
+    "test": "ava",
     "perftest": "node --experimental-modules ./tests/performance/deepCopy.js"
   },
   "files": [
@@ -26,6 +26,28 @@
     "url": "git://github.com/GrosSacASac/utilsac.git"
   },
   "devDependencies": {
+    "ava": "^2.2.0",
     "leistung": "^2.0.0"
+  },
+  "ava": {
+    "files": [
+        "tests/specification/**"
+    ],
+    "require": [
+      "esm"
+    ],
+    "babel": {
+      "testOptions": {
+        "presets": [
+          [
+            "module:ava/stage-4",
+            {
+              "modules": false
+            }
+          ]
+        ]
+      }
+    },
+    "compileEnhancements": false
   }
 }
