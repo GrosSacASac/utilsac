@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "10.5.2",
+  "version": "10.5.3",
   "description": "Utility functions",
   "type": "module",
   "main": "utility.js",
@@ -18,7 +18,11 @@
     "changelog.md"
   ],
   "keywords": [
-    "utility"
+    "utility",
+    "deep",
+    "copy",
+    "assign",
+    "memoize"
   ],
   "license": "CC0-1.0",
   "repository": {
