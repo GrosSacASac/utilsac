@@ -271,7 +271,7 @@ warning does not work with cyclic objects, Dates, regexs
 does not work with anything created with new
 */
 const deepCopy = x => {
-    if (!x || typeof x !== `object`) {
+    if (typeof x !== `object` || x === null) {
         return x;
     }
 
@@ -309,7 +309,7 @@ const deepAssign = (target, ...sources) => {
             if (key === `__proto__`) {
                 return;
             }
-            if (!value || typeof value !== `object`) {
+            if (typeof value !== `object` || value === null) {
                 target[key] = value;
                 return;
             }
