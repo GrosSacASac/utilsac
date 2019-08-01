@@ -221,11 +221,11 @@ const chainPromiseNTimes = function (promiseCreator, times) {
     });
 };
 
-const timeFunction = function (callback) {
+const timeFunction = function (callback, timer = Date) {
     // executes callback and returns time elapsed in ms
-    const startTime = performance.now();
+    const startTime = timer.now();
     callback();
-    const endTime = performance.now();
+    const endTime = timer.now();
     return endTime - startTime;
 };
 
