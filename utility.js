@@ -229,13 +229,13 @@ const timeFunction = function (callback) {
     return endTime - startTime;
 };
 
-const timePromise = function (promiseCreator) {
+const timePromise = function (promiseCreator, timer = Date) {
     /* returns a Promise that resolves with
     the time elapsed for the promise to resolve and its value
     executes promiseCreator and waits for it to resolve */
-    const startTime = performance.now();
+    const startTime = timer.now();
     return promiseCreator().then(function (value) {
-        const endTime = performance.now();
+        const endTime = timer.now();
         return {
             timeElapsed: endTime - startTime,
             value
