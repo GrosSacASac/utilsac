@@ -30,8 +30,8 @@ test(`it should create new object references`, t => {
     const source = {
         a: 1,
         b: {
-            c: 2
-        }
+            c: 2,
+        },
     };
     const target = {};
 
@@ -56,6 +56,8 @@ test(`it should work with multiple sources`, t => {
 
     // sources assign on top of each other according to the order 
     t.is(target.a, 100);
+    t.is(target.b, false);
+    t.deepEqual(target.c, { a: 5, b: true, d: [5, 4, 6, 8] });
 });
 
 test(`it should silently discard primitives like Object.assign`, t => {
