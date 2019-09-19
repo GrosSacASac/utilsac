@@ -13,8 +13,6 @@ import {
     createDebounced,
     createThrottled,
     throttledWithLast,
-    createCustomRound,
-    arrayWithResults,
     chainPromises,
     chainRequestAnimationFrame,
     doNTimes,

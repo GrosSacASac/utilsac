@@ -2,9 +2,6 @@ export {
     createDebounced,
     createThrottled,
     throttledWithLast,
-    createThrottledUsingTimeout,
-    createCustomRound,
-    arrayWithResults,
     chainPromises,
     chainRequestAnimationFrame,
     doNTimes,
@@ -84,60 +81,6 @@ const throttledWithLast = function (functionToThrottle, minimumTimeSpace = 150) 
         lastTime = now;
         functionToThrottle(...args);
     };
-};
-
-const createThrottledUsingTimeout = function (functionToThrottle, minimumTimeSpace = 150) {
-    /* creates a function that is throttled,
-    calling it once will execute it immediately
-    calling it very often during a period less than minimumTimeSpace will only execute it once
-
-    the returned function always return undefined */
-    let ready = true;
-    const makeReady = function () {
-        ready = true;
-    };
-    return function (...args) {
-        if (!ready) {
-            return;
-        }
-        ready = false;
-        functionToThrottle(...args);
-        setTimeout(makeReady, minimumTimeSpace);
-    };
-};
-
-const createCustomRound = function (precision) {
-    /* creates a function similar to Math.round (has precision of 1)
-    with any precision, example:
-        const roundStep02 = createCustomRound(0.2);
-        roundStep02(0.6125897); --> 0.6000000000000001 (rounded down)
-        roundStep02(0.12); --> 0.2 (rounded up)
-        roundStep02(2.4); --> 2.4000000000000004 (almost not rounded)
-        roundStep02(5); --> 5 (already rounded)
-
-    warning: can have small errors due to fixed precision floats */
-    const halfPrecision = precision / 2;
-    return function (anyNumber) {
-        const rest = anyNumber % precision;
-        if (rest === 0) {
-            return anyNumber;
-        }
-        if (rest > halfPrecision) {
-            return anyNumber + (precision - rest);
-        }
-        return anyNumber - rest;
-    };
-};
-
-const arrayWithResults = function (aFunction, times) {
-    /* [].fill is for static values only
-    alternative , return Array.from({length: times}, aFunction);
-    same if aFunction ignores its second argument */
-    const array = [];
-    for (let i = 0; i < times; i += 1) {
-        array.push(aFunction());
-    }
-    return array;
 };
 
 const doNTimes = function (task, times) {
