@@ -8,8 +8,8 @@ remove
  * createThrottledUsingTimeout
  * arrayWithResults in favor of Array.from({length: times}, aFunction)
 
-browse this commit dd5fbb65b377fc4174d9444d663debfdb3f1b628
-or use 10.5.6 to keep using
+browse this commit #dd5fbb65b377fc4174d9444d663debfdb3f1b628
+or use 10.5.5 to keep using
 
 ## 10.5.0
 
