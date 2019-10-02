@@ -21,7 +21,9 @@ import {
     timePromise,
     memoizeAsStrings,
     deepCopy,
+    deepCopyAdded,
     deepAssign,
+    deepAssignAdded,
     createTemplateTag,
     bytesLengthFromString,
 } from "utilsac";
