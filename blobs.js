@@ -1,5 +1,5 @@
 export {
-    downloadBlob
+    downloadBlob,
 };
 
 const downloadBlob = function (blob, name = "new_file.txt") {

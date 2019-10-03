@@ -31,10 +31,10 @@ const evalGlobal = (code, as = `script`) => {
                 evalGlobalResolves.delete(id);
                 resolve();
             }
-        }
+        };
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         evalGlobalResolves.set(thisId, resolve);
         document.body.appendChild(script);
     });

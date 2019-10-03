@@ -5,12 +5,12 @@ test(`it should pass if objects have the same contents`, t => {
     const obj1 = { 
         'a': 1,
         'b': 2,
-        'c': 'hi'
+        'c': `hi`,
     };
     const obj2 = { 
         'a': 1,
         'b': 2,
-        'c': 'hi'
+        'c': `hi`,
     };
     t.is(deepEqual(obj1, obj2), true);
 });
@@ -19,12 +19,12 @@ test(`it should fail if objects do not have the same contents`, t => {
     const obj1 = { 
         'a': 1,
         'b': 2,
-        'c': 'hi'
+        'c': `hi`,
     };
     const obj2 = { 
         'a': 1,
         'b': 2,
-        'c': 'bye'
+        'c': `bye`,
     };
     t.is(deepEqual(obj1, obj2), false);
 });
@@ -36,11 +36,11 @@ test(`it should pass if object with nested properties are equal`, t => {
             'b1': 42,
             'c2': { 
                 'd3': {
-                    'e4': true
-                }
-            }
+                    'e4': true,
+                },
+            },
         },
-        'c': 3
+        'c': 3,
     };
     const obj2 = { 
         'a': 1,
@@ -48,11 +48,11 @@ test(`it should pass if object with nested properties are equal`, t => {
             'b1': 42,
             'c2': { 
                 'd3': {
-                    'e4': true
-                }
-            }
+                    'e4': true,
+                },
+            },
         },
-        'c': 3
+        'c': 3,
     };
     t.is(deepEqual(obj1, obj2), true);
 });
@@ -73,12 +73,12 @@ test(`it should fail if object with arrays are not equal`, t => {
     const obj1 = { 
         'a': 1,
         'b': [ 42, 56 ],
-        'c': 3
+        'c': 3,
     };
     const obj2 = { 
         'a': 1,
         'b': [ 42, 53 ],
-        'c': 3
+        'c': 3,
     };
     t.is(deepEqual(obj1, obj2), false);
 });
@@ -87,12 +87,12 @@ test(`it should pass if object with arrays are equal`, t => {
     const obj1 = { 
         'a': 1,
         'b': [ 42, 53, 2 ],
-        'c': "hi" 
+        'c': "hi",
     };
     const obj2 = { 
         'a': 1,
         'b': [ 42, 53, 2 ],
-        'c': "hi"
+        'c': "hi",
     };
     t.is(deepEqual(obj1, obj2), true);
 });
@@ -102,13 +102,13 @@ test(`it should pass if object with arrays of objects should be equal`, t => {
         'a': [1, 3, 5],
         'b': [ { 'b1': 42 }, { 'c1': 56 } ],
         'c': "hi",
-        'd': [ { 'd1': [ 1, 2, 3 ], 'd2': [4, 5, 6] } ]
+        'd': [ { 'd1': [ 1, 2, 3 ], 'd2': [4, 5, 6] } ],
     };
     const obj2 = { 
         'a': [1, 3, 5],
         'b': [ { 'b1': 42 }, { 'c1': 56 } ],
         'c': "hi",
-        'd': [ { 'd1': [ 1, 2, 3 ], 'd2': [4, 5, 6] } ]
+        'd': [ { 'd1': [ 1, 2, 3 ], 'd2': [4, 5, 6] } ],
     };
     t.is(deepEqual(obj1, obj2), true);
 });
@@ -124,11 +124,11 @@ test(`it should pass sample json`, t => {
           "name": "John Doe",
           "phones": {
             "home": "800-123-4567",
-            "mobile": "877-123-1234"
+            "mobile": "877-123-1234",
           },
           "email": [
             "jd@example.com",
-            "jd@example.org"
+            "jd@example.org",
           ],
           "dateOfBirth": "1980-01-02T00:00:00.000Z",
           "registered": true,
@@ -136,15 +136,15 @@ test(`it should pass sample json`, t => {
             {
               "name": "Jane Doe",
               "phone": "888-555-1212",
-              "relationship": "spouse"
+              "relationship": "spouse",
             },
             {
               "name": "Justin Doe",
               "phone": "877-123-1212",
-              "relationship": "parent"
-            }
-          ]
-        }
+              "relationship": "parent",
+            },
+          ],
+        },
       }; 
 
     const obj2 = {
@@ -157,11 +157,11 @@ test(`it should pass sample json`, t => {
           "name": "John Doe",
           "phones": {
             "home": "800-123-4567",
-            "mobile": "877-123-1234"
+            "mobile": "877-123-1234",
           },
           "email": [
             "jd@example.com",
-            "jd@example.org"
+            "jd@example.org",
           ],
           "dateOfBirth": "1980-01-02T00:00:00.000Z",
           "registered": true,
@@ -169,15 +169,15 @@ test(`it should pass sample json`, t => {
             {
               "name": "Jane Doe",
               "phone": "888-555-1212",
-              "relationship": "spouse"
+              "relationship": "spouse",
             },
             {
               "name": "Justin Doe",
               "phone": "877-123-1212",
-              "relationship": "parent"
-            }
-          ]
-        }
+              "relationship": "parent",
+            },
+          ],
+        },
       }; 
       t.is(deepEqual(obj1, obj2), true);
 });
