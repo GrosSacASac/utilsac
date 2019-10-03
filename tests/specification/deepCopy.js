@@ -1,5 +1,5 @@
 import test from "ava";
-import { deepCopy } from "../../utility.js";
+import { deepCopy } from "../../deep.js";
 import { primitives } from "../helper.js";
 
 

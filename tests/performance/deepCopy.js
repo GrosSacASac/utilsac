@@ -1,7 +1,7 @@
 import { performance } from "perf_hooks";
 import { createPerformanceTest, runAll } from "leistung";
 
-import { deepCopy } from "../../utility.js";
+import { deepCopy } from "../../deep.js";
 
 
 const deepCopyJSON = x => JSON.parse(JSON.stringify(x));
