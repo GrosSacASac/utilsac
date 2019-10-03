@@ -13,7 +13,9 @@ export {
     bytesLengthFromString,
 };
 
-const createDebounced = function (functionToDebounce, waitTime = 150) {
+const waitTimeDefault = 150;
+
+const createDebounced = function (functionToDebounce, waitTime = waitTimeDefault) {
     /* creates a function that is de-bounced,
     calling it, will eventually execute it, when you stop calling it
     useful for scroll events, resize, search etc
@@ -32,7 +34,9 @@ const createDebounced = function (functionToDebounce, waitTime = 150) {
     };
 };
 
-const createThrottled = function (functionToThrottle, minimumTimeSpace = 150) {
+const minimumTimeSpaceDefault = 150;
+
+const createThrottled = function (functionToThrottle, minimumTimeSpace = minimumTimeSpaceDefault) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
@@ -50,7 +54,7 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace = 150) {
 };
 
 
-const throttledWithLast = function (functionToThrottle, minimumTimeSpace = 150) {
+const throttledWithLast = function (functionToThrottle, minimumTimeSpace = minimumTimeSpaceDefault, waitTime = waitTimeDefault) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it twice:
@@ -117,7 +121,7 @@ const chainRequestAnimationFrame = function (functions) {
         const values = [];
         const length = functions.length;
         let i = 0;
-        const next = function (timing) {
+        const next = function () {
             if (i < length) {
                 try {
                     values.push(functions[i]());
@@ -147,7 +151,7 @@ const chainPromiseNTimes = function (promiseCreator, times) {
     if (times === 0) {
         return Promise.resolve(values);
     }
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
         let i = 0;
         const chainer = function (value) {
             i += 1;
@@ -179,7 +183,7 @@ const timePromise = function (promiseCreator, timer = Date) {
         const endTime = timer.now();
         return {
             timeElapsed: endTime - startTime,
-            value
+            value,
         };
     });
 };
@@ -217,11 +221,10 @@ const createTemplateTag = (mapper) => {
     // -> "https://example.com/id/slashes%20and%20spaces%20are%20properly%20escaped%20%2F%2F%2F" */
     return (staticStrings, ...parts) => {
         return Array.from(parts, (part, index) => {
-            return `${staticStrings[index]}${mapper(part)}`
+            return `${staticStrings[index]}${mapper(part)}`;
         }).concat(staticStrings[staticStrings.length - 1]).join(``);
     };
 };
-
 
 const bytesLengthFromString = string => {
     const textEncoder = new TextEncoder();

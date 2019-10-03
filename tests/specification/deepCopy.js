@@ -43,7 +43,7 @@ test(`it should create new object references`, t => {
     };
 
     const result = deepCopy(source);
-    result.b.c = 3
+    result.b.c = 3;
 
     t.is(source.b.c, 2);
 });

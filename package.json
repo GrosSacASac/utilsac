@@ -6,7 +6,9 @@
   "main": "utility.js",
   "scripts": {
     "test": "ava",
-    "perftest": "node --experimental-modules ./tests/performance/deepCopy.js"
+    "perftest": "node --experimental-modules ./tests/performance/deepCopy.js",
+    "lint-fix": "eslint --ignore-path .gitignore --fix .",
+    "lint": "eslint --ignore-path .gitignore ."
   },
   "files": [
     "typeCast.js",
@@ -25,17 +27,37 @@
     "memoize"
   ],
   "license": "CC0-1.0",
+  "eslintConfig": {
+    "extends": ["red"],
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "ecmaFeatures": {}
+    },
+    "env": {
+      "es6": true,
+      "browser": true
+    },
+    "rules": {
+        "prefer-destructuring": "off",
+        "quotes": "off",
+        "no-magic-numbers": "off",
+        "max-statements-per-line": "off"
+    }
+ },
   "repository": {
     "type": "git",
     "url": "git://github.com/GrosSacASac/utilsac.git"
   },
   "devDependencies": {
     "ava": "^2.2.0",
+    "eslint": "^6.5.1",
+    "eslint-config-red": "^1.4.1",
     "leistung": "^2.0.0"
   },
   "ava": {
     "files": [
-        "tests/specification/**"
+      "tests/specification/**"
     ],
     "require": [
       "esm"

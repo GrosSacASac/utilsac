@@ -36,7 +36,7 @@ test(`it should create new object references`, t => {
     const target = {};
 
     deepAssign(target, source);
-    target.b.c = 3
+    target.b.c = 3;
 
     t.is(source.b.c, 2);
 });
@@ -46,7 +46,7 @@ test(`it should work with multiple sources`, t => {
 
     deepAssign(
         target,
-        { a: 5, b: false, c: { a: 5, b: false, } },
+        { a: 5, b: false, c: { a: 5, b: false } },
         null,
         { a: 100 },
         { c: { b: true, d: [5, 4, 6, 8] } },
