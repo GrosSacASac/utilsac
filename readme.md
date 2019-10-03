@@ -29,6 +29,7 @@ import {
 } from "utilsac";
 ```
 
+deep
 ## typeCast.js
 
 ```
