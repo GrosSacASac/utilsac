@@ -396,7 +396,6 @@ const createTemplateTag = (mapper) => {
     };
 };
 
-
 const bytesLengthFromString = string => {
     const textEncoder = new TextEncoder();
     return textEncoder.encode(string).length;
