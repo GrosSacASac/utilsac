@@ -1,17 +1,13 @@
-/**
-Deep Equal
-
-Determines whether two objects are equal. Works on nested structures.
-
-@param {Object} obj1 can be either an object or array
-@param {Object} obj1 can be either an object or array
-
-@returns {Boolean}
-*/
-
 export {
   deepEqual
 };
+
+/**
+  * Determines whether two objects are equal. Works on nested structures.
+  * @param {Object} obj1 can be either an object or array
+  * @param {Object} obj2 can be either an object or array
+  * @returns {Boolean}
+  */
 
 const deepEqual = (obj1, obj2) => {
   if (obj1 === obj2) { // check primative
