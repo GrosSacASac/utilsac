@@ -1,5 +1,18 @@
 # Changelog
 
+## 12.0.0 unreleased
+
+add
+ * deepCopyAdded
+ * deepAssignAdded
+ * deepEqual
+
+move
+ * deepAssign
+ * deepCopy
+
+to deep.js
+
 ## 11.0.0
 
 remove
