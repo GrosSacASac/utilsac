@@ -1,5 +1,5 @@
 import test from "ava";
-import { deepAssign } from "../../utility.js";
+import { deepAssign } from "../../deep.js";
 import { primitives } from "../helper.js";
 
 
