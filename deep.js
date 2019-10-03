@@ -1,5 +1,5 @@
 export {
-  deepEqual
+  deepEqual,
 };
 
 /**
@@ -23,13 +23,15 @@ const deepEqual = (obj1, obj2) => {
       return false;
     }
 
-    for (let i = 0; i < obj1.length; i++) {
+    for (let i = 0; i < obj1.length; i += 1) {
       if (!deepEqual(obj1[i], obj2[i])) {
         return false;
       }
     }
     return true;
-  } else if (isObject(obj1) && obj1 !== null) {
+  } 
+  if (isObject(obj1) && obj1 !== null
+    || (isObject(obj2) && obj2 !== null)) {
     const keysA = Object.keys(obj1);
     const keysB = Object.keys(obj2);
 
@@ -38,7 +40,7 @@ const deepEqual = (obj1, obj2) => {
     }
 
     for (const prop in obj1) {
-      if (obj2.hasOwnProperty(prop)) {
+      if (Object.prototype.hasOwnProperty.call(obj2, prop)) {
         if (!deepEqual(obj1[prop], obj2[prop])) {
           return false;
         }
@@ -48,4 +50,6 @@ const deepEqual = (obj1, obj2) => {
   }
 };
 
-const isObject = obj => obj === Object(obj);
+const isObject = obj => {
+  return obj === Object(obj);
+};

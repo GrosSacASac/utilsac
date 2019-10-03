@@ -5,7 +5,7 @@ export {
 };
 
 
-const stringFromArrayBuffer = function (arrayBuffer, encoding = "utf-8") {
+const stringFromArrayBuffer = function (arrayBuffer, encoding = `utf-8`) {
     return (new TextDecoder(encoding)).decode(new DataView(arrayBuffer));
 };
 
@@ -17,7 +17,7 @@ const xFromBlob = function (readAs) {
     return function (blob) {
         return new Promise(function (resolve, reject) {
             const reader = new FileReader();
-            reader.onload = function (event) {
+            reader.onload = function () {
                 resolve(reader.result);
             };
             reader.onerror = function (error) {
