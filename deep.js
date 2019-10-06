@@ -179,12 +179,14 @@ const deepAssignAdded = (target, ...sources) => {
 };
 
 /**
-  * Determines whether two objects are equal. Works on nested structures.
-  * @param {Object} obj1 can be either an object or array
-  * @param {Object} obj2 can be either an object or array
-  * @returns {Boolean}
-  */
-
+ * Determines whether two objects are equal. Works on nested structures.
+ * Work with all primitive types like Number, String, Big Int.
+ * It also Object, Array, Date and Regex
+ * It also works when nested structure contains object and array
+ * @param {Object} obj1 can be either an object or array
+ * @param {Object} obj2 can be either an object or array
+ * @returns {Boolean}
+ */
 const deepEqual = (obj1, obj2) => {
     if (obj1 === obj2) { // check primative
         return true;
