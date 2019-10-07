@@ -6,8 +6,6 @@ export {
     deepEqual,
 };
 
-const typedArrayClasses = [Int8Array, Uint8Array, Uint8ClampedArray, Int16Array, Uint16Array,
-    Int32Array, Uint32Array, Float32Array, Float64Array, BigInt64Array, BigUint64Array]
 
 /**
 only works with undefined, null, Number, Symbol, String, Big Int, Object, Array,
@@ -64,11 +62,7 @@ const deepCopyAdded = x => {
         return x.map(deepCopy);
     }
     if (ArrayBuffer.isView(x) && !(x instanceof DataView)) {
-        for (const typedArrayClass of typedArrayClasses) {
-            if (x instanceof typedArrayClass) {
-                return new typedArrayClass(x);
-            }
-        }
+        return new x.constructor(x);
     }
 
     const copy = {}
@@ -178,12 +172,8 @@ const deepAssignAdded = (target, ...sources) => {
                 target[key] = [];
             }
             if (ArrayBuffer.isView(value) && !(value instanceof DataView)) {
-                for (const typedArrayClass of typedArrayClasses) {
-                    if (value instanceof typedArrayClass) {
-                        target[key] = new typedArrayClass(value);
-                        return;
-                    }
-                }
+                target[key] = new value.constructor(value);
+                return;
             }
             // value is an Object
             if (typeof target[key] !== `object` || !target[key]) {
