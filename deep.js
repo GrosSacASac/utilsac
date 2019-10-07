@@ -21,7 +21,7 @@ const deepCopy = x => {
         return x.map(deepCopy);
     }
 
-    const copy = {}
+    const copy = {};
     Object.entries(x).forEach(([key, value]) => {
         copy[key] = deepCopy(value);
     });
@@ -65,7 +65,7 @@ const deepCopyAdded = x => {
         return new x.constructor(x);
     }
 
-    const copy = {}
+    const copy = {};
     Object.entries(x).forEach(([key, value]) => {
         copy[key] = deepCopy(value);
     });
@@ -151,7 +151,7 @@ const deepAssignAdded = (target, ...sources) => {
                 if (target[key] instanceof Set) {
                     tempArray = tempArray.concat(Array.from(target[key]));
                 }
-                target[key] = new Set(Array.from(value, deepCopyAdded));
+                target[key] = new Set(Array.from(value, tempArray));
                 return;
             }
             if (value instanceof Map) {
@@ -163,8 +163,8 @@ const deepAssignAdded = (target, ...sources) => {
                     target[key] = map;
                 }
                 // todo keep internal links
-                value.forEach((value, key) => {
-                    map.set(deepCopyAdded(key), deepCopyAdded(value));
+                value.forEach((intlValue, intlKey) => {
+                    map.set(deepCopyAdded(intlKey), deepCopyAdded(intlValue));
                 });
                 return;
             }
