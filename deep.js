@@ -61,6 +61,9 @@ const deepCopyAdded = x => {
     if (Array.isArray(x)) {
         return x.map(deepCopy);
     }
+    if (ArrayBuffer.isView(x) && !(x instanceof DataView)) {
+        return new x.constructor(x);
+    }
 
     const copy = {}
     Object.entries(x).forEach(([key, value]) => {
@@ -167,6 +170,10 @@ const deepAssignAdded = (target, ...sources) => {
             }
             if (Array.isArray(value)) {
                 target[key] = [];
+            }
+            if (ArrayBuffer.isView(value) && !(value instanceof DataView)) {
+                target[key] = new value.constructor(value);
+                return;
             }
             // value is an Object
             if (typeof target[key] !== `object` || !target[key]) {
