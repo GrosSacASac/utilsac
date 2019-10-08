@@ -25,7 +25,7 @@ test(`the result should be deep equal`, t => {
         a: 1,
         b: {
             c: 2,
-            d: [456, 6, 8],
+            d: [1024, 6, 8],
         },
     };
 

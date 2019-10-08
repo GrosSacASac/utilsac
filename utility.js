@@ -95,7 +95,7 @@ const chainPromises = function (promiseCreators) {
     /* different than Promise.all, takes an array of functions that return a promise
     only executes promiseCreators sequentially
     resolves with an array of values or reject with the first error*/
-    const length = promiseCreators.length;
+    const {length} = promiseCreators;
     const values = [];
     let i = -1;
     return new Promise(function (resolve, reject) {
@@ -119,7 +119,7 @@ const chainPromises = function (promiseCreators) {
 const chainRequestAnimationFrame = function (functions) {
     return new Promise(function (resolve, reject) {
         const values = [];
-        const length = functions.length;
+        const {length} = functions;
         let i = 0;
         const next = function () {
             if (i < length) {

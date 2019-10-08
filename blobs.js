@@ -2,9 +2,9 @@ export {
     downloadBlob,
 };
 
-const downloadBlob = function (blob, name = "new_file.txt") {
+const downloadBlob = function (blob, name = `new_file.txt`) {
     const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
+    const anchor = document.createElement(`a`);
     anchor.href = url;
     anchor.download = name;
 

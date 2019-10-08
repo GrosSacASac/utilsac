@@ -48,14 +48,14 @@ test(`it should work with multiple sources`, t => {
         target,
         { a: 5, b: false, c: { a: 5, b: false } },
         null,
-        { a: 100 },
+        { a: 1024 },
         { c: { b: true, d: [5, 4, 6, 8] } },
         { e: [7, 8, 9] },
-        { e: [777, Symbol(), null, undefined, 8, "k"] },
+        { e: [512, Symbol(), null, undefined, 8, `k`] },
     );
 
     // sources assign on top of each other according to the order 
-    t.is(target.a, 100);
+    t.is(target.a, 1024);
     t.is(target.b, false);
     t.deepEqual(target.c, { a: 5, b: true, d: [5, 4, 6, 8] });
 });
@@ -90,7 +90,7 @@ test(`it should avoid prototype pollution`, t => {
     // mistake 3 not checking if the input has too few fields
     // mistake 4 used deepAssign instead of deepCopy
 
-    const copy = deepAssign({}, parsedInput);
+    /*const copy = */deepAssign({}, parsedInput);
 
     // mistake 5 defensive style, unecessary  copy, better is to have convention to not modify input in functions
     // mistake 6 copy everything, be lazy !

@@ -28,7 +28,9 @@
   ],
   "license": "CC0-1.0",
   "eslintConfig": {
-    "extends": ["red"],
+    "extends": [
+      "red"
+    ],
     "parserOptions": {
       "ecmaVersion": 2020,
       "sourceType": "module",
@@ -39,12 +41,8 @@
       "browser": true
     },
     "rules": {
-        "prefer-destructuring": "off",
-        "quotes": "off",
-        "no-magic-numbers": "off",
-        "max-statements-per-line": "off"
     }
- },
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/GrosSacASac/utilsac.git"

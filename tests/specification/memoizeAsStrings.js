@@ -29,9 +29,9 @@ test(`it should call the function when the parameters are not the same`, t => {
 
     const memoized = memoizeAsStrings(sideEffectFunction);
     t.is(called, 0);
-    memoized(100);
+    memoized(1);
     t.is(called, 1);
-    memoized(200);
+    memoized(2);
     t.is(called, 2);
 });
 
@@ -41,9 +41,9 @@ test(`it should return the same when when the parameters are the same`, t => {
     };
 
     const memoized = memoizeAsStrings(sideEffectFunction);
-    const result1 = memoized(100);
-    const result2 = memoized(200);
-    const result3 = memoized(100);
+    const result1 = memoized(1);
+    const result2 = memoized(2);
+    const result3 = memoized(1);
     t.is(result1, result3);
     t.not(result1, result2);
 });
