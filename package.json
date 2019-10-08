@@ -15,6 +15,7 @@
     "evalGlobal.js",
     "blobs.js",
     "utility.js",
+    "deep.js",
     "readme.md",
     "license.txt",
     "changelog.md"
