@@ -213,8 +213,7 @@ const deepEqual = (obj1, obj2) => {
             return deepEqual(obj1value, obj2[i]);
         });
     }
-    if (isObject(obj1) && obj1 !== null &&
-        isObject(obj2) && obj2 !== null) {
+    if (isObject(obj1) && isObject(obj2)) {
         const keysA = Object.keys(obj1);
         const keysB = Object.keys(obj2);
 
@@ -231,6 +230,6 @@ const deepEqualAdded = (a, b) => {
     throw `not yet implemented`;
 };
 
-const isObject = obj => {
-    return obj === Object(obj);
+const isObject = x => {
+    return typeof x === `object` && x !== null;
 };
