@@ -195,32 +195,32 @@ const deepAssignAdded = (target, ...sources) => {
  * @param {Object} obj2 can be either an object or array
  * @returns {Boolean}
  */
-const deepEqual = (obj1, obj2) => {
-    if (obj1 === obj2) { // check primitive
+const deepEqual = (a, b) => {
+    if (a === b) {
         return true;
     }
 
-    if (Array.isArray(obj1)) {
-        if (!Array.isArray(obj2)) {
+    if (Array.isArray(a)) {
+        if (!Array.isArray(b)) {
             return false;
         }
 
-        if (obj1.length !== obj2.length) {
+        if (a.length !== b.length) {
             return false;
         }
 
-        return obj1.every((obj1value, i) => {
-            return deepEqual(obj1value, obj2[i]);
+        return a.every((value, i) => {
+            return deepEqual(value, b[i]);
         });
     }
-    if (isObject(obj1) && isObject(obj2)) {
-        const keysA = Object.keys(obj1);
-        const keysB = Object.keys(obj2);
+    if (isObject(a) && isObject(b)) {
+        const keysA = Object.keys(a);
+        const keysB = Object.keys(b);
 
         return (
             deepEqual(keysA, keysB) &&
             keysA.every(key => {
-                return deepEqual(obj1[key], obj2[key]);
+                return deepEqual(a[key], b[key]);
             })
         );
     }
