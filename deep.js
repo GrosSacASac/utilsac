@@ -151,7 +151,7 @@ const deepAssignAdded = (target, ...sources) => {
                 if (target[key] instanceof Set) {
                     tempArray = tempArray.concat(Array.from(target[key]));
                 }
-                target[key] = new Set(Array.from(value, tempArray));
+                target[key] = new Set(tempArray);
                 return;
             }
             if (value instanceof Map) {
