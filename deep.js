@@ -4,6 +4,7 @@ export {
     deepAssign,
     deepAssignAdded,
     deepEqual,
+    deepEqualAdded,
 };
 
 
@@ -195,7 +196,7 @@ const deepAssignAdded = (target, ...sources) => {
  * @returns {Boolean}
  */
 const deepEqual = (obj1, obj2) => {
-    if (obj1 === obj2) { // check primative
+    if (obj1 === obj2) { // check primitive
         return true;
     }
 
@@ -208,31 +209,26 @@ const deepEqual = (obj1, obj2) => {
             return false;
         }
 
-        for (let i = 0; i < obj1.length; i += 1) {
-            if (!deepEqual(obj1[i], obj2[i])) {
-                return false;
-            }
-        }
-        return true;
+        return obj1.every((obj1value, i) => {
+            return deepEqual(obj1value, obj2[i]);
+        });
     }
-    if (isObject(obj1) && obj1 !== null
-        || (isObject(obj2) && obj2 !== null)) {
+    if (isObject(obj1) && obj1 !== null &&
+        isObject(obj2) && obj2 !== null) {
         const keysA = Object.keys(obj1);
         const keysB = Object.keys(obj2);
 
-        if (keysA.length !== keysB.length) {
-            return false;
-        }
-
-        for (const prop in obj1) {
-            if (Object.prototype.hasOwnProperty.call(obj2, prop)) {
-                if (!deepEqual(obj1[prop], obj2[prop])) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return (
+            deepEqual(keysA, keysB) &&
+            keysA.every(key => {
+                return deepEqual(obj1[key], obj2[key]);
+            })
+        );
     }
+};
+
+const deepEqualAdded = (a, b) => {
+    throw `not yet implemented`;
 };
 
 const isObject = obj => {
