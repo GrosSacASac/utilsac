@@ -1,11 +1,12 @@
 # Changelog
 
-## 12.0.0 unreleased
+## 12.0.0
 
 add
  * deepCopyAdded
  * deepAssignAdded
  * deepEqual
+ * (Not yet implemented deepEqualAdded)
 
 move
  * deepAssign
