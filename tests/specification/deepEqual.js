@@ -1,7 +1,6 @@
 import test from "ava";
 import { deepEqual, deepEqualAdded } from "../../deep.js";
 
-
 const runBaselineDeepEqualTests = (deepEqualImplementation) => {
     const { name } = deepEqualImplementation;
     test(`${name} should pass if objects have the same contents`, t => {
@@ -232,8 +231,8 @@ test(`it should handle Dates`, t => {
     t.is(deepEqualAdded(a, c), false);
 });
 
-test(`it should handle typed Arrays`, t => {
-    const numbers = [1, 4, 8];
+test(`it should handle typed uint8 Arrays`, t => {
+    const numbers = [1, 4, 8, 10];
     const a = new Uint8Array(numbers);
     const b = new Uint8Array(numbers);
     numbers.push(1);
@@ -242,4 +241,84 @@ test(`it should handle typed Arrays`, t => {
     t.is(deepEqualAdded(a, b), true);
     t.is(deepEqualAdded(a, c), false);
 });
+
+test(`it should handle typed uint16 Arrays`, t => {
+    const numbers = [1, 4, 8];
+    const a = new Uint16Array(numbers);
+    const b = new Uint16Array(numbers);
+    numbers.push(1);
+    const c = new Uint16Array(numbers);
+
+    t.is(deepEqualAdded(a, b), true);
+    t.is(deepEqualAdded(a, c), false);
+});
+
+test(`it should pass for Date`, t => {
+    const d1 = new Date(`2019-01-01`);
+    const d2 = new Date(`2019-01-01`);
+    t.true(deepEqualAdded(d1, d2));
+});
+
+test(`it should pass for array of Dates`, t => {
+    const arr1 = Array.from([new Date(`2019-01-01`),new Date(`2019-01-02`), new Date(`2019-01-03`)]);
+    const arr2 = Array.from([new Date(`2019-01-01`),new Date(`2019-01-02`), new Date(`2019-01-03`)]);
+    t.true(deepEqualAdded(arr1, arr2));
+});
+
+test(`it should fail for array of Dates given different dates`, t => {
+    const arr1 = Array.from([new Date(`2019-01-01`),new Date(`2019-01-02`), new Date(`2019-01-03`)]);
+    const arr2 = Array.from([new Date(`2019-01-02`),new Date(`2019-01-02`), new Date(`2019-01-03`)]);
+    t.false(deepEqualAdded(arr1, arr2));
+});
+
+test(`it should pass for Map of Dates`, t => {
+    const a = new Map([
+        [`a`, new Date(`2019-01-01`)],
+        [`b`, new Date(`2019-01-02`)],
+        [`c`, new Date(`2019-01-03`)],
+    ]);
+    const b = new Map([
+        [`a`, new Date(`2019-01-01`)],
+        [`b`, new Date(`2019-01-02`)],
+        [`c`, new Date(`2019-01-03`)],
+    ]);
+    t.true(deepEqualAdded(a, b));
+});
+
+test(`it should fail for Map of Dates given mismatched data`, t => {
+    const a = new Map([
+        [`a`, new Date(`2019-01-01`)],
+        [`b`, new Date(`2019-01-02`)],
+        [`c`, new Date(`2019-01-06`)],
+    ]);
+    const b = new Map([
+        [`a`, new Date(`2019-01-01`)],
+        [`b`, new Date(`2019-01-01`)],
+        [`g`, new Date(`2019-01-03`)],
+    ]);
+    t.false(deepEqualAdded(a, b));
+});
+
+test(`it should pass for nested Map of Dates`, t => {
+    const a = new Map([
+        [`a`, new Date(`2019-01-01`)],
+        [`b`, new Map([
+            [ `b1`, new Date(`2019-01-05`)],
+            [ `c1`, new Date(`2019-01-06`)],
+            [ `d1`, new Date(`2019-01-07`)]]),
+        ],
+        [`c`, new Date(`2019-01-06`)],
+    ]);
+    const b = new Map([
+        [`a`, new Date(`2019-01-01`)],
+        [`b`, new Map([
+            [ `b1`, new Date(`2019-01-05`)],
+            [ `c1`, new Date(`2019-01-06`)],
+            [ `d1`, new Date(`2019-01-07`)]]),
+        ],
+        [`c`, new Date(`2019-01-06`)],
+    ]);
+    t.true(deepEqualAdded(a, b));
+});
+
 
