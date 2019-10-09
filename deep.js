@@ -200,26 +200,26 @@ const deepEqual = (a, b) => {
     }
 
     if (Array.isArray(a) && Array.isArray(b)) {
-      if (a.length !== b.length) {
-        return false;
-      }
+        if (a.length !== b.length) {
+            return false;
+        }
 
-      return a.every((value, index) => {
-        return deepEqual(value, b[index]);
-      });
+        return a.every((value, index) => {
+            return deepEqual(value, b[index]);
+        });
     }
-  if (isObject(a) && isObject(b)) {
-    const keysA = Object.keys(a);
-    const keysB = Object.keys(b);
+    if (isObject(a) && isObject(b)) {
+        const keysA = Object.keys(a);
+        const keysB = Object.keys(b);
 
-    return (
-      deepEqual(keysA, keysB) &&
-      keysA.every(key => {
-        return deepEqual(a[key], b[key]);
-      })
-    );
-  }
-  return false;
+        return (
+            deepEqual(keysA, keysB) &&
+            keysA.every(key => {
+                return deepEqual(a[key], b[key]);
+            })
+        );
+    }
+    return false;
 };
 
 const isObject = x => {
@@ -227,15 +227,15 @@ const isObject = x => {
 };
 
 const validateArray = (a,b) => {
-  if (a === null && b === null) {
-    return false;
-  }
-  if (a.length !== b.length) {
-    return false;
-  }
-  return a.every((value, index) => {
-    return deepEqualAdded(value, b[index]);
-  });
+    if (a === null && b === null) {
+        return false;
+    }
+    if (a.length !== b.length) {
+        return false;
+    }
+    return a.every((value, index) => {
+        return deepEqualAdded(value, b[index]);
+    });
 };
 
 /**
@@ -248,57 +248,57 @@ const validateArray = (a,b) => {
  * @returns {Boolean}
  */
 const deepEqualAdded = (a, b) => {
-  if (a === b) {
-    return true;
-  }
-
-  if (a instanceof Date && b instanceof Date) {
-    return deepEqualAdded(a.getTime(), b.getTime());
-  }
-
-  if (a instanceof RegExp && b instanceof RegExp) {
-    return new RegExp(a).toString() === new RegExp(b).toString();
-  }
-
-  if (Array.isArray(a) && Array.isArray(b)) {
-    return validateArray(a, b);
-  }
-
-  if ((a instanceof Uint8Array && b instanceof Uint8Array)
-    || (a instanceof Uint16Array && b instanceof Uint16Array)
-    || (a instanceof Set && b instanceof Set)) {
-    const arr1 = Array.from(a);
-    const arr2 = Array.from(b);
-    return validateArray(arr1, arr2);
-  }
-
-  if (a instanceof Map && b instanceof Map) {
-    const keysA = a.keys();
-    const keysB = b.keys();
-
-    if (keysA.length !== keysB.length) {
-      return false;
+    if (a === b) {
+        return true;
     }
 
-    for (const key of keysA) {
-      if (!b.has(key) || !deepEqualAdded(a.get(key), b.get(key))) {
-        return false;
-      }
+    if (a instanceof Date && b instanceof Date) {
+        return deepEqualAdded(a.getTime(), b.getTime());
     }
-    return true;
-  }
 
-  if (isObject(a) && isObject(b)) {
-    const keysA = Object.keys(a);
-    const keysB = Object.keys(b);
+    if (a instanceof RegExp && b instanceof RegExp) {
+        return new RegExp(a).toString() === new RegExp(b).toString();
+    }
 
-    return (
-      deepEqualAdded(keysA, keysB) &&
-      keysA.every(key => {
-        return deepEqualAdded(a[key], b[key]);
-      })
-    );
-  }
+    if (Array.isArray(a) && Array.isArray(b)) {
+        return validateArray(a, b);
+    }
 
-  return false;
+    if ((a instanceof Uint8Array && b instanceof Uint8Array)
+        || (a instanceof Uint16Array && b instanceof Uint16Array)
+        || (a instanceof Set && b instanceof Set)) {
+        const arr1 = Array.from(a);
+        const arr2 = Array.from(b);
+        return validateArray(arr1, arr2);
+    }
+
+    if (a instanceof Map && b instanceof Map) {
+        const keysA = a.keys();
+        const keysB = b.keys();
+
+        if (keysA.length !== keysB.length) {
+            return false;
+        }
+
+        for (const key of keysA) {
+            if (!b.has(key) || !deepEqualAdded(a.get(key), b.get(key))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    if (isObject(a) && isObject(b)) {
+        const keysA = Object.keys(a);
+        const keysB = Object.keys(b);
+
+        return (
+            deepEqualAdded(keysA, keysB) &&
+            keysA.every(key => {
+                return deepEqualAdded(a[key], b[key]);
+            })
+        );
+    }
+
+    return false;
 };

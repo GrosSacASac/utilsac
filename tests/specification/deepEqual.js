@@ -1,5 +1,5 @@
 import test from "ava";
-import { deepEqual, deepEqualAdded } from "../../deep";
+import { deepEqual, deepEqualAdded } from "../../deep.js";
 
 const runBaselineDeepEqualTests = (deepEqualImplementation) => {
     const { name } = deepEqualImplementation;
