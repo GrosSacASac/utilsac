@@ -40,8 +40,6 @@
     "env": {
       "es6": true,
       "browser": true
-    },
-    "rules": {
     }
   },
   "repository": {
@@ -49,7 +47,7 @@
     "url": "git://github.com/GrosSacASac/utilsac.git"
   },
   "devDependencies": {
-    "ava": "^2.2.0",
+    "ava": "^2.4.0",
     "eslint": "^6.5.1",
     "eslint-config-red": "^1.4.1",
     "leistung": "^2.0.0"
