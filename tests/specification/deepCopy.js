@@ -1,49 +1,112 @@
 import test from "ava";
-import { deepCopy } from "../../deep.js";
+import { deepCopy, deepCopyAdded } from "../../deep.js";
 import { primitives } from "../helper.js";
 
-
-test(`it should work like an assignement for primitives`, t => {
-    primitives.forEach(value => {
-        const result = deepCopy(value);
-        t.is(result, value);
+const runBaselineDeepCopyTests = (deepCopyImplementation) => {
+    const { name } = deepCopyImplementation;
+    test(` ${name} should work like an assignement for primitives`, t => {
+        primitives.forEach(value => {
+            const result = deepCopyImplementation(value);
+            t.is(result, value);
+        });
     });
-});
 
-test(`it should not work like an assignement for non primitives`, t => {
-    const source = {
-        a: 1,
-    };
+    test(`${name} should not work like an assignement for non primitives`, t => {
+        const source = {
+            a: 1,
+        };
 
-    const result = deepCopy(source);
+        const result = deepCopyImplementation(source);
 
-    t.not(result, source);
-});
+        t.not(result, source);
+    });
 
-test(`the result should be deep equal`, t => {
-    const source = {
-        a: 1,
-        b: {
-            c: 2,
-            d: [1024, 6, 8],
-        },
-    };
+    test(`${name} result should be deep equal`, t => {
+        const source = {
+            a: 1,
+            b: {
+                c: 2,
+                d: [1024, 6, 8],
+            },
+        };
 
-    const result = deepCopy(source);
+        const result = deepCopyImplementation(source);
 
-    t.deepEqual(result, source);
-});
+        t.deepEqual(result, source);
+    });
 
-test(`it should create new object references`, t => {
-    const source = {
-        a: 1,
-        b: {
-            c: 2,
-        },
-    };
+    test(`${name} should create new object references`, t => {
+        const source = {
+            a: 1,
+            b: {
+                c: 2,
+            },
+        };
 
-    const result = deepCopy(source);
-    result.b.c = 3;
+        const result = deepCopyImplementation(source);
+        result.b.c = 3;
 
-    t.is(source.b.c, 2);
-});
+        t.is(source.b.c, 2);
+    });
+
+}
+
+runBaselineDeepCopyTests(deepCopy);
+runBaselineDeepCopyTests(deepCopyAdded);
+
+//tests for deep copy added
+test('it should work for Date', t => {
+    const sourceDate = new Date();
+
+    const copiedDate = deepCopyAdded(sourceDate);
+
+    t.deepEqual(copiedDate, sourceDate);
+
+
+})
+
+test('it should work with RegEx', t => {
+
+    const sourceRegex = new RegExp('\\w+');
+
+
+    const copiedRegex = deepCopyAdded(sourceRegex);
+
+
+    t.deepEqual(copiedRegex, sourceRegex);
+
+})
+
+test('it should work with Set', t => {
+
+    const a = new Set([1, 2, 3]);
+    const b = new Set([1, 2, 3]);
+    const c = new Set([4]);
+
+    t.deepEqual(deepCopyAdded(a), b);
+    t.notDeepEqual(deepCopyAdded(a), c);
+})
+
+test('it should work with Map', t => {
+
+    const a = new Map([[1, 2], [2, 3]]);
+    const b = new Map([[1, 2], [2, 3]]);
+    const c = new Map([[4, 8]]);
+
+    t.deepEqual(deepCopyAdded(a), b);
+    t.notDeepEqual(deepCopyAdded(a), c);
+})
+
+test('it should work with Array', t => {
+    const numbers = [1, 4, 8, 10];
+    const a = Array.from(numbers);
+    numbers.push(1);
+    const c = Array.from(numbers);
+
+    const copiedArray = deepCopyAdded(a);
+
+    t.not(copiedArray, a)
+    t.deepEqual(copiedArray, a);
+    t.is(copiedArray instanceof Array, true)
+    t.notDeepEqual(deepCopyAdded(a), c);
+})
