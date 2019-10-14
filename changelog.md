@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.1.0
+
+add
+ * deepEqualAdded
+
 ## 12.0.0
 
 add
