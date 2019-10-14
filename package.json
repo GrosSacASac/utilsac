@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "12.0.1",
+  "version": "12.1.0",
   "description": "Utility functions",
   "type": "module",
   "main": "utility.js",
@@ -25,7 +25,11 @@
     "deep",
     "copy",
     "assign",
-    "memoize"
+    "memoize",
+    "type",
+    "cast",
+    "eval",
+    "global"
   ],
   "license": "CC0-1.0",
   "eslintConfig": {
