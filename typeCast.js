@@ -2,6 +2,9 @@ export {
     stringFromArrayBuffer,
     arrayBufferFromBlob,
     stringFromBlob,
+    stringFromArray,
+    setFromArray,
+    mapFromObject
 };
 
 
@@ -31,3 +34,17 @@ const xFromBlob = function (readAs) {
 const arrayBufferFromBlob = xFromBlob(`readAsArrayBuffer`);
 
 const stringFromBlob = xFromBlob(`readAsText`);
+
+const stringFromArray = function (array, sep = ` `) {
+    return array.reduce((total, item) => `${total}${sep}${item}`);
+}
+
+const setFromArray = (array) => new Set(array);
+
+const mapFromObject =  function (obj) {
+    let m = new Map();
+    for (let key in obj) {
+        m.set(key, obj[key]);
+    }
+    return m;
+}
