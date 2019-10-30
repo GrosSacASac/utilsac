@@ -4,7 +4,7 @@ export {
     stringFromBlob,
     stringFromArray,
     setFromArray,
-    mapFromObject
+    mapFromObject,
 };
 
 
@@ -41,7 +41,7 @@ const stringFromArray = function (array, sep = ` `) {
 
 const setFromArray = (array) => new Set(array);
 
-const mapFromObject =  function (obj) {
+const mapFromObject = function (obj) {
     let m = new Map();
     for (let key in obj) {
         m.set(key, obj[key]);

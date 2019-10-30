@@ -46,6 +46,9 @@ import {
     stringFromArrayBuffer,
     arrayBufferFromBlob,
     stringFromBlob,
+    stringFromArray,
+    setFromArray,
+    mapFromObject,
 } from "utilsac/typeCast.js";
 ```
 

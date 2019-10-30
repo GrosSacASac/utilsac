@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.2.0
+
+add
+ * stringFromArray
+ * setFromArray
+ * mapFromObject
+
 ## 12.1.0
 
 add
