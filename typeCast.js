@@ -9,7 +9,7 @@ export {
 
 
 const stringFromArrayBuffer = function (arrayBuffer, encoding = `utf-8`) {
-    return (new TextDecoder(encoding)).decode(new DataView(arrayBuffer));
+    return (new TextDecoder(encoding)).decode(arrayBuffer);
 };
 
 const xFromBlob = function (readAs) {
