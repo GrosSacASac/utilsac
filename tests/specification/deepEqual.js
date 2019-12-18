@@ -121,6 +121,18 @@ const runBaselineDeepEqualTests = (deepEqualImplementation) => {
         const b = { 'value': undefined };
         t.is(deepEqualImplementation(a, b), true);
     });
+
+    test(`${name} should not consider array and array-like object as equal `, t => {
+        const a = {
+            0: `a`,
+            1: `b`,
+        };
+        const b = [
+            `a`,
+            `b`,
+        ];
+        t.is(deepEqualImplementation(a, b), false);
+    });
 };
 
 
