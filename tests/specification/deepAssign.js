@@ -102,34 +102,59 @@ const runBaselineDeepAssignTests = (deepAssignImplementation) => {
         // recovery (only to be able to run this multiple times)
         delete Object.prototype.isAdmin;
     });
-
-}
+};
 
 runBaselineDeepAssignTests(deepAssign);
 runBaselineDeepAssignTests(deepAssignAdded);
 
-//tests for deepAssignAdded
-
-test(`should work for different datatypes`, t => {
+test(`deepAssignAdded should work for Set`, t => {
     const target = {};
 
-    const date1 = new Date()
-    const map1 = new Map([[1, 2], [2, 3]]);
     const set1 = new Set([1, 2, 3]);
-    const symbol1 = Symbol();
-    const source = [{ a: 5, b: false, c: { a: 5, b: new RegExp('\\w+') } },
-    { a: date1 },
-    { c: { b: true, d: [5, 4, 6, map1] } },
-    { e: [7, 8, 9] },
-    { e: [512, symbol1, null, undefined, 8, set1] }]
+    const source = {set: set1};
 
-    deepAssignAdded(target, ...source)
-    
-    t.not(target.a, date1);
-    t.deepEqual(target.a, date1);
-    t.is(target.c.b, true)
-    t.deepEqual(target, {
-        a: date1, b: false, c: { a: 5, b: true, d: [5, 4, 6, {}] }, e: [512, symbol1, null, undefined, 8, {},]
-    })
-    t.is(Object.keys(target).length, 4);
+    deepAssignAdded(target, source);
+
+    t.deepEqual(target.set, set1);
+    t.is(target.set.constructor, Set);
+});
+
+test(`deepAssignAdded should work for Map`, t => {
+    const target = {};
+
+    const map1 = new Map([[1, 2], [2, 3]]);
+    const source = {map: map1};
+
+    deepAssignAdded(target, source);
+
+    t.deepEqual(target.map, map1);
+    t.is(target.map.constructor, Map);
+});
+
+test(`deepAssignAdded should work for Date`, t => {
+    const target = {};
+
+    const date1 = new Date();
+    date1.setTime(4);
+    const source = {date: date1};
+
+    deepAssignAdded(target, source);
+
+    t.deepEqual(target.date, date1);
+    t.is(target.date.getTime(), date1.getTime());
+    t.is(target.date.constructor, Date);
+});
+
+test(`deepAssignAdded should work for RegExp`, t => {
+    const target = {};
+
+    const regex1 = new RegExp(`\\w+`);
+    const source = { a: { b: regex1 } };
+
+    deepAssignAdded(target, source);
+    console.log(target)
+
+    t.deepEqual(target.a.b, regex1);
+    t.is(String(target.a.b), String(regex1));
+    t.is(target.a.b.constructor, RegExp);
 });
