@@ -180,7 +180,7 @@ const deepAssignAdded = (target, ...sources) => {
             if (typeof target[key] !== `object` || !target[key]) {
                 target[key] = {};
             }
-            deepAssign(target[key], value);
+            deepAssignAdded(target[key], value);
         });
     });
     return target;
