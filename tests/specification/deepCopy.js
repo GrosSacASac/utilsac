@@ -2,9 +2,10 @@ import test from "ava";
 import { deepCopy, deepCopyAdded } from "../../deep.js";
 import { primitives } from "../helper.js";
 
+
 const runBaselineDeepCopyTests = (deepCopyImplementation) => {
     const { name } = deepCopyImplementation;
-    test(` ${name} should work like an assignement for primitives`, t => {
+    test(`${name} should work like an assignement for primitives`, t => {
         primitives.forEach(value => {
             const result = deepCopyImplementation(value);
             t.is(result, value);
@@ -17,7 +18,6 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
         };
 
         const result = deepCopyImplementation(source);
-
         t.not(result, source);
     });
 
@@ -31,7 +31,6 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
         };
 
         const result = deepCopyImplementation(source);
-
         t.deepEqual(result, source);
     });
 
@@ -49,64 +48,52 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
         t.is(source.b.c, 2);
     });
 
-}
+    test(`${name} should work with Array`, t => {
+        const numbers = [1, 4, 8, 10];
+        const a = Array.from(numbers);
+        numbers.push(1);
+        const c = Array.from(numbers);
+
+        const copiedArray = deepCopyAdded(a);
+
+        t.not(copiedArray, a)
+        t.deepEqual(copiedArray, a);
+        t.is(copiedArray instanceof Array, true)
+        t.notDeepEqual(deepCopyAdded(a), c);
+    });
+};
 
 runBaselineDeepCopyTests(deepCopy);
 runBaselineDeepCopyTests(deepCopyAdded);
 
-//tests for deep copy added
-test('it should work for Date', t => {
+test(`deepCopyAdded should work for Date`, t => {
     const sourceDate = new Date();
-
     const copiedDate = deepCopyAdded(sourceDate);
 
     t.deepEqual(copiedDate, sourceDate);
+});
 
-
-})
-
-test('it should work with RegEx', t => {
-
-    const sourceRegex = new RegExp('\\w+');
-
-
+test(`deepCopyAdded should work with RegEx`, t => {
+    const sourceRegex = new RegExp(`\\w+`);
     const copiedRegex = deepCopyAdded(sourceRegex);
 
-
     t.deepEqual(copiedRegex, sourceRegex);
+});
 
-})
-
-test('it should work with Set', t => {
-
+test(`deepCopyAdded should work with Set`, t => {
     const a = new Set([1, 2, 3]);
     const b = new Set([1, 2, 3]);
     const c = new Set([4]);
 
     t.deepEqual(deepCopyAdded(a), b);
     t.notDeepEqual(deepCopyAdded(a), c);
-})
+});
 
-test('it should work with Map', t => {
-
+test(`deepCopyAdded should work with Map`, t => {
     const a = new Map([[1, 2], [2, 3]]);
     const b = new Map([[1, 2], [2, 3]]);
     const c = new Map([[4, 8]]);
 
     t.deepEqual(deepCopyAdded(a), b);
     t.notDeepEqual(deepCopyAdded(a), c);
-})
-
-test('it should work with Array', t => {
-    const numbers = [1, 4, 8, 10];
-    const a = Array.from(numbers);
-    numbers.push(1);
-    const c = Array.from(numbers);
-
-    const copiedArray = deepCopyAdded(a);
-
-    t.not(copiedArray, a)
-    t.deepEqual(copiedArray, a);
-    t.is(copiedArray instanceof Array, true)
-    t.notDeepEqual(deepCopyAdded(a), c);
-})
+});
