@@ -188,7 +188,7 @@ const deepAssignAdded = (target, ...sources) => {
 
 /**
  * Determines whether two objects are equal. Works on nested structures.
- * Work with all primitive types like Number, String, Big Int.
+ * Works with all primitive types like Number, String, Big Int.
  * It also works when nested structure contains object and array
  * @param {Object} a can be either an object or array
  * @param {Object} b can be either an object or array
@@ -226,25 +226,9 @@ const deepEqual = (a, b) => {
     return false;
 };
 
-const isObject = x => {
-    return typeof x === `object` && x !== null;
-};
-
-const validateArray = (a,b) => {
-    if (a === null && b === null) {
-        return false;
-    }
-    if (a.length !== b.length) {
-        return false;
-    }
-    return a.every((value, index) => {
-        return deepEqualAdded(value, b[index]);
-    });
-};
-
 /**
  * Determines whether two objects are equal. Works on nested structures.
- * Work with all primitive types like Number, String, Big Int.
+ * Works with all primitive types like Number, String, Big Int.
  * It also Object, Array, Date and Regex
  * It also works when nested structure contains object and array
  * @param {Object} a can be either an object or array
@@ -256,12 +240,18 @@ const deepEqualAdded = (a, b) => {
         return true;
     }
 
-    if (a instanceof Date && b instanceof Date) {
-        return deepEqualAdded(a.getTime(), b.getTime());
+    if (a instanceof Date) {
+        if (!(b instanceof Date)) {
+            return false;
+        }
+        return (a.getTime() === b.getTime());
     }
 
-    if (a instanceof RegExp && b instanceof RegExp) {
-        return new RegExp(a).toString() === new RegExp(b).toString();
+    if (a instanceof RegExp) {
+        if (!(b instanceof RegExp)) {
+            return false;
+        }
+        return String(a) === String(b);
     }
 
     if (Array.isArray(a)) {
@@ -272,22 +262,28 @@ const deepEqualAdded = (a, b) => {
         return validateArray(a, b);
     }
 
-    if ((a instanceof Uint8Array && b instanceof Uint8Array)
-        || (a instanceof Uint16Array && b instanceof Uint16Array)
-        || (a instanceof Set && b instanceof Set)) {
+    if ((a instanceof Uint8Array) ||
+        (a instanceof Uint16Array) ||
+        (a instanceof Set)) {
+        if (!(b instanceof a.constructor)) {
+            return false;
+        }
+            
         const arr1 = Array.from(a);
         const arr2 = Array.from(b);
         return validateArray(arr1, arr2);
     }
 
-    if (a instanceof Map && b instanceof Map) {
-        const keysA = a.keys();
-        const keysB = b.keys();
-
-        if (keysA.length !== keysB.length) {
+    if (a instanceof Map) {
+        if (!(b instanceof Map)) {
             return false;
         }
 
+        if (a.size !== b.size) {
+            return false;
+        }
+
+        const keysA = a.keys();
         for (const key of keysA) {
             if (!b.has(key) || !deepEqualAdded(a.get(key), b.get(key))) {
                 return false;
@@ -309,4 +305,17 @@ const deepEqualAdded = (a, b) => {
     }
 
     return false;
+};
+
+const isObject = x => {
+    return typeof x === `object` && x !== null;
+};
+
+const validateArray = (a,b) => {
+    if (a.length !== b.length) {
+        return false;
+    }
+    return a.every((value, index) => {
+        return deepEqualAdded(value, b[index]);
+    });
 };
