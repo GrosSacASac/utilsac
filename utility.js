@@ -226,7 +226,7 @@ const createTemplateTag = (mapper) => {
     };
 };
 
+const textEncoder = new TextEncoder();
 const bytesLengthFromString = string => {
-    const textEncoder = new TextEncoder();
     return textEncoder.encode(string).length;
 };

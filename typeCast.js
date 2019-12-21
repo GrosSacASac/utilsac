@@ -8,8 +8,9 @@ export {
 };
 
 
-const stringFromArrayBuffer = function (arrayBuffer, encoding = `utf-8`) {
-    return (new TextDecoder(encoding)).decode(arrayBuffer);
+const textDecoder = new TextDecoder();
+const stringFromArrayBuffer = function (arrayBuffer) {
+    return textDecoder.decode(arrayBuffer);
 };
 
 const xFromBlob = function (readAs) {
