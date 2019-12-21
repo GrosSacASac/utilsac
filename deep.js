@@ -199,7 +199,11 @@ const deepEqual = (a, b) => {
         return true;
     }
 
-    if (Array.isArray(a) && Array.isArray(b)) {
+    if (Array.isArray(a)) {
+        if (!Array.isArray(b)) {
+            return false;
+        }
+
         if (a.length !== b.length) {
             return false;
         }
@@ -260,7 +264,11 @@ const deepEqualAdded = (a, b) => {
         return new RegExp(a).toString() === new RegExp(b).toString();
     }
 
-    if (Array.isArray(a) && Array.isArray(b)) {
+    if (Array.isArray(a)) {
+        if (!Array.isArray(b)) {
+            return false;
+        }
+
         return validateArray(a, b);
     }
 
