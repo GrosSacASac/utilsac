@@ -25,6 +25,7 @@ import {
 } from "utilsac";
 ```
 
+
 ## deep.js
 
 ```js
@@ -36,6 +37,17 @@ import {
     deepEqual,
     deepEqualAdded,
 } from "utilsac/deep.js";
+```
+
+
+### deepEqual example
+
+```js 
+const personA = { email: 'example@email.com', name: { firstname: 'James', lastname: 'William' }};
+
+const personB = { email: 'example@email.com', name: { firstname: 'James', lastname: 'William' }};
+
+deepEqual(personA, personB); //  true
 ```
 
 
@@ -80,15 +92,7 @@ Use optional second argument with `module` to be able to use static imports
 ```js
 import { downloadBlob } from "utilsac/blobs.js";
 ```
-## deep.js
-### deepEqual example
-```js 
-const personA = { email: 'example@example@email.com', name: { firstname: 'James', lastname: 'William' }};
 
-const personB = { email: 'example@example@email.com', name: { firstname: 'James', lastname: 'William' }};
-
-deepEqual(personA, personB) // Equal to true
-```
 
 ## About
 
