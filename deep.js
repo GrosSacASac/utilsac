@@ -212,6 +212,11 @@ const deepEqual = (a, b) => {
             return deepEqual(value, b[index]);
         });
     }
+
+    if (a.constructor !== b.constructor) {
+        return false;
+    }
+
     if (isObject(a) && isObject(b)) {
         const keysA = Object.keys(a);
         const keysB = Object.keys(b);
@@ -290,6 +295,10 @@ const deepEqualAdded = (a, b) => {
             }
         }
         return true;
+    }
+
+    if (a.constructor !== b.constructor) {
+        return false;
     }
 
     if (isObject(a) && isObject(b)) {
