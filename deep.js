@@ -117,9 +117,15 @@ const deepAssign = (target, ...sources) => {
 /**
 Like deepAssign but supports more types,
 does not try to assign partial arrays inside, they are overwritten
-only works with
-undefined, null, Number, Symbol, String, Big Int, Object, Array, Date, Set, Map, RegExp
-warning does not work with cyclic objects
+works with
+undefined, null, Number, Symbol, String, Big Int,
+Object, Array,
+Date, Set, Map, RegExp,
+Uint8Array, Uint16Array, Uint32Array,
+Int8Array, Int16Array, Int32Array
+warning
+does not work with cyclic objects
+does not copy internal links
 
 @param {Object} target must be an object
 @param {Object} source1 should be an object, silently discards if not (like Object.assign)
