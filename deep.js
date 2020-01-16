@@ -10,7 +10,8 @@ export {
 
 /**
 only works with undefined, null, Number, Symbol, String, Big Int, Object, Array,
-warning does not work with cyclic object, Date, regex
+warning
+does not work with cyclic objects
 does not work with anything created with new
 */
 const deepCopy = x => {
@@ -31,12 +32,18 @@ const deepCopy = x => {
 };
 
 /**
-todo
 like deepCopy but supports more types
-only works with
-undefined, null, Number, Symbol, String, Big Int, Object, Array, Date, RegExp, Set, Map
-warning does not work with cyclic object
-does not work with anything created with new
+works with
+undefined, null, Number, Symbol, String, Big Int,
+Object, Array,
+Date, RegExp, Set, Map,
+Uint8Array, Uint16Array, Uint32Array,
+Int8Array, Int16Array, Int32Array
+
+warning
+does not work with cyclic object
+does not copy internal links
+
 */
 const deepCopyAdded = x => {
     if (typeof x !== `object` || x === null) {
@@ -79,7 +86,8 @@ const deepCopyAdded = x => {
 Like Object.assign but deep,
 does not try to assign partial arrays inside, they are overwritten
 only works with undefined, null, Number, Symbol, String, Big Int, Object, Array,
-warning does not work with cyclic object, Date, regex
+warning
+does not work with cyclic objects
 does not work with anything created with new
 
 @param {Object} target must be an object
@@ -120,9 +128,10 @@ does not try to assign partial arrays inside, they are overwritten
 works with
 undefined, null, Number, Symbol, String, Big Int,
 Object, Array,
-Date, Set, Map, RegExp,
+Date, RegExp, Set, Map,
 Uint8Array, Uint16Array, Uint32Array,
 Int8Array, Int16Array, Int32Array
+
 warning
 does not work with cyclic objects
 does not copy internal links
@@ -193,9 +202,10 @@ const deepAssignAdded = (target, ...sources) => {
 };
 
 /**
- * Determines whether two objects are equal. Works on nested structures.
- * Works with all primitive types like Number, String, Big Int.
- * It also works when nested structure contains object and array
+works with
+undefined, null, Number, Symbol, String, Big Int,
+Object, Array,
+
  * @param {Object} a can be either an object or array
  * @param {Object} b can be either an object or array
  * @returns {Boolean}
@@ -238,10 +248,13 @@ const deepEqual = (a, b) => {
 };
 
 /**
- * Determines whether two objects are equal. Works on nested structures.
- * Works with all primitive types like Number, String, Big Int.
- * It also Object, Array, Date and Regex
- * It also works when nested structure contains object and array
+works with
+undefined, null, Number, Symbol, String, Big Int,
+Object, Array,
+Date, RegExp, Set, Map,
+Uint8Array, Uint16Array, Uint32Array,
+Int8Array, Int16Array, Int32Array
+
  * @param {Object} a can be either an object or array
  * @param {Object} b can be either an object or array
  * @returns {Boolean}
@@ -269,20 +282,31 @@ const deepEqualAdded = (a, b) => {
         if (!Array.isArray(b)) {
             return false;
         }
-
-        return validateArray(a, b);
+        return validateArrayLike(a, b);
     }
+
 
     if ((a instanceof Uint8Array) ||
         (a instanceof Uint16Array) ||
-        (a instanceof Set)) {
+        (a instanceof Uint32Array) ||
+        (a instanceof Int8Array) ||
+        (a instanceof Int16Array) ||
+        (a instanceof Int32Array)) {
         if (!(b instanceof a.constructor)) {
             return false;
         }
-            
+        return validateArrayLike(arr1, arr2);
+    }
+
+    if ((a instanceof Set)) {
+        if (!(b instanceof Set)) {
+            return false;
+        }
+        
+        // Sets have size, not length
         const arr1 = Array.from(a);
         const arr2 = Array.from(b);
-        return validateArray(arr1, arr2);
+        return validateArrayLike(arr1, arr2);
     }
 
     if (a instanceof Map) {
@@ -296,6 +320,7 @@ const deepEqualAdded = (a, b) => {
 
         const keysA = a.keys();
         for (const key of keysA) {
+            // todo don't check for strict equal key, use deepEqual
             if (!b.has(key) || !deepEqualAdded(a.get(key), b.get(key))) {
                 return false;
             }
@@ -326,11 +351,11 @@ const isObject = x => {
     return typeof x === `object` && x !== null;
 };
 
-const validateArray = (a,b) => {
-    if (a.length !== b.length) {
-        return false;
-    }
-    return a.every((value, index) => {
-        return deepEqualAdded(value, b[index]);
-    });
+const validateArrayLike = (a, b) => {
+    return (
+        (a.length === b.length) &&
+        (a.every((value, index) => {
+            return deepEqualAdded(value, b[index]);
+        }))
+    );
 };
