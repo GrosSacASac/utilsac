@@ -1,7 +1,8 @@
 {
   "name": "utilsac",
-  "version": "12.2.7",
+  "version": "12.2.8",
   "description": "Utility functions",
+  "license": "CC0-1.0",
   "type": "module",
   "main": "utility.js",
   "scripts": {
@@ -10,29 +11,12 @@
     "lint-fix": "eslint --ignore-path .gitignore --fix .",
     "lint": "eslint --ignore-path .gitignore ."
   },
-  "files": [
-    "typeCast.js",
-    "evalGlobal.js",
-    "blobs.js",
-    "utility.js",
-    "deep.js",
-    "readme.md",
-    "license.txt",
-    "changelog.md"
-  ],
-  "keywords": [
-    "utility",
-    "deep",
-    "equal",
-    "copy",
-    "assign",
-    "memoize",
-    "type",
-    "cast",
-    "eval",
-    "global"
-  ],
-  "license": "CC0-1.0",
+  "devDependencies": {
+    "ava": "^2.4.0",
+    "eslint": "^6.5.1",
+    "eslint-config-red": "^1.4.1",
+    "leistung": "^2.0.0"
+  },
   "eslintConfig": {
     "extends": [
       "red"
@@ -46,16 +30,6 @@
       "es6": true,
       "browser": true
     }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/GrosSacASac/utilsac.git"
-  },
-  "devDependencies": {
-    "ava": "^2.4.0",
-    "eslint": "^6.5.1",
-    "eslint-config-red": "^1.4.1",
-    "leistung": "^2.0.0"
   },
   "ava": {
     "files": [
@@ -77,5 +51,31 @@
       }
     },
     "compileEnhancements": false
-  }
+  },
+  "files": [
+    "typeCast.js",
+    "evalGlobal.js",
+    "blobs.js",
+    "utility.js",
+    "deep.js",
+    "readme.md",
+    "license.txt",
+    "changelog.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/GrosSacASac/utilsac.git"
+  },
+  "keywords": [
+    "utility",
+    "deep",
+    "equal",
+    "copy",
+    "assign",
+    "memoize",
+    "type",
+    "cast",
+    "eval",
+    "global"
+  ]
 }
