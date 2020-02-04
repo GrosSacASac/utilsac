@@ -48,6 +48,8 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
         t.is(source.b.c, 2);
     });
 
+
+
     test(`${name} should work with Array`, t => {
         const numbers = [1, 4, 8, 10];
         const a = Array.from(numbers);
@@ -96,4 +98,13 @@ test(`deepCopyAdded should work with Map`, t => {
 
     t.deepEqual(deepCopyAdded(a), b);
     t.notDeepEqual(deepCopyAdded(a), c);
+});
+
+test(`deepCopyAdded should create new Map references`, t => {
+    const a = new Map([[1, 2], [2, 3]]);
+
+    const result = deepCopyAdded(a);
+    result.set(1,"Luke i am your father");
+
+    t.is(a.get(1), 2);
 });
