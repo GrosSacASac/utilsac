@@ -2,8 +2,7 @@ import test from "ava";
 import { deepCopy, deepCopyAdded } from "../../deep.js";
 import { primitives } from "../helper.js";
 
-
-const runBaselineDeepCopyTests = (deepCopyImplementation) => {
+const runBaselineDeepCopyTests = deepCopyImplementation => {
     const { name } = deepCopyImplementation;
     test(`${name} should work like an assignement for primitives`, t => {
         primitives.forEach(value => {
@@ -14,7 +13,7 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
 
     test(`${name} should not work like an assignement for non primitives`, t => {
         const source = {
-            a: 1,
+            a: 1
         };
 
         const result = deepCopyImplementation(source);
@@ -26,8 +25,8 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
             a: 1,
             b: {
                 c: 2,
-                d: [1024, 6, 8],
-            },
+                d: [1024, 6, 8]
+            }
         };
 
         const result = deepCopyImplementation(source);
@@ -38,8 +37,8 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
         const source = {
             a: 1,
             b: {
-                c: 2,
-            },
+                c: 2
+            }
         };
 
         const result = deepCopyImplementation(source);
@@ -47,8 +46,6 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
 
         t.is(source.b.c, 2);
     });
-
-
 
     test(`${name} should work with Array`, t => {
         const numbers = [1, 4, 8, 10];
@@ -58,9 +55,9 @@ const runBaselineDeepCopyTests = (deepCopyImplementation) => {
 
         const copiedArray = deepCopyAdded(a);
 
-        t.not(copiedArray, a)
+        t.not(copiedArray, a);
         t.deepEqual(copiedArray, a);
-        t.is(copiedArray instanceof Array, true)
+        t.is(copiedArray instanceof Array, true);
         t.notDeepEqual(deepCopyAdded(a), c);
     });
 };
@@ -92,19 +89,39 @@ test(`deepCopyAdded should work with Set`, t => {
 });
 
 test(`deepCopyAdded should work with Map`, t => {
-    const a = new Map([[1, 2], [2, 3]]);
-    const b = new Map([[1, 2], [2, 3]]);
+    const a = new Map([
+        [1, 2],
+        [2, 3]
+    ]);
+    const b = new Map([
+        [1, 2],
+        [2, 3]
+    ]);
     const c = new Map([[4, 8]]);
 
     t.deepEqual(deepCopyAdded(a), b);
     t.notDeepEqual(deepCopyAdded(a), c);
 });
 
-test(`deepCopyAdded should create new Map references`, t => {
-    const a = new Map([[1, 2], [2, 3]]);
+test(`deepCopyAdded should create new set references`, t => {
+    const a = new Set([1, 2, 3]);
 
     const result = deepCopyAdded(a);
-    result.set(1,"Luke i am your father");
+    result.add(`I heard you paint houses`);
+    result.delete(2);
+
+    t.is(a.has(`I heard you paint houses`), false);
+    t.is(a.has(2), true);
+});
+
+test(`deepCopyAdded should create new Map references`, t => {
+    const a = new Map([
+        [1, 2],
+        [2, 3]
+    ]);
+
+    const result = deepCopyAdded(a);
+    result.set(1, `Luke i am your father`);
 
     t.is(a.get(1), 2);
 });
