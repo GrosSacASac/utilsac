@@ -2,6 +2,7 @@ import test from "ava";
 import { deepCopy, deepCopyAdded } from "../../deep.js";
 import { primitives } from "../helper.js";
 
+
 const runBaselineDeepCopyTests = deepCopyImplementation => {
     const { name } = deepCopyImplementation;
     test(`${name} should work like an assignement for primitives`, t => {
@@ -114,6 +115,19 @@ test(`deepCopyAdded should create new set references`, t => {
     t.is(a.has(2), true);
 });
 
+test(`deepCopyAdded should create new references for individual values`, t => {
+    const anObject = {a: 2};
+    const set = new Set([anObject]);
+
+    const copy = deepCopyAdded(set);
+    anObject.a = 3;
+    
+    // get the first and only
+    const anObjectCopy = copy.values().next().value
+
+    t.is(anObjectCopy.a, 2);
+});
+
 test(`deepCopyAdded should create new Map references`, t => {
     const a = new Map([
         [1, 2],
@@ -124,4 +138,21 @@ test(`deepCopyAdded should create new Map references`, t => {
     result.set(1, `Luke i am your father`);
 
     t.is(a.get(1), 2);
+});
+
+test(`deepCopyAdded should create new references for the keys of the Map`, t => {
+    // Maps can have objects as keys
+    const aKey = {a: 7};
+    const a = new Map([
+        [aKey, 9],
+    ]);
+
+    const copy = deepCopyAdded(a);
+    // should not modify key of copy
+    aKey.a = 12;
+    aKey.b = 13;
+    // get key of copy
+    const aKeyCopy = copy.keys().next.value;
+
+    t.deepEqual(aKeyCopy, {a: 7});
 });
