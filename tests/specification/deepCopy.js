@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import test from "ava";
 import { deepCopy, deepCopyAdded } from "../../deep.js";
 import { primitives } from "../helper.js";
