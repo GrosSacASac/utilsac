@@ -295,7 +295,7 @@ const deepEqualAdded = (a, b) => {
         if (!(b instanceof a.constructor)) {
             return false;
         }
-        return validateArrayLike(arr1, arr2);
+        return validateArrayLike(a, b);
     }
 
     if ((a instanceof Set)) {
