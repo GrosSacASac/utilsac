@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "12.2.9",
+  "version": "12.2.10",
   "description": "Utility functions",
   "license": "CC0-1.0",
   "type": "module",
@@ -12,7 +12,7 @@
     "lint": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
-    "ava": "^2.4.0",
+    "ava": "^3.4.0",
     "eslint": "^6.5.1",
     "eslint-config-red": "^1.4.1",
     "leistung": "^2.0.0"
@@ -27,30 +27,17 @@
       "ecmaFeatures": {}
     },
     "env": {
-      "es2020": true,  
+      "es2020": true,
       "browser": true
     }
   },
   "ava": {
+    "nodeArguments": [
+        "--experimental-modules"
+    ],
     "files": [
       "tests/specification/**"
-    ],
-    "require": [
-      "esm"
-    ],
-    "babel": {
-      "testOptions": {
-        "presets": [
-          [
-            "module:ava/stage-4",
-            {
-              "modules": false
-            }
-          ]
-        ]
-      }
-    },
-    "compileEnhancements": false
+    ]    
   },
   "files": [
     "typeCast.js",
