@@ -150,7 +150,7 @@ test(`deepCopyAdded should create new references for the keys of the Map`, t => 
     aKey.a = 12;
     aKey.b = 13;
     // get key of copy
-    const aKeyCopy = copy.keys().next.value;
+    const aKeyCopy = copy.keys().next().value;
 
     t.deepEqual(aKeyCopy, { a: 7 });
 });
