@@ -37,15 +37,17 @@ const arrayBufferFromBlob = xFromBlob(`readAsArrayBuffer`);
 const stringFromBlob = xFromBlob(`readAsText`);
 
 const stringFromArray = function (array, sep = ` `) {
-    return array.reduce((total, item) => `${total}${sep}${item}`);
-}
+    return array.join(sep);
+};
 
-const setFromArray = (array) => new Set(array);
+const setFromArray = (array) => {
+    return new Set(array);
+};
 
 const mapFromObject = function (obj) {
-    let m = new Map();
-    for (let key in obj) {
+    const m = new Map();
+    for (const key in obj) {
         m.set(key, obj[key]);
     }
     return m;
-}
+};
