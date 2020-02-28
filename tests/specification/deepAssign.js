@@ -152,7 +152,6 @@ test(`deepAssignAdded should work for RegExp`, t => {
     const source = { a: { b: regex1 } };
 
     deepAssignAdded(target, source);
-    console.log(target)
 
     t.deepEqual(target.a.b, regex1);
     t.is(String(target.a.b), String(regex1));
