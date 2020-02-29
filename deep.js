@@ -388,7 +388,8 @@ let deepDiffererence = function(obj1, obj2) {
             deepDiffererences.changes.push(changed);
             return;
         }
- 
+        
+        //if object call deepDifference recursively
         if (type1 === '[object Object]') {
             let nameArray = [];
             nameArray.push(key);
