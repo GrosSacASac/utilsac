@@ -5,6 +5,7 @@ export {
     deepAssignAdded,
     deepEqual,
     deepEqualAdded,
+    deepDifference,
 };
 
 
@@ -348,19 +349,19 @@ const deepEqualAdded = (a, b) => {
 };
 
 /**
- * @function deepDiffererence  finds the differences betwenn two objects
+ * @function deepDifference  finds the differences betwenn two objects
  * @param  {*}      obj1 The first object
  * @param  {*}      obj2 The second object
- * @var  {Object} deepDiffererences contains the differences results
- * @return  {deepDiffererences} returns an Object of differences
+ * @var  {Object} deepDifferences contains the differences results
+ * @return  {deepDifferences} returns an Object of differences
  */
 
-let deepDiffererence = function(obj1, obj2) {
+let deepDifference = function(obj1, obj2) {
     if (!obj2 || typeof obj2 !== 'object') {
         return obj1;
     }
 
-    let deepDiffererences = {
+    let deepDifferences = {
         additions: [],
         removals: [],
         changes: [],
@@ -385,7 +386,7 @@ let deepDiffererence = function(obj1, obj2) {
             let nameArray = [];
             nameArray.push(key);
             let changed = { name: nameArray, oldValue: item1, newValue: null };
-            deepDiffererences.changes.push(changed);
+            deepDifferences.changes.push(changed);
             return;
         }
         
@@ -393,22 +394,22 @@ let deepDiffererence = function(obj1, obj2) {
         if (type1 === '[object Object]') {
             let nameArray = [];
             nameArray.push(key);
-            let objdeepDiffererence = deepDiffererence(item1, item2);
-            if (objdeepDiffererence.additions.length > 0) {
-                nameArray.push(objdeepDiffererence.additions[0].name[0]);
+            let objdeepDifference = deepDifference(item1, item2);
+            if (objdeepDifference.additions.length > 0) {
+                nameArray.push(objdeepDifference.additions[0].name[0]);
                 let added = {
                     name: nameArray,
-                    value: objdeepDiffererence.additions[0].value,
+                    value: objdeepDifference.additions[0].value,
                 };
-                deepDiffererences.additions.push(added);
+                deepDifferences.additions.push(added);
             }
-            if (objdeepDiffererence.removals.length > 0) {
-                nameArray.push(objdeepDiffererence.removals[0].name[0]);
+            if (objdeepDifference.removals.length > 0) {
+                nameArray.push(objdeepDifference.removals[0].name[0]);
                 let removed = {
                     name: nameArray,
-                    value: objdeepDiffererence.removals[0].value,
+                    value: objdeepDifference.removals[0].value,
                 };
-                deepDiffererences.removals.push(removed);
+                deepDifferences.removals.push(removed);
             }
 
             return;
@@ -420,7 +421,7 @@ let deepDiffererence = function(obj1, obj2) {
                 let nameArray = [];
                 nameArray.push(key);
                 let changed = { name: nameArray, oldValue: item1, newValue: item2 };
-                deepDiffererences.changes.push(changed);
+                deepDifferences.changes.push(changed);
             }
         }
 
@@ -429,7 +430,7 @@ let deepDiffererence = function(obj1, obj2) {
                 let nameArray = [];
                 nameArray.push(key);
                 let changed = { name: nameArray, oldValue: item1, newValue: item2 };
-                deepDiffererences.changes.push(changed);
+                deepDifferences.changes.push(changed);
             }
             return;
         }
@@ -438,7 +439,7 @@ let deepDiffererence = function(obj1, obj2) {
             let nameArray = [];
             nameArray.push(key);
             let changed = { name: nameArray, oldValue: item1, newValue: item2 };
-            deepDiffererences.changes.push(changed);
+            deepDifferences.changes.push(changed);
             return;
         }
 
@@ -446,7 +447,7 @@ let deepDiffererence = function(obj1, obj2) {
             let nameArray = [];
             nameArray.push(key);
             let changed = { name: nameArray, oldValue: item1, newValue: item2 };
-            deepDiffererences.changes.push(changed);
+            deepDifferences.changes.push(changed);
             return;
         }
     };
@@ -460,23 +461,23 @@ let deepDiffererence = function(obj1, obj2) {
             let nameArray = [];
             nameArray.push(key);
             let removed = { name: nameArray, value: obj1[key] };
-            deepDiffererences.removals.push(removed);
+            deepDifferences.removals.push(removed);
             return;
         }
         compare(obj1[key], obj2[key], key);
     });
 
-    Object.keys(obj2).forEach(key => {
+        Object.keys(obj2).forEach(key => {
         if (!obj1.hasOwnProperty(key)) {
             let nameArray = [];
             nameArray.push(key);
             let added = { name: nameArray, value: obj2[key] };
-            deepDiffererences.additions.push(added);
+            deepDifferences.additions.push(added);
             return;
         }
     });
 
-    return deepDiffererences;
+    return deepDifferences;
 }
 
 let arraysMatch = function(arr1, arr2) {
