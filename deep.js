@@ -413,7 +413,43 @@ let deepDiffererence = function(obj1, obj2) {
 
             return;
         }
-    }
+
+        //if function. convert to string and compare
+        if (type1 === '[object Function]') {
+            if (item1.toString() !== item2.toString()) {
+                let nameArray = [];
+                nameArray.push(key);
+                let changed = { name: nameArray, oldValue: item1, newValue: item2 };
+                deepDiffererences.changes.push(changed);
+            }
+        }
+
+        if (type1 === '[object Array]') {
+            if (!arraysMatch(item1, item2)) {
+                let nameArray = [];
+                nameArray.push(key);
+                let changed = { name: nameArray, oldValue: item1, newValue: item2 };
+                deepDiffererences.changes.push(changed);
+            }
+            return;
+        }
+
+        if (item1 !== item2) {
+            let nameArray = [];
+            nameArray.push(key);
+            let changed = { name: nameArray, oldValue: item1, newValue: item2 };
+            deepDiffererences.changes.push(changed);
+            return;
+        }
+
+        if (type1 !== type2) {
+            let nameArray = [];
+            nameArray.push(key);
+            let changed = { name: nameArray, oldValue: item1, newValue: item2 };
+            deepDiffererences.changes.push(changed);
+            return;
+        }
+    };
 
     Object.keys(obj1).forEach(key => {
         /**
@@ -430,6 +466,20 @@ let deepDiffererence = function(obj1, obj2) {
         compare(obj1[key], obj2[key], key);
     });
 }
+
+let arraysMatch = function(arr1, arr2) {
+    // Check if the arrays are the same length
+    if (arr1.length !== arr2.length) return false;
+
+    // Check if all items exist and are in the same order
+    for (var i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) return false;
+    }
+
+    // Otherwise, return true
+    return true;
+};
+
 const isObject = x => {
     return typeof x === `object` && x !== null;
 };
