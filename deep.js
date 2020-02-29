@@ -388,6 +388,30 @@ let deepDiffererence = function(obj1, obj2) {
             deepDiffererences.changes.push(changed);
             return;
         }
+ 
+        if (type1 === '[object Object]') {
+            let nameArray = [];
+            nameArray.push(key);
+            let objdeepDiffererence = deepDiffererence(item1, item2);
+            if (objdeepDiffererence.additions.length > 0) {
+                nameArray.push(objdeepDiffererence.additions[0].name[0]);
+                let added = {
+                    name: nameArray,
+                    value: objdeepDiffererence.additions[0].value,
+                };
+                deepDiffererences.additions.push(added);
+            }
+            if (objdeepDiffererence.removals.length > 0) {
+                nameArray.push(objdeepDiffererence.removals[0].name[0]);
+                let removed = {
+                    name: nameArray,
+                    value: objdeepDiffererence.removals[0].value,
+                };
+                deepDiffererences.removals.push(removed);
+            }
+
+            return;
+        }
     }
 
     Object.keys(obj1).forEach(key => {
