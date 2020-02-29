@@ -465,6 +465,18 @@ let deepDiffererence = function(obj1, obj2) {
         }
         compare(obj1[key], obj2[key], key);
     });
+
+    Object.keys(obj2).forEach(key => {
+        if (!obj1.hasOwnProperty(key)) {
+            let nameArray = [];
+            nameArray.push(key);
+            let added = { name: nameArray, value: obj2[key] };
+            deepDiffererences.additions.push(added);
+            return;
+        }
+    });
+
+    return deepDiffererences;
 }
 
 let arraysMatch = function(arr1, arr2) {
