@@ -1,7 +1,7 @@
 import test from 'ava';
 import { deepDifference } from '../../deep.js';
 
-test('deep difference should return new object with keys Additions, Removals, Changes', t => {
+test(`deep difference should return new object with keys Additions, Removals, Changes`, t => {
     const a = {
         same: 7,
         x: 30,
@@ -22,23 +22,23 @@ test('deep difference should return new object with keys Additions, Removals, Ch
     t.deepEqual(result, {
         additions: [
             {
-                name: ['deep', 'deeper'],
+                name: [`deep`, `deeper`],
                 value: 99,
             },
             {
-                name: ['z'],
+                name: [`z`],
                 value: 10,
             },
         ],
         removals: [
             {
-                name: ['w'],
+                name: [`w`],
                 value: 20,
             },
         ],
         changes: [
             {
-                name: ['x'],
+                name: [`x`],
                 oldValue: 30,
                 newValue: 15,
             },
