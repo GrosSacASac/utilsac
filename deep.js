@@ -347,6 +347,64 @@ const deepEqualAdded = (a, b) => {
     return false;
 };
 
+/**
+ * @function deepDiffererence  finds the differences betwenn two objects
+ * @param  {*}      obj1 The first object
+ * @param  {*}      obj2 The second object
+ * @var  {Object} deepDiffererences contains the differences results
+ * @return  {deepDiffererences} returns an Object of differences
+ */
+
+let deepDiffererence = function(obj1, obj2) {
+    if (!obj2 || typeof obj2 !== 'object') {
+        return obj1;
+    }
+
+    let deepDiffererences = {
+        additions: [],
+        removals: [],
+        changes: [],
+    };
+
+    /**
+     * @function compare two items and push non-matches to object
+     * @param  {*}      item1 The first item
+     * @param  {*}      item2 The second item
+     * @param  {String} key   The key in our object
+     *
+     * Grab the object types for better comparison, since arrays by default return type object
+     * @var {*} type1 the object type for the first item
+     * @var {*} type2 the object type for the first item
+     */
+    let compare = function(item1, item2, key) {
+        let type1 = Object.prototype.toString.call(item1);
+        let type2 = Object.prototype.toString.call(item2);
+
+        //if item2 has undefined type, assign null to its value
+        if (type2 === '[object Undefined]') {
+            let nameArray = [];
+            nameArray.push(key);
+            let changed = { name: nameArray, oldValue: item1, newValue: null };
+            deepDiffererences.changes.push(changed);
+            return;
+        }
+    }
+
+    Object.keys(obj1).forEach(key => {
+        /**
+         * If obj2 is missing a property in obj1
+         * add property to removals array
+         **/
+        if (!obj2.hasOwnProperty(key)) {
+            let nameArray = [];
+            nameArray.push(key);
+            let removed = { name: nameArray, value: obj1[key] };
+            deepDiffererences.removals.push(removed);
+            return;
+        }
+        compare(obj1[key], obj2[key], key);
+    });
+}
 const isObject = x => {
     return typeof x === `object` && x !== null;
 };
