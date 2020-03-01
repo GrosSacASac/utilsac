@@ -5,6 +5,7 @@ export {
     deepAssignAdded,
     deepEqual,
     deepEqualAdded,
+    deepDifference,
 };
 
 
@@ -345,6 +346,155 @@ const deepEqualAdded = (a, b) => {
     }
 
     return false;
+};
+
+/**
+ * @function deepDifference  finds the differences betwenn two objects
+ * @param  {*}      obj1 The first object
+ * @param  {*}      obj2 The second object
+ * @var  {Object} deepDifferences contains the differences results
+ * @return  {deepDifferences} returns an Object of differences
+ */
+
+const deepDifference = function(obj1, obj2) {
+    if (!obj2 || typeof obj2 !== `object`) {
+        return obj1;
+    }
+
+    const deepDifferences = {
+        additions: [],
+        removals: [],
+        changes: [],
+    };
+
+    /**
+     * @function compare two items and push non-matches to object
+     * @param  {*}      item1 The first item
+     * @param  {*}      item2 The second item
+     * @param  {String} key   The key in our object
+     *
+     * Grab the object types for better comparison, since arrays by default return type object
+     * @var {*} type1 the object type for the first item
+     * @var {*} type2 the object type for the first item
+     */
+    const compare = function(item1, item2, key) {
+        const type1 = Object.prototype.toString.call(item1);
+        const type2 = Object.prototype.toString.call(item2);
+
+        //if item2 has undefined type, assign null to its value
+        if (type2 === `[object Undefined]`) {
+            const nameArray = [];
+            nameArray.push(key);
+            const changed = { name: nameArray, oldValue: item1, newValue: null };
+            deepDifferences.changes.push(changed);
+            return;
+        }
+        
+        //if object call deepDifference recursively
+        if (type1 === `[object Object]`) {
+            const nameArray = [];
+            nameArray.push(key);
+            const objdeepDifference = deepDifference(item1, item2);
+            if (objdeepDifference.additions.length > 0) {
+                nameArray.push(objdeepDifference.additions[0].name[0]);
+                const added = {
+                    name: nameArray,
+                    value: objdeepDifference.additions[0].value,
+                };
+                deepDifferences.additions.push(added);
+            }
+            if (objdeepDifference.removals.length > 0) {
+                nameArray.push(objdeepDifference.removals[0].name[0]);
+                const removed = {
+                    name: nameArray,
+                    value: objdeepDifference.removals[0].value,
+                };
+                deepDifferences.removals.push(removed);
+            }
+
+            return;
+        }
+
+        //if function. convert to string and compare
+        if (type1 === `[object Function]`) {
+            if (item1.toString() !== item2.toString()) {
+                const nameArray = [];
+                nameArray.push(key);
+                const changed = { name: nameArray, oldValue: item1, newValue: item2 };
+                deepDifferences.changes.push(changed);
+            }
+        }
+
+        if (type1 === `[object Array]`) {
+            if (!arraysMatch(item1, item2)) {
+                const nameArray = [];
+                nameArray.push(key);
+                const changed = { name: nameArray, oldValue: item1, newValue: item2 };
+                deepDifferences.changes.push(changed);
+            }
+            return;
+        }
+
+        if (item1 !== item2) {
+            const nameArray = [];
+            nameArray.push(key);
+            const changed = { name: nameArray, oldValue: item1, newValue: item2 };
+            deepDifferences.changes.push(changed);
+            return;
+        }
+
+        if (type1 !== type2) {
+            const nameArray = [];
+            nameArray.push(key);
+            const changed = { name: nameArray, oldValue: item1, newValue: item2 };
+            deepDifferences.changes.push(changed);
+            return;
+        }
+    };
+
+    Object.keys(obj1).forEach(key => {
+        /**
+         * If obj2 is missing a property in obj1
+         * add property to removals array
+         **/
+        if (!{}.hasOwnProperty.call(obj2, key)) {
+            const nameArray = [];
+            nameArray.push(key);
+            const removed = { name: nameArray, value: obj1[key] };
+            deepDifferences.removals.push(removed);
+            return;
+        }
+        compare(obj1[key], obj2[key], key);
+    });
+
+        Object.keys(obj2).forEach(key => {
+        if (!{}.hasOwnProperty.call(obj1, key)) {
+            const nameArray = [];
+            nameArray.push(key);
+            const added = { name: nameArray, value: obj2[key] };
+            deepDifferences.additions.push(added);
+            return;
+        }
+    });
+
+    return deepDifferences;
+};
+
+const arraysMatch = function(arr1, arr2) {
+    // Check if the arrays are the same length
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+
+    // Check if all items exist and are in the same order
+    for (let i = 0; i < arr1.length; i = +1) {
+        if (arr1[i] !== arr2[i]) {
+            return false;
+        }
+    }
+
+    // Otherwise, return true
+    return true;
 };
 
 const isObject = x => {
