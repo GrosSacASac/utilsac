@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.3.0
+
+add
+ * deepDifference
+
 ## 12.2.0
 
 add

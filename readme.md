@@ -36,6 +36,7 @@ import {
     deepAssignAdded,
     deepEqual,
     deepEqualAdded,
+    deepDifference,
 } from "utilsac/deep.js";
 ```
 
