@@ -9,8 +9,11 @@ export {
 
 
 const textDecoder = new TextDecoder();
-const stringFromArrayBuffer = function (arrayBuffer) {
-    return textDecoder.decode(arrayBuffer);
+/* works with
+Uint8Array, Uint16Array, Uint32Array,
+Int8Array, Int16Array, Int32Array, ArrayBuffer */
+const stringFromArrayBuffer = function (arrayBufferOrView) {
+    return textDecoder.decode(arrayBufferOrView);
 };
 
 const xFromBlob = function (readAs) {
