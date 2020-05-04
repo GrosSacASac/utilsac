@@ -1,5 +1,6 @@
-import test from 'ava';
-import { deepDifference } from '../../deep.js';
+import test from "ava";
+import { deepDifference } from "../../deep.js";
+
 
 test(`deep difference should return new object with keys Additions, Removals, Changes`, t => {
     const a = {
