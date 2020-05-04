@@ -13,8 +13,8 @@
   },
   "devDependencies": {
     "ava": "^3.4.0",
-    "eslint": "^6.5.1",
-    "eslint-config-red": "^1.4.1",
+    "eslint": "^6.8.0",
+    "eslint-config-red": "^1.7.0",
     "leistung": "^2.0.0"
   },
   "eslintConfig": {
@@ -33,11 +33,11 @@
   },
   "ava": {
     "nodeArguments": [
-        "--experimental-modules"
+      "--experimental-modules"
     ],
     "files": [
       "tests/specification/**"
-    ]    
+    ]
   },
   "files": [
     "typeCast.js",
