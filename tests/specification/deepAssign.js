@@ -157,3 +157,25 @@ test(`deepAssignAdded should work for RegExp`, t => {
     t.is(String(target.a.b), String(regex1));
     t.is(target.a.b.constructor, RegExp);
 });
+
+[
+    Uint8Array,
+    Uint16Array,
+    Uint32Array,
+    Uint8ClampedArray,
+    Int8Array,
+    Int16Array,
+    Int32Array,
+].forEach((intArrayType) => {
+    test(`deepAssignAdded should handle typed ${intArrayType.name} Arrays`, t => {
+        const numbers = [1, 4, 8, 10];
+        const a = {x: new intArrayType(numbers)};
+        const b = {x: new intArrayType()}; // empty of same type
+        const c = {};
+        deepAssignAdded(b, a);
+        deepAssignAdded(c, a);
+
+        t.deepEqual(a, b);
+        t.deepEqual(a, c);
+    });
+});

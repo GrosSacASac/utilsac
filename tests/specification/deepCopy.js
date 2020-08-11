@@ -154,3 +154,21 @@ test(`deepCopyAdded should create new references for the keys of the Map`, t => 
 
     t.deepEqual(aKeyCopy, { a: 7 });
 });
+
+[
+    Uint8Array,
+    Uint16Array,
+    Uint32Array,
+    Uint8ClampedArray,
+    Int8Array,
+    Int16Array,
+    Int32Array,
+].forEach((intArrayType) => {
+    test(`deepCopyAdded should handle typed ${intArrayType.name} Arrays`, t => {
+        const numbers = [1, 4, 8, 10];
+        const a = new intArrayType(numbers);
+        const b = deepCopyAdded(a);
+
+        t.deepEqual(a, b);
+    });
+});

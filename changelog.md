@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.4.0
+
+### deep.js
+
+add
+ * support for type Uint8ClampedArray
+
 ## 12.3.0
 
 add

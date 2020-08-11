@@ -38,7 +38,7 @@ works with
 undefined, null, Number, Symbol, String, Big Int,
 Object, Array,
 Date, RegExp, Set, Map,
-Uint8Array, Uint16Array, Uint32Array,
+Uint8Array, Uint8ClampedArray, Uint16Array, Uint32Array,
 Int8Array, Int16Array, Int32Array
 
 warning
@@ -130,7 +130,7 @@ works with
 undefined, null, Number, Symbol, String, Big Int,
 Object, Array,
 Date, RegExp, Set, Map,
-Uint8Array, Uint16Array, Uint32Array,
+Uint8Array, Uint8ClampedArray, Uint16Array, Uint32Array,
 Int8Array, Int16Array, Int32Array
 
 warning
@@ -288,6 +288,7 @@ const deepEqualAdded = (a, b) => {
 
 
     if ((a instanceof Uint8Array) ||
+        (a instanceof Uint8ClampedArray) ||
         (a instanceof Uint16Array) ||
         (a instanceof Uint32Array) ||
         (a instanceof Int8Array) ||

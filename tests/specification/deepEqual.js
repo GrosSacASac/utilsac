@@ -175,27 +175,6 @@ test(`deepEqualAdded should handle Dates`, t => {
     t.is(deepEqualAdded(a, c), false);
 });
 
-test(`deepEqualAdded should handle typed uint8 Arrays`, t => {
-    const numbers = [1, 4, 8, 10];
-    const a = new Uint8Array(numbers);
-    const b = new Uint8Array(numbers);
-    numbers.push(1);
-    const c = new Uint8Array(numbers);
-
-    t.is(deepEqualAdded(a, b), true);
-    t.is(deepEqualAdded(a, c), false);
-});
-
-test(`deepEqualAdded should handle typed uint16 Arrays`, t => {
-    const numbers = [1, 4, 8];
-    const a = new Uint16Array(numbers);
-    const b = new Uint16Array(numbers);
-    numbers.push(1);
-    const c = new Uint16Array(numbers);
-
-    t.is(deepEqualAdded(a, b), true);
-    t.is(deepEqualAdded(a, c), false);
-});
 
 test(`deepEqualAdded should pass for array of Dates`, t => {
     const arr1 = Array.from([new Date(`2019-01-01`),new Date(`2019-01-02`), new Date(`2019-01-03`)]);
@@ -207,20 +186,6 @@ test(`deepEqualAdded should fail for array of Dates given different dates`, t =>
     const arr1 = Array.from([new Date(`2019-01-01`),new Date(`2019-01-02`), new Date(`2019-01-03`)]);
     const arr2 = Array.from([new Date(`2019-01-02`),new Date(`2019-01-02`), new Date(`2019-01-03`)]);
     t.false(deepEqualAdded(arr1, arr2));
-});
-
-test(`deepEqualAdded should pass for Map of Dates`, t => {
-    const a = new Map([
-        [`a`, new Date(`2019-01-01`)],
-        [`b`, new Date(`2019-01-02`)],
-        [`c`, new Date(`2019-01-03`)],
-    ]);
-    const b = new Map([
-        [`a`, new Date(`2019-01-01`)],
-        [`b`, new Date(`2019-01-02`)],
-        [`c`, new Date(`2019-01-03`)],
-    ]);
-    t.true(deepEqualAdded(a, b));
 });
 
 test(`deepEqualAdded should fail for Map of Dates given mismatched data`, t => {
@@ -257,4 +222,38 @@ test(`deepEqualAdded should pass for nested Map of Dates`, t => {
         [`c`, new Date(`2019-01-06`)],
     ]);
     t.true(deepEqualAdded(a, b));
+});
+test(`deepEqualAdded should pass for Map of Dates`, t => {
+    const a = new Map([
+        [`a`, new Date(`2019-01-01`)],
+        [`b`, new Date(`2019-01-02`)],
+        [`c`, new Date(`2019-01-03`)],
+    ]);
+    const b = new Map([
+        [`a`, new Date(`2019-01-01`)],
+        [`b`, new Date(`2019-01-02`)],
+        [`c`, new Date(`2019-01-03`)],
+    ]);
+    t.true(deepEqualAdded(a, b));
+});
+
+[
+    Uint8Array,
+    Uint16Array,
+    Uint32Array,
+    Uint8ClampedArray,
+    Int8Array,
+    Int16Array,
+    Int32Array,
+].forEach((intArrayType) => {
+    test(`deepEqualAdded should handle typed ${intArrayType.name} Arrays`, t => {
+        const numbers = [1, 4, 8, 10];
+        const a = new intArrayType(numbers);
+        const b = new intArrayType(numbers);
+        numbers.push(1);
+        const c = new intArrayType(numbers);
+    
+        t.is(deepEqualAdded(a, b), true);
+        t.is(deepEqualAdded(a, c), false);
+    });
 });
