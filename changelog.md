@@ -1,5 +1,15 @@
 # Changelog
 
+## 13.0.0
+
+### merge blob.js and evalGlobal.js
+
+ * merge into browserUtility.js
+
+### safer default
+
+ * downloadBlob default download file name does not assume the file type
+
 ## 12.4.0
 
 ### deep.js

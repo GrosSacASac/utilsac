@@ -66,10 +66,13 @@ import {
 ```
 
 
-## evalGlobal.js
+## browserUtility.js
 
 ```js
-import { evalGlobal } from "utilsac/evalGlobal.js";
+import { 
+    evalGlobal,
+    downloadBlob,
+} from "utilsac/browserUtility.js";
 ```
 
 ```js
@@ -88,11 +91,7 @@ window.x = sin(Math.PI)
 
 Use optional second argument with `module` to be able to use static imports
 
-## blobs.js
 
-```js
-import { downloadBlob } from "utilsac/blobs.js";
-```
 
 
 ## About

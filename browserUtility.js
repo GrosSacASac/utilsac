@@ -1,4 +1,24 @@
-export { evalGlobal };
+export {
+    downloadBlob,
+    evalGlobal,
+};
+
+const downloadBlob = function (blob, name = `download_file`) {
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement(`a`);
+    anchor.href = url;
+    anchor.download = name;
+
+    // required
+    document.body.appendChild(anchor);
+
+    // will prompt file location
+    anchor.click();
+
+    // clean up
+    URL.revokeObjectURL(url);
+    document.body.removeChild(anchor);
+};
 
 let evalGlobalId = 0;
 const evalGlobalResolves = new Map();
