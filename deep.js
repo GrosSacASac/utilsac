@@ -44,7 +44,6 @@ Int8Array, Int16Array, Int32Array
 warning
 does not work with cyclic object
 does not copy internal links
-
 */
 const deepCopyAdded = x => {
     if (typeof x !== `object` || x === null) {

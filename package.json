@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "description": "Utility functions",
   "license": "CC0-1.0",
   "type": "module",
@@ -41,8 +41,7 @@
   },
   "files": [
     "typeCast.js",
-    "evalGlobal.js",
-    "blobs.js",
+    "browserUtility.js",
     "utility.js",
     "deep.js",
     "readme.md",
