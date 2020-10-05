@@ -1,13 +1,13 @@
 {
   "name": "utilsac",
-  "version": "13.0.1",
+  "version": "13.0.2",
   "description": "Utility functions",
   "license": "CC0-1.0",
   "type": "module",
   "main": "utility.js",
   "scripts": {
     "test": "ava",
-    "perftest": "node --experimental-modules ./tests/performance/deepCopy.js",
+    "perftest": "node ./tests/performance/deepCopy.js",
     "lint-fix": "eslint --ignore-path .gitignore --fix .",
     "lint": "eslint --ignore-path .gitignore ."
   },
@@ -15,7 +15,7 @@
     "ava": "^3.4.0",
     "eslint": "^6.8.0",
     "eslint-config-red": "^1.7.0",
-    "leistung": "^2.0.0"
+    "leistung": "^5.0.1"
   },
   "eslintConfig": {
     "extends": [

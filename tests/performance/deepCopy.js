@@ -1,5 +1,5 @@
-import { performance } from "perf_hooks";
 import { createPerformanceTest, runAll } from "leistung";
+import { defaultLogging } from "leistung/source/defaultLogging.js";
 
 import { deepCopy } from "../../deep.js";
 
@@ -41,6 +41,6 @@ const deepCopyTest = {
 const testSuite = createPerformanceTest({
     tests: [JSONCopyTest, deepCopyTest],
     maxTime: 50,
-    nowReferential: performance.now,
 });
-runAll(testSuite);
+runAll(testSuite).then(defaultLogging);
+
