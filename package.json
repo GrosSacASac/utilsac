@@ -12,9 +12,9 @@
     "lint": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
-    "ava": "^3.4.0",
-    "eslint": "^6.8.0",
-    "eslint-config-red": "^1.7.0",
+    "ava": "^3.13.0",
+    "eslint": "^7.12.1",
+    "eslint-config-red": "^1.7.2",
     "leistung": "^5.0.1"
   },
   "eslintConfig": {
@@ -22,12 +22,12 @@
       "red"
     ],
     "parserOptions": {
-      "ecmaVersion": 2020,
+      "ecmaVersion": 2021,
       "sourceType": "module",
       "ecmaFeatures": {}
     },
     "env": {
-      "es2020": true,
+      "es2021": true,
       "browser": true
     }
   },
