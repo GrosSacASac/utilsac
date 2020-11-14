@@ -107,8 +107,7 @@ Use optional second argument with `module` to be able to use static imports
 
 ### Related
 
- * [fnk](https://github.com/seanohue/fnk)
- * jQuery
- * lodash
- * ramda
- * [slugify](https://github.com/sindresorhus/slugify)
+ * [JSON.prune to handle circular objects](https://github.com/Canop/JSON.prune)
+ * [stackoverflow answer to clone prototypes](https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript)
+ * [fnk utility functions](https://github.com/seanohue/fnk)
+ * [lodash utility functions](https://lodash.com/)
