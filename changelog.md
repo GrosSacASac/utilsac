@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.1.0
+
+ * How to import in deno examples
+
 ## 13.0.0
 
 ### merge blob.js and evalGlobal.js

@@ -6,6 +6,8 @@
 
 ## Usage
 
+The source code is the documentation.
+
 ## utility.js
 
 ```js
@@ -23,6 +25,22 @@ import {
     createTemplateTag,
     bytesLengthFromString,
 } from "utilsac";
+
+// deno
+import {
+    createDebounced,
+    createThrottled,
+    throttledWithLast,
+    chainPromises,
+    chainRequestAnimationFrame,
+    doNTimes,
+    chainPromiseNTimes,
+    timeFunction,
+    timePromise,
+    memoizeAsStrings,
+    createTemplateTag,
+    bytesLengthFromString,
+} from "https://unpkg.com/utilsac/utility.js";
 ```
 
 
@@ -38,6 +56,17 @@ import {
     deepEqualAdded,
     deepDifference,
 } from "utilsac/deep.js";
+
+// deno
+import {
+    deepCopy,
+    deepCopyAdded,
+    deepAssign,
+    deepAssignAdded,
+    deepEqual,
+    deepEqualAdded,
+    deepDifference,
+} from "https://unpkg.com/utilsac/deep.js";
 ```
 
 
@@ -63,6 +92,17 @@ import {
     setFromArray,
     mapFromObject,
 } from "utilsac/typeCast.js";
+
+// deno
+import {
+    deepCopy,
+    deepCopyAdded,
+    deepAssign,
+    deepAssignAdded,
+    deepEqual,
+    deepEqualAdded,
+    deepDifference,
+} from "https://unpkg.com/utilsac/typeCast.js";
 ```
 
 
