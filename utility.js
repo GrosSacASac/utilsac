@@ -114,6 +114,14 @@ const chainPromises = function (promiseCreators) {
     });
 };
 
+const chainPromiseNTimes = function (promiseCreator, times) {
+    /* different than Promise.all
+    only executes promiseCreator one after the previous has resolved
+    useful for testing
+    resolves with an array of values */
+    return chainPromises(Array.from({length: times}).fill(promiseCreator));
+};
+
 const chainRequestAnimationFrame = function (functions) {
     return new Promise(function (resolve, reject) {
         const values = [];
@@ -134,33 +142,6 @@ const chainRequestAnimationFrame = function (functions) {
             }
         };
         next();
-    });
-};
-
-const chainPromiseNTimes = function (promiseCreator, times) {
-    /* different than Promise.all
-    only executes promiseCreator one after the previous has resolved
-    useful for testing
-    resolves with an array of values
-
-    could be made with chainPromises, but chose not to
-    to avoid an adapter array */
-    const values = [];
-    if (times === 0) {
-        return Promise.resolve(values);
-    }
-    return new Promise(function (resolve) {
-        let i = 0;
-        const chainer = function (value) {
-            i += 1;
-            values.push(value);
-            if (i < times) {
-                promiseCreator().then(chainer);
-                return;
-            }
-            resolve(values);
-        };
-        promiseCreator().then(chainer);
     });
 };
 
