@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.0.0
+
+* memoizeAsStrings requires Map support
+
 ## 13.1.0
 
  * How to import in deno examples

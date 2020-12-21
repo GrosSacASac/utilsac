@@ -105,9 +105,7 @@ const chainPromises = function (promiseCreators) {
                 values.push(value);
             }
             if (i < length) {
-                const promise = promiseCreators[i]();
-                promise.then(chainer);
-                promise.catch(reject);
+                promiseCreators[i]().then(chainer).catch(reject);
             } else {
                 resolve(values);
             }
@@ -195,18 +193,18 @@ const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
     fast memoizer
     but infinitely growing */
 
-    const previousResults = {};
+    const previousResults = new Map();
     return function (...args) {
         const argumentsAsStrings = args.map(String).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings
         const argumentsAsStrings = args.join(separator);
         */
-        if (!Object.prototype.hasOwnProperty.call(previousResults, argumentsAsStrings)) {
+        if (!previousResults.has(argumentsAsStrings)) {
             // not yet in cache
-            previousResults[argumentsAsStrings] = functionToMemoize(...args);
+            previousResult.set(argumentsAsStrings, functionToMemoize(...args));
         }
-        return previousResults[argumentsAsStrings];
+        return previousResult.get(argumentsAsStrings);
     };
 };
 
