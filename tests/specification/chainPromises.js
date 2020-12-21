@@ -6,7 +6,7 @@ const resolveValue = {};
 const promiseCreator = () => {
     return Promise.resolve(resolveValue);
 };
-const rejectValue = "error"
+const rejectValue = `error`;
 const rejectingPromiseCreator = () => {
     return Promise.reject(rejectValue);
 };
@@ -28,7 +28,7 @@ test(`timePromise reject with first rejecting value`, async t => {
     return chainPromises([
         promiseCreator,
         rejectingPromiseCreator,
-        promiseCreator
+        promiseCreator,
     ]).then(() => {
     }).catch(error => {
         t.is(error, rejectValue);

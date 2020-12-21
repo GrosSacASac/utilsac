@@ -25,7 +25,7 @@ let b; // eslint-disable-line
 const JSONCopyTest = {
     name: `JSONCopy`,
     code: (shared, finish) => {
-        b = deepCopyJSON(a);
+        b = deepCopyJSON(a); // eslint-disable-line
         finish();
     },
 };
@@ -33,7 +33,7 @@ const JSONCopyTest = {
 const deepCopyTest = {
     name: `deepCopy`,
     code: (shared, finish) => {
-        b = deepCopy(a);
+        b = deepCopy(a); // eslint-disable-line
         finish();
     },
 };
