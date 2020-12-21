@@ -11,11 +11,11 @@ const rejectingPromiseCreator = () => {
     return Promise.reject(rejectValue);
 };
 
-test(`timePromise returns a promise`, t => {
+test(`chainPromises returns a promise`, t => {
     t.is(typeof chainPromises([promiseCreator]).then, `function`);
 });
 
-test(`timePromise resolves with values Array`, async t => {
+test(`chainPromises resolves with values Array`, async t => {
     return chainPromises([promiseCreator, promiseCreator]).then(values => {
         t.truthy(Array.isArray(values));
         values.forEach(value => {
@@ -24,7 +24,7 @@ test(`timePromise resolves with values Array`, async t => {
     });
 });
 
-test(`timePromise reject with first rejecting value`, async t => {
+test(`chainPromises reject with first rejecting value`, async t => {
     return chainPromises([
         promiseCreator,
         rejectingPromiseCreator,
