@@ -13,9 +13,9 @@ export {
     bytesLengthFromString,
 };
 
-const waitTimeDefault = 150;
+const timeDefault = 150;
 
-const createDebounced = function (functionToDebounce, waitTime = waitTimeDefault) {
+const createDebounced = function (functionToDebounce, waitTime = timeDefault) {
     /* creates a function that is de-bounced,
     calling it, will eventually execute it, when you stop calling it
     useful for scroll events, resize, search etc
@@ -34,9 +34,7 @@ const createDebounced = function (functionToDebounce, waitTime = waitTimeDefault
     };
 };
 
-const minimumTimeSpaceDefault = 150;
-
-const createThrottled = function (functionToThrottle, minimumTimeSpace = minimumTimeSpaceDefault) {
+const createThrottled = function (functionToThrottle, minimumTimeSpace = timeDefault) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
@@ -53,8 +51,7 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace = minimum
     };
 };
 
-
-const throttledWithLast = function (functionToThrottle, minimumTimeSpace = minimumTimeSpaceDefault, waitTime = waitTimeDefault) {
+const throttledWithLast = function (functionToThrottle, minimumTimeSpace = timeDefault, waitTime = timeDefault) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it twice:
