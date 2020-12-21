@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.0.0
+
+* memoizeAsStrings requires Map support
+* chainPromiseNTimes handles rejection like Promise.all
+
 ## 13.1.0
 
  * How to import in deno examples

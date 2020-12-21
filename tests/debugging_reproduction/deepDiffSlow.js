@@ -1,6 +1,6 @@
 import {deepDifference} from "../../deep.js";
 
-deepDifference([
+const result = deepDifference([
     [
       0,
       0,
@@ -5202,4 +5202,7 @@ deepDifference([
       0,
       0,
     ],
-  ]).changes;
+  ]);
+
+  console.log(result);
+  

@@ -13,9 +13,9 @@ export {
     bytesLengthFromString,
 };
 
-const waitTimeDefault = 150;
+const timeDefault = 150;
 
-const createDebounced = function (functionToDebounce, waitTime = waitTimeDefault) {
+const createDebounced = function (functionToDebounce, waitTime = timeDefault) {
     /* creates a function that is de-bounced,
     calling it, will eventually execute it, when you stop calling it
     useful for scroll events, resize, search etc
@@ -34,9 +34,7 @@ const createDebounced = function (functionToDebounce, waitTime = waitTimeDefault
     };
 };
 
-const minimumTimeSpaceDefault = 150;
-
-const createThrottled = function (functionToThrottle, minimumTimeSpace = minimumTimeSpaceDefault) {
+const createThrottled = function (functionToThrottle, minimumTimeSpace = timeDefault) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it once
@@ -53,8 +51,7 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace = minimum
     };
 };
 
-
-const throttledWithLast = function (functionToThrottle, minimumTimeSpace = minimumTimeSpaceDefault, waitTime = waitTimeDefault) {
+const throttledWithLast = function (functionToThrottle, minimumTimeSpace = timeDefault, waitTime = timeDefault) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it twice:
@@ -105,15 +102,21 @@ const chainPromises = function (promiseCreators) {
                 values.push(value);
             }
             if (i < length) {
-                const promise = promiseCreators[i]();
-                promise.then(chainer);
-                promise.catch(reject);
+                promiseCreators[i]().then(chainer).catch(reject);
             } else {
                 resolve(values);
             }
         };
         chainer();
     });
+};
+
+const chainPromiseNTimes = function (promiseCreator, times) {
+    /* different than Promise.all
+    only executes promiseCreator one after the previous has resolved
+    useful for testing
+    resolves with an array of values */
+    return chainPromises(Array.from({length: times}).fill(promiseCreator));
 };
 
 const chainRequestAnimationFrame = function (functions) {
@@ -136,33 +139,6 @@ const chainRequestAnimationFrame = function (functions) {
             }
         };
         next();
-    });
-};
-
-const chainPromiseNTimes = function (promiseCreator, times) {
-    /* different than Promise.all
-    only executes promiseCreator one after the previous has resolved
-    useful for testing
-    resolves with an array of values
-
-    could be made with chainPromises, but chose not to
-    to avoid an adapter array */
-    const values = [];
-    if (times === 0) {
-        return Promise.resolve(values);
-    }
-    return new Promise(function (resolve) {
-        let i = 0;
-        const chainer = function (value) {
-            i += 1;
-            values.push(value);
-            if (i < times) {
-                promiseCreator().then(chainer);
-                return;
-            }
-            resolve(values);
-        };
-        promiseCreator().then(chainer);
     });
 };
 
@@ -195,18 +171,18 @@ const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
     fast memoizer
     but infinitely growing */
 
-    const previousResults = {};
+    const previousResults = new Map();
     return function (...args) {
         const argumentsAsStrings = args.map(String).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings
         const argumentsAsStrings = args.join(separator);
         */
-        if (!Object.prototype.hasOwnProperty.call(previousResults, argumentsAsStrings)) {
+        if (!previousResults.has(argumentsAsStrings)) {
             // not yet in cache
-            previousResults[argumentsAsStrings] = functionToMemoize(...args);
+            previousResults.set(argumentsAsStrings, functionToMemoize(...args));
         }
-        return previousResults[argumentsAsStrings];
+        return previousResults.get(argumentsAsStrings);
     };
 };
 
