@@ -180,9 +180,9 @@ const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
         */
         if (!previousResults.has(argumentsAsStrings)) {
             // not yet in cache
-            previousResult.set(argumentsAsStrings, functionToMemoize(...args));
+            previousResults.set(argumentsAsStrings, functionToMemoize(...args));
         }
-        return previousResult.get(argumentsAsStrings);
+        return previousResults.get(argumentsAsStrings);
     };
 };
 
