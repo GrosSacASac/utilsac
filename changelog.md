@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.1.0
+
+chainPromises is more like Promise.all, promise creators can return a promise or a direct value
+
 ## 14.0.0
 
 * memoizeAsStrings requires Map support

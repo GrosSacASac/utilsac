@@ -89,7 +89,7 @@ const doNTimes = function (task, times) {
 };
 
 const chainPromises = function (promiseCreators) {
-    /* different than Promise.all, takes an array of functions that return a promise
+    /* different than Promise.all, takes an array of functions that return a promise or value
     only executes promiseCreators sequentially
     resolves with an array of values or reject with the first error*/
     const {length} = promiseCreators;
@@ -102,7 +102,7 @@ const chainPromises = function (promiseCreators) {
                 values.push(value);
             }
             if (i < length) {
-                promiseCreators[i]().then(chainer).catch(reject);
+                Promise.resolve(promiseCreators[i]()).then(chainer).catch(reject);
             } else {
                 resolve(values);
             }
