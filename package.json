@@ -1,6 +1,6 @@
 {
   "name": "utilsac",
-  "version": "14.1.1",
+  "version": "14.1.2",
   "description": "Utility functions",
   "license": "CC0-1.0",
   "type": "module",
@@ -12,8 +12,8 @@
     "lint": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
-    "ava": "^3.14.0",
-    "eslint": "^7.16.0",
+    "ava": "^3.15.0",
+    "eslint": "^7.23.0",
     "eslint-config-red": "^1.8.1",
     "leistung": "^5.0.1"
   },
