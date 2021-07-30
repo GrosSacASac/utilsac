@@ -129,7 +129,7 @@ const somePromisesParallel = function (promiseCreators, x = 10) {
             }
             if (i < length) {
                 let currentIndex = i;
-                promiseCreators[i]().then(function (value) {
+                Promise.resolve(promiseCreators[i]()).then(function (value) {
                     chainer(false, value, currentIndex);
                 }).catch(function (error) {
                     if (!hasErrored) {
