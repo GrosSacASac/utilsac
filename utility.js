@@ -3,6 +3,7 @@ export {
     createThrottled,
     throttledWithLast,
     chainPromises,
+    somePromisesParallel,
     chainRequestAnimationFrame,
     doNTimes,
     chainPromiseNTimes,
@@ -108,6 +109,44 @@ const chainPromises = function (promiseCreators) {
             }
         };
         chainer();
+    });
+};
+
+const somePromisesParallel = function (promiseCreators, x = 10) {
+    /* same as chainPromises except it will run up to x amount of 
+    promise in paraell */
+    const {length} = promiseCreators;
+    const values = [];
+    let i = -1;
+    let completed = 0;
+    let hasErrored = false;
+    return new Promise(function (resolve, reject) {
+        const chainer = function (isLaunching, value, index) {
+            i += 1;
+            if (!isLaunching) {
+                values[index] = value;
+                completed += 1;
+            }
+            if (i < length) {
+                let currentIndex = i;
+                promiseCreators[i]().then(function (value) {
+                    chainer(false, value, currentIndex);
+                }).catch(function (error) {
+                    if (!hasErrored) {
+                        hasErrored = true;
+                        reject(error);
+                    }
+                });
+            } else {
+                if ((completed === length) && !hasErrored) {
+                    resolve(values);
+                }
+            }
+        };
+        for (let y = 0; y < (x + 1) && y < length; y += 1) {
+            chainer(true);
+
+        }
     });
 };
 

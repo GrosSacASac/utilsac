@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.2.0
+
+add somePromisesParallel, similar to chainPromises but will run upt to x promises at the same time
+
 ## 14.1.0
 
 chainPromises is more like Promise.all, promise creators can return a promise or a direct value
