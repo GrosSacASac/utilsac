@@ -50,6 +50,8 @@ import {
 
 ## deep.js
 
+Consider [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/structuredClone) if you need deepCopy
+
 ```js
 import {
     deepCopy,
