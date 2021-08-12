@@ -2,7 +2,7 @@
 
 ## 14.2.0
 
-add somePromisesParallel, similar to chainPromises but will run upt to x promises at the same time
+add somePromisesParallel, similar to chainPromises but will run up to x promises at the same time
 
 ## 14.1.0
 
