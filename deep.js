@@ -12,7 +12,8 @@ export {
 /**
 only works with undefined, null, Number, Symbol, String, Big Int, Object, Array,
 warning
-does not work with cyclic objects
+will enter infite recursion with cyclic objects
+does not copy internal links
 does not work with anything created with new
 */
 const deepCopy = x => {
@@ -42,7 +43,7 @@ Uint8Array, Uint8ClampedArray, Uint16Array, Uint32Array,
 Int8Array, Int16Array, Int32Array
 
 warning
-does not work with cyclic object
+will enter infite recursion with cyclic objects
 does not copy internal links
 */
 const deepCopyAdded = x => {
@@ -87,7 +88,8 @@ Like Object.assign but deep,
 does not try to assign partial arrays inside, they are overwritten
 only works with undefined, null, Number, Symbol, String, Big Int, Object, Array,
 warning
-does not work with cyclic objects
+will enter infite recursion with cyclic objects
+does not copy internal links
 does not work with anything created with new
 
 @param {Object} target must be an object
@@ -133,7 +135,7 @@ Uint8Array, Uint8ClampedArray, Uint16Array, Uint32Array,
 Int8Array, Int16Array, Int32Array
 
 warning
-does not work with cyclic objects
+will enter infite recursion with cyclic objects
 does not copy internal links
 
 @param {Object} target must be an object
@@ -206,6 +208,9 @@ works with
 undefined, null, Number, Symbol, String, Big Int,
 Object, Array,
 
+warning
+will enter infite recursion with cyclic objects
+
  * @param {Object} a can be either an object or array
  * @param {Object} b can be either an object or array
  * @returns {Boolean}
@@ -254,6 +259,9 @@ Object, Array,
 Date, RegExp, Set, Map,
 Uint8Array, Uint16Array, Uint32Array,
 Int8Array, Int16Array, Int32Array
+
+warning
+will enter infite recursion with cyclic objects
 
  * @param {Object} a can be either an object or array
  * @param {Object} b can be either an object or array
@@ -349,6 +357,10 @@ const deepEqualAdded = (a, b) => {
 };
 
 /**
+ * 
+ * warning
+will enter infite recursion with cyclic objects
+
  * @function deepDifference  finds the differences betwenn two objects
  * @param  {*}      obj1 The first object
  * @param  {*}      obj2 The second object
