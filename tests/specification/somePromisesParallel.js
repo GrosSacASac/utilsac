@@ -11,7 +11,7 @@ const rejectingPromiseCreator = () => {
     return Promise.reject(rejectValue);
 };
 
-[1, 10].forEach(x => {
+[1, 2, 10].forEach(x => {
     test(`somePromisesParallel (x=${x}) returns a promise`, t => {
         t.is(typeof somePromisesParallel([promiseCreator], x).then, `function`);
     });
@@ -20,8 +20,18 @@ const rejectingPromiseCreator = () => {
         t.is(typeof somePromisesParallel([], x).then, `function`);
     });
     
+    test(`somePromisesParallel with single element (x=${x}) resolves with values Array single element`, async t => {
+        return somePromisesParallel([promiseCreator], x).then(values => {
+            t.true(Array.isArray(values));
+            t.is(values[0], resolveValue);
+            values.forEach(value => {
+                t.is(value, resolveValue);
+            });
+        });
+    });
+    
     test(`somePromisesParallel (x=${x}) resolves with values Array`, async t => {
-        return somePromisesParallel([promiseCreator, promiseCreator], x).then(values => {
+        return somePromisesParallel([promiseCreator, promiseCreator, promiseCreator], x).then(values => {
             t.true(Array.isArray(values));
             values.forEach(value => {
                 t.is(value, resolveValue);
