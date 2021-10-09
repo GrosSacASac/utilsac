@@ -143,9 +143,10 @@ const somePromisesParallel = function (promiseCreators, x = 10) {
                 }
             }
         };
-        for (let y = 0; y < (x + 1) && y < length; y += 1) {
+        // call at least once (for empty array)
+        chainer(true);
+        for (let y = 0; y < x && y < length - 1; y += 1) {
             chainer(true);
-
         }
     });
 };
