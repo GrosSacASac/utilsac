@@ -22,13 +22,20 @@ const rejectingPromiseCreator = () => {
     
     test(`somePromisesParallel (x=${x}) resolves with values Array`, async t => {
         return somePromisesParallel([promiseCreator, promiseCreator], x).then(values => {
-            t.truthy(Array.isArray(values));
+            t.true(Array.isArray(values));
             values.forEach(value => {
                 t.is(value, resolveValue);
             });
         });
     });
-    
+
+    test(`somePromisesParallel (x=${x}) with an empty array resolves with empty Array`, async t => {
+        return somePromisesParallel([], x).then(values => {
+            t.true(Array.isArray(values));
+            t.true(values.length === 0);
+        });
+    });
+
     test(`somePromisesParallel (x=${x}) reject with first rejecting value`, async t => {
         return somePromisesParallel([
             promiseCreator,
