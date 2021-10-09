@@ -121,14 +121,14 @@ const somePromisesParallel = function (promiseCreators, x = 10) {
     let completed = 0;
     let hasErrored = false;
     return new Promise(function (resolve, reject) {
-        const chainer = function (isLaunching, value, index) {
+        const chainer = function (isLaunching, lastValue, index) {
             i += 1;
             if (!isLaunching) {
-                values[index] = value;
+                values[index] = lastValue;
                 completed += 1;
             }
             if (i < length) {
-                let currentIndex = i;
+                const currentIndex = i;
                 Promise.resolve(promiseCreators[i]()).then(function (value) {
                     chainer(false, value, currentIndex);
                 }).catch(function (error) {
