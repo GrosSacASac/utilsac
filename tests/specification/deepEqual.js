@@ -133,11 +133,27 @@ const runBaselineDeepEqualTests = (deepEqualImplementation) => {
         ];
         t.is(deepEqualImplementation(a, b), false);
     });
+
+    
+    test(`${name} should pass if objects have slightly different prototypes`, t => {
+        const obj1 = {
+            'a': 1,
+            'b': 2,
+            'c': `hi`,
+        };
+        const obj2 = Object.assign(Object.create(null), {
+            'a': 1,
+            'b': 2,
+            'c': `hi`,
+        });
+        t.is(deepEqualImplementation(obj1, obj2), true);
+    });
 };
 
 
 runBaselineDeepEqualTests(deepEqual);
 runBaselineDeepEqualTests(deepEqualAdded);
+
 
 test(`deepEqualAdded should handle Set`, t => {
     const a = new Set([1, 2, 3]);

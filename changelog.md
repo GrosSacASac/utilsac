@@ -1,5 +1,10 @@
 # Changelog
 
+## 15.0.0
+
+deepEqual and deepEqualAdded will return true for objects with same content even if one has a null prototype
+
+
 ## 14.2.0
 
 add somePromisesParallel, similar to chainPromises but will run up to x promises at the same time

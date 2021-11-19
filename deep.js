@@ -234,7 +234,7 @@ const deepEqual = (a, b) => {
         });
     }
 
-    if (a.constructor !== b.constructor) {
+    if (Array.isArray(b)) {
         return false;
     }
 
@@ -293,6 +293,11 @@ const deepEqualAdded = (a, b) => {
         return validateArrayLike(a, b);
     }
 
+    
+    if (Array.isArray(b)) {
+        return false;
+    }
+
 
     if ((a instanceof Uint8Array) ||
         (a instanceof Uint8ClampedArray) ||
@@ -337,9 +342,6 @@ const deepEqualAdded = (a, b) => {
         return true;
     }
 
-    if (a.constructor !== b.constructor) {
-        return false;
-    }
 
     if (isObject(a) && isObject(b)) {
         const keysA = Object.keys(a);
