@@ -273,3 +273,24 @@ test(`deepEqualAdded should pass for Map of Dates`, t => {
         t.is(deepEqualAdded(a, c), false);
     });
 });
+
+
+[
+    Uint8Array,
+    Uint16Array,
+    Uint32Array,
+    Uint8ClampedArray,
+    Int8Array,
+    Int16Array,
+    Int32Array,
+].forEach((intArrayType) => {
+    test(`deepEqualAdded should handle not care if ${intArrayType.name} is compared with a subcclass`, t => {
+        const SubClass = class extends intArrayType {};
+        const numbers = [1, 4, 8, 10];
+        const a = new intArrayType(numbers);
+        const b = new SubClass(numbers);
+    
+        t.is(deepEqualAdded(a, b), true);
+        t.is(deepEqualAdded(b, a), true); // order should not matter
+    });
+});
