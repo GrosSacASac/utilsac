@@ -306,7 +306,7 @@ const deepEqualAdded = (a, b) => {
         (a instanceof Int8Array) ||
         (a instanceof Int16Array) ||
         (a instanceof Int32Array)) {
-        if (!(b instanceof a.constructor)) {
+        if (!(b instanceof a.constructor) && !(a instanceof b.constructor)) {
             return false;
         }
         return validateArrayLike(a, b);

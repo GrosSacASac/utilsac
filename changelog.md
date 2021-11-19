@@ -1,5 +1,10 @@
 # Changelog
 
+## 15.0.1
+
+deepEqualAdded will return true more often when int arrays are compared
+
+
 ## 15.0.0
 
 deepEqual and deepEqualAdded will return true for objects with same content even if one has a null prototype
