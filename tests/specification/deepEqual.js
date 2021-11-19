@@ -285,7 +285,7 @@ test(`deepEqualAdded should pass for Map of Dates`, t => {
     Int32Array,
 ].forEach((intArrayType) => {
     test(`deepEqualAdded should handle not care if ${intArrayType.name} is compared with a subcclass`, t => {
-        const SubClass = class extends intArrayType {};
+        const SubClass = class extends intArrayType {}; // eslint-disable-line
         const numbers = [1, 4, 8, 10];
         const a = new intArrayType(numbers);
         const b = new SubClass(numbers);
