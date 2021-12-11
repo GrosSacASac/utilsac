@@ -52,7 +52,7 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace = timeDef
     };
 };
 
-const throttledWithLast = function (functionToThrottle, minimumTimeSpace = timeDefault, waitTime = timeDefault) {
+const throttledWithLast = function (functionToThrottle, minimumTimeSpace = timeDefault) {
     /* creates a function that is throttled,
     calling it once will execute it immediately
     calling it very often during a period less than minimumTimeSpace will only execute it twice:
@@ -75,7 +75,7 @@ const throttledWithLast = function (functionToThrottle, minimumTimeSpace = timeD
                 timeOutId = 0;
                 lastTime = now;
                 functionToThrottle(...args);
-            }, waitTime - timeAlreadyWaited);
+            }, minimumTimeSpace - timeAlreadyWaited);
             return;
         }
         lastTime = now;
