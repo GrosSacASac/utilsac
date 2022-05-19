@@ -114,7 +114,7 @@ const chainPromises = function (promiseCreators) {
 
 const somePromisesParallel = function (promiseCreators, x = 10) {
     /* same as chainPromises except it will run up to x amount of 
-    promise in paraell */
+    promise in parallel */
     const {length} = promiseCreators;
     const values = [];
     let i = -1;
