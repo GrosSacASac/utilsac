@@ -6,6 +6,7 @@ export {
     chainPromises,
     somePromisesParallel,
     chainRequestAnimationFrame,
+    decorateForceSequential,
     doNTimes,
     timeFunction,
     timePromise,
@@ -111,6 +112,20 @@ const chainPromises = function (promiseCreators) {
         chainer();
     });
 };
+
+
+
+const decorateForceSequential = function (promiseCreator) {
+    /* forces a function that returns a promise to be sequential
+    useful for fs  for example */
+    let lastPromise = Promise.resolve();
+    return async function (...x) {
+        await lastPromise;
+        lastPromise = promiseCreator(...x);
+        return lastPromise;
+    }
+};
+
 
 const somePromisesParallel = function (promiseCreators, x = 10) {
     /* same as chainPromises except it will run up to x amount of 
