@@ -113,17 +113,24 @@ const chainPromises = function (promiseCreators) {
     });
 };
 
-
-
 const decorateForceSequential = function (promiseCreator) {
     /* forces a function that returns a promise to be sequential
     useful for fs  for example */
     let lastPromise = Promise.resolve();
     return async function (...x) {
-        await lastPromise;
-        lastPromise = promiseCreator(...x);
-        return lastPromise;
-    }
+        const promiseWeAreWaitingFor = lastPromise;
+        let currentPromise;
+        let callback;
+        // we need to change lastPromise before await anything,
+        // otherwise 2 calls might wait the same thing
+        lastPromise = new Promise(function (resolve) {
+            callback = resolve;
+        });
+        await promiseWeAreWaitingFor;
+        currentPromise = promiseCreator(...x);
+        currentPromise.then(callback).catch(callback);
+        return currentPromise;
+    };
 };
 
 
