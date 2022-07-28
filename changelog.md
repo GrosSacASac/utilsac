@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.2.0
+
+add assignSelected
+
 ## 15.1.0
 
 add decorateForceSequential

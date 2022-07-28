@@ -28,6 +28,7 @@ import {
     memoizeAsStrings,
     createTemplateTag,
     bytesLengthFromString,
+    assignSelected,
 } from "utilsac";
 
 // deno

@@ -13,6 +13,7 @@ export {
     memoizeAsStrings,
     createTemplateTag,
     bytesLengthFromString,
+    assignSelected,
 };
 
 const timeDefault = 150;
@@ -265,4 +266,23 @@ const createTemplateTag = (mapper) => {
 const textEncoder = new TextEncoder();
 const bytesLengthFromString = string => {
     return textEncoder.encode(string).length;
+};
+
+/** Similar to Object.assign, except it takes a white list as first argument */
+const assignSelected = (list, target, ...sources) => {
+    sources.forEach(source => {
+        if (!source || typeof source !== `object`) {
+            return;
+        }
+        Object.entries(source).forEach(([key, value]) => {
+            if (key === `__proto__`) {
+                return;
+            }
+            if (!list.includes(key)) {
+                return;
+            }
+            target[key] = value;
+        });
+    });
+    return target;
 };
