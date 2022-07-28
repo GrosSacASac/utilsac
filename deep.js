@@ -471,7 +471,7 @@ const deepDifference = function(obj1, obj2) {
          * If obj2 is missing a property in obj1
          * add property to removals array
          **/
-        if (!{}.hasOwnProperty.call(obj2, key)) {
+        if (!Object.hasOwn(obj2, key)) {
             const nameArray = [];
             nameArray.push(key);
             const removed = { name: nameArray, value: obj1[key] };
@@ -482,7 +482,7 @@ const deepDifference = function(obj1, obj2) {
     });
 
         Object.keys(obj2).forEach(key => {
-        if (!{}.hasOwnProperty.call(obj1, key)) {
+        if (!Object.hasOwn(obj1, key)) {
             const nameArray = [];
             nameArray.push(key);
             const added = { name: nameArray, value: obj2[key] };

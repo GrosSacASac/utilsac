@@ -2,8 +2,8 @@
 import { decorateForceSequential } from "../../utility.js";
 import {setTimeout} from "node:timers/promises";
 
-let lastTime = Date.now()
-const beginning = Date.now()
+let lastTime = Date.now();
+const beginning = Date.now();
 // const original = function () {
 //     return setTimeout(100, true).then(function () {
 //         const now = Date.now();
@@ -17,8 +17,8 @@ const original = function () {
         const timeSinceLast  = now - lastTime;
         lastTime = now;
         return timeSinceLast;
-    })
-}
+    });
+};
 
 const decorated = decorateForceSequential(original);
 
