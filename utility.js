@@ -17,12 +17,12 @@ export {
 
 const timeDefault = 150;
 
-const createDebounced = function (functionToDebounce, waitTime = timeDefault) {
-    /* creates a function that is de-bounced,
-    calling it, will eventually execute it, when you stop calling it
-    useful for scroll events, resize, search etc
+/** creates a function that is de-bounced,
+calling it, will eventually execute it, when you stop calling it
+useful for scroll events, resize, search etc
 
-    the returned function always returns undefined */
+the returned function always returns undefined */
+const createDebounced = function (functionToDebounce, waitTime = timeDefault) {
     let timeOutId = 0;
     return function (...args) {
         if (timeOutId !== 0) {
@@ -36,12 +36,12 @@ const createDebounced = function (functionToDebounce, waitTime = timeDefault) {
     };
 };
 
-const createThrottled = function (functionToThrottle, minimumTimeSpace = timeDefault) {
-    /* creates a function that is throttled,
-    calling it once will execute it immediately
-    calling it very often during a period less than minimumTimeSpace will only execute it once
+/** creates a function that is throttled,
+calling it once will execute it immediately
+calling it very often during a period less than minimumTimeSpace will only execute it once
 
-    the returned function always returns undefined */
+the returned function always returns undefined */
+const createThrottled = function (functionToThrottle, minimumTimeSpace = timeDefault) {
     let lastTime = Number.MIN_SAFE_INTEGER;
     return function (...args) {
         const now = Date.now();
@@ -53,15 +53,14 @@ const createThrottled = function (functionToThrottle, minimumTimeSpace = timeDef
     };
 };
 
+/** creates a function that is throttled,
+calling it once will execute it immediately
+calling it very often during a period less than minimumTimeSpace will only execute it twice:
+the first and last call
+The last call is always eventually executed
+
+the returned function always returns undefined */
 const throttledWithLast = function (functionToThrottle, minimumTimeSpace = timeDefault) {
-    /* creates a function that is throttled,
-    calling it once will execute it immediately
-    calling it very often during a period less than minimumTimeSpace will only execute it twice:
-    the first and last call
-    The last call is always eventually executed
-
-    the returned function always returns undefined */
-
     let timeOutId = 0;
     let lastTime = Number.MIN_SAFE_INTEGER;
     return function (...args) {
@@ -90,10 +89,10 @@ const doNTimes = function (task, times) {
     }
 };
 
+/** different than Promise.all, takes an array of functions that return a promise or value
+only executes promiseCreators sequentially
+resolves with an array of values or reject with the first error*/
 const chainPromises = function (promiseCreators) {
-    /* different than Promise.all, takes an array of functions that return a promise or value
-    only executes promiseCreators sequentially
-    resolves with an array of values or reject with the first error*/
     const {length} = promiseCreators;
     const values = [];
     let i = -1;
@@ -113,9 +112,9 @@ const chainPromises = function (promiseCreators) {
     });
 };
 
+/** forces a function that returns a promise to be sequential
+useful for fs  for example */
 const decorateForceSequential = function (promiseCreator) {
-    /* forces a function that returns a promise to be sequential
-    useful for fs  for example */
     let lastPromise = Promise.resolve();
     return async function (...x) {
         const promiseWeAreWaitingFor = lastPromise;
@@ -133,10 +132,11 @@ const decorateForceSequential = function (promiseCreator) {
     };
 };
 
-
+/** same as chainPromises except it will run up to x amount of 
+promise in parallel
+resolves with an array of values or reject with the first error  **/
 const somePromisesParallel = function (promiseCreators, x = 10) {
-    /* same as chainPromises except it will run up to x amount of 
-    promise in parallel */
+
     const {length} = promiseCreators;
     const values = [];
     let i = -1;
@@ -173,11 +173,11 @@ const somePromisesParallel = function (promiseCreators, x = 10) {
     });
 };
 
+/** different than Promise.all
+only executes promiseCreator one after the previous has resolved
+useful for testing
+resolves with an array of values */
 const chainPromiseNTimes = function (promiseCreator, times) {
-    /* different than Promise.all
-    only executes promiseCreator one after the previous has resolved
-    useful for testing
-    resolves with an array of values */
     return chainPromises(Array.from({length: times}).fill(promiseCreator));
 };
 
@@ -204,18 +204,18 @@ const chainRequestAnimationFrame = function (functions) {
     });
 };
 
+/** executes callback and returns time elapsed in ms */
 const timeFunction = function (callback, timer = Date) {
-    // executes callback and returns time elapsed in ms
     const startTime = timer.now();
     callback();
     const endTime = timer.now();
     return endTime - startTime;
 };
 
+/** returns a Promise that resolves with
+the time elapsed for the promise to resolve and its value
+executes promiseCreator and waits for it to resolve */
 const timePromise = function (promiseCreator, timer = Date) {
-    /* returns a Promise that resolves with
-    the time elapsed for the promise to resolve and its value
-    executes promiseCreator and waits for it to resolve */
     const startTime = timer.now();
     return promiseCreator().then(function (value) {
         const endTime = timer.now();
@@ -227,12 +227,11 @@ const timePromise = function (promiseCreator, timer = Date) {
 };
 
 
+/** joins together the args as strings to
+decide if arguments are the same
+fast memoizer
+but infinitely growing */
 const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
-    /* joins together the args as strings to
-    decide if arguments are the same
-    fast memoizer
-    but infinitely growing */
-
     const previousResults = new Map();
     return function (...args) {
         const argumentsAsStrings = args.map(String).join(separator);
@@ -248,15 +247,14 @@ const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
     };
 };
 
-
+/** creates a template tag function
+that will map the provided function on all runtime values
+before constructing the string
+example:
+const createURLString = createTemplateTag(encodeURIComponent)
+createURLString`https://example.com/id/${`slashes and spaces are properly escaped ///`}`;
+// -> "https://example.com/id/slashes%20and%20spaces%20are%20properly%20escaped%20%2F%2F%2F" */
 const createTemplateTag = (mapper) => {
-    /* creates a template tag function
-    that will map the provided function on all runtime values
-    before constructing the string
-    example:
-    const createURLString = createTemplateTag(encodeURIComponent)
-    createURLString`https://example.com/id/${`slashes and spaces are properly escaped ///`}`;
-    // -> "https://example.com/id/slashes%20and%20spaces%20are%20properly%20escaped%20%2F%2F%2F" */
     return (staticStrings, ...parts) => {
         return Array.from(parts, (part, index) => {
             return `${staticStrings[index]}${mapper(part)}`;
