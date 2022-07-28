@@ -119,7 +119,6 @@ const decorateForceSequential = function (promiseCreator) {
     let lastPromise = Promise.resolve();
     return async function (...x) {
         const promiseWeAreWaitingFor = lastPromise;
-        let currentPromise;
         let callback;
         // we need to change lastPromise before await anything,
         // otherwise 2 calls might wait the same thing
@@ -127,7 +126,7 @@ const decorateForceSequential = function (promiseCreator) {
             callback = resolve;
         });
         await promiseWeAreWaitingFor;
-        currentPromise = promiseCreator(...x);
+        const currentPromise = promiseCreator(...x);
         currentPromise.then(callback).catch(callback);
         return currentPromise;
     };
