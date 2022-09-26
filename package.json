@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "ava": "^4.3.3",
-    "eslint": "^8.20.0",
+    "eslint": "^8.24.0",
     "eslint-config-red": "^1.9.1",
     "leistung": "^5.0.1"
   },
