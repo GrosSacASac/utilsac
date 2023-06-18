@@ -89,6 +89,26 @@ const doNTimes = function (task, times) {
         task();
     }
 };
+/*
+decorates a promise creator
+throttles it in a way that calls after the first
+ but before minimum time space
+will await for the same result as the last non throttled call
+*/
+const createThrottledPromiseCreator = function (functionToThrottle, minimumTimeSpace = timeDefault) {
+    let lastTime = Number.MIN_SAFE_INTEGER;
+    let lastPromise;
+    return function (...args) {
+        const now = Date.now();
+        if (minimumTimeSpace > now - lastTime) {
+            return lastPromise;
+        }
+        lastTime = now;
+        lastPromise = functionToThrottle(...args);
+        return lastPromise;
+    };
+};
+
 
 /** different than Promise.all, takes an array of functions that return a promise or value
 only executes promiseCreators sequentially
