@@ -11,7 +11,7 @@
 ## 15.2.0
 
 * add assignSelected
-* requires Object.hasOwn 
+* requires Object.hasOwn
 
 ## 15.1.0
 
