@@ -130,7 +130,11 @@ const throttlePromiseCreator = function (promiseCreator, minimumTimeSpace = time
     const previousResults = new Map();
     return function (...args) {
         const argumentsAsStrings = args.map((argument) => {
-            return JSON.stringify(argument);
+            try {
+                return JSON.stringify(argument);
+            } catch (typeNotHandledByJSON) {
+                return String(argument);
+            }
         }).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings
@@ -176,7 +180,11 @@ const throttlePromiseCreatorSelfClean = function (promiseCreator, minimumTimeSpa
     };
     return function (...args) {
         const argumentsAsStrings = args.map((argument) => {
-            return JSON.stringify(argument);
+            try {
+                return JSON.stringify(argument);
+            } catch (typeNotHandledByJSON) {
+                return String(argument);
+            }
         }).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings
@@ -337,7 +345,11 @@ const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
     const previousResults = new Map();
     return function (...args) {
         const argumentsAsStrings = args.map((argument) => {
-            return JSON.stringify(argument);
+            try {
+                return JSON.stringify(argument);
+            } catch (typeNotHandledByJSON) {
+                return String(argument);
+            }
         }).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings

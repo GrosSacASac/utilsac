@@ -21,7 +21,7 @@ test(`it should not call the function when the parameters are the same`, t => {
     t.is(called, 1);
 });
 
-test(`it should call the function when the parameters are not the same object`, t => {
+test(`it should call the function when the parameters are not the same`, t => {
     let called = 0;
     const sideEffectFunction = function () {
         called += 1;
@@ -35,7 +35,7 @@ test(`it should call the function when the parameters are not the same object`, 
     t.is(called, 2);
 });
 
-test(`it should call the function when the parameters are not the same`, t => {
+test(`it should call the function when the parameters are not the same object`, t => {
     let called = 0;
     const sideEffectFunction = function () {
         called += 1;
@@ -50,14 +50,38 @@ test(`it should call the function when the parameters are not the same`, t => {
 });
 
 test(`it should return the same when when the parameters are the same`, t => {
-    const sideEffectFunction = function () {
+    const regularFunction = function () {
         return {};
     };
 
-    const memoized = memoizeAsStrings(sideEffectFunction);
+    const memoized = memoizeAsStrings(regularFunction);
     const result1 = memoized(1);
     const result2 = memoized(2);
     const result3 = memoized(1);
+    t.is(result1, result3);
+    t.not(result1, result2);
+});
+
+
+test(`it should return the same when when the parameters are the same using advanced types`, t => {
+    const regularFunction = function () {
+        return {};
+    };
+    const allThings = {
+        a: Symbol(),
+        b: function() {
+
+        },
+        c: new Map(),
+        d: 7n,
+        e: 8,
+        f: {},
+        g: [],
+    };
+    const memoized = memoizeAsStrings(regularFunction);
+    const result1 = memoized(allThings);
+    const result2 = memoized(2);
+    const result3 = memoized(allThings);
     t.is(result1, result3);
     t.not(result1, result2);
 });
