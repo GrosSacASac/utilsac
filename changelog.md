@@ -5,6 +5,8 @@
 * add forceThrottlePromiseCreator
 * add throttlePromiseCreator
 * add throttlePromiseCreatorSelfClean
+* memoizeAsStrings uses JSON.stringify internally
+* This change increase compatibility with function that use the objects as single argument pattern
 
 ## 15.2.0
 

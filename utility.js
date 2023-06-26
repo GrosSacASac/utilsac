@@ -129,7 +129,9 @@ const forceThrottlePromiseCreator = function (promiseCreator, minimumTimeSpace =
 const throttlePromiseCreator = function (promiseCreator, minimumTimeSpace = timeDefault, separator = `-`) {
     const previousResults = new Map();
     return function (...args) {
-        const argumentsAsStrings = args.map(String).join(separator);
+        const argumentsAsStrings = args.map((argument) => {
+            return JSON.stringify(argument);
+        }).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings
         const argumentsAsStrings = args.join(separator);
@@ -173,7 +175,9 @@ const throttlePromiseCreatorSelfClean = function (promiseCreator, minimumTimeSpa
         }, cleanUpAfterFirstCallTime);
     };
     return function (...args) {
-        const argumentsAsStrings = args.map(String).join(separator);
+        const argumentsAsStrings = args.map((argument) => {
+            return JSON.stringify(argument);
+        }).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings
         const argumentsAsStrings = args.join(separator);
@@ -332,7 +336,9 @@ but infinitely growing */
 const memoizeAsStrings = function (functionToMemoize, separator = `-`) {
     const previousResults = new Map();
     return function (...args) {
-        const argumentsAsStrings = args.map(String).join(separator);
+        const argumentsAsStrings = args.map((argument) => {
+            return JSON.stringify(argument);
+        }).join(separator);
         /*
         without .map(String) works but undefined and null become empty strings
         const argumentsAsStrings = args.join(separator);

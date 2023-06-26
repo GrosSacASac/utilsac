@@ -21,7 +21,7 @@ test(`it should not call the function when the parameters are the same`, t => {
     t.is(called, 1);
 });
 
-test(`it should call the function when the parameters are not the same`, t => {
+test(`it should call the function when the parameters are not the same object`, t => {
     let called = 0;
     const sideEffectFunction = function () {
         called += 1;
@@ -32,6 +32,20 @@ test(`it should call the function when the parameters are not the same`, t => {
     memoized(1);
     t.is(called, 1);
     memoized(2);
+    t.is(called, 2);
+});
+
+test(`it should call the function when the parameters are not the same`, t => {
+    let called = 0;
+    const sideEffectFunction = function () {
+        called += 1;
+    };
+
+    const memoized = memoizeAsStrings(sideEffectFunction);
+    t.is(called, 0);
+    memoized({a:2});
+    t.is(called, 1);
+    memoized({c:4});
     t.is(called, 2);
 });
 
