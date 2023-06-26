@@ -4,6 +4,9 @@ export {
     throttledWithLast,
     chainPromiseNTimes,
     chainPromises,
+    createThrottledPromiseCreator,
+    createThrottledPromiseCreator2,
+    createThrottledPromiseCreator3,
     somePromisesParallel,
     chainRequestAnimationFrame,
     decorateForceSequential,
@@ -89,13 +92,16 @@ const doNTimes = function (task, times) {
         task();
     }
 };
-/*
+
+/**
+ does not care about arguments !
+Use createThrottledPromiseCreator2 to handle different arguments separatly
 decorates a promise creator
 throttles it in a way that calls after the first
  but before minimum time space
 will await for the same result as the last non throttled call
 */
-const createThrottledPromiseCreator = function (functionToThrottle, minimumTimeSpace = timeDefault) {
+const createThrottledPromiseCreator = function (promiseCreator, minimumTimeSpace = timeDefault) {
     let lastTime = Number.MIN_SAFE_INTEGER;
     let lastPromise;
     return function (...args) {
@@ -104,12 +110,84 @@ const createThrottledPromiseCreator = function (functionToThrottle, minimumTimeS
             return lastPromise;
         }
         lastTime = now;
-        lastPromise = functionToThrottle(...args);
+        lastPromise = promiseCreator(...args);
         return lastPromise;
     };
+    
 };
 
+/** 
+ * decorates a promise creator
+ * throttles it in a way that calls after the first
+ * but before minimum time space
+ * will await for the same result as the last non throttled call
+ * each set of argument is throttled separatly
+ * creates a new function for each argument set
+ * use this over createThrottledPromiseCreator3 when the argument set 
+ * is potentially fixed and may call often the same
+ */
+const createThrottledPromiseCreator2 = function (promiseCreator, minimumTimeSpace = timeDefault, separator = `-`) {
+    const previousResults = new Map();
+    return function (...args) {
+        const argumentsAsStrings = args.map(String).join(separator);
+        /*
+        without .map(String) works but undefined and null become empty strings
+        const argumentsAsStrings = args.join(separator);
+        */
+        if (!previousResults.has(argumentsAsStrings)) {
+            // not yet in cache
+            previousResults.set(argumentsAsStrings, createThrottledPromiseCreator(promiseCreator, minimumTimeSpace));
+        }
+        return previousResults.get(argumentsAsStrings)(...args);
+    };
+};
+/** 
+ * decorates a promise creator
+ * throttles it in a way that calls after the first
+ * but before minimum time space
+ * will await for the same result as the last non throttled call
+ * each set of argument is throttled separatly
+ * creates a new function for each argument set
+ * eventually cleans up its unused function,
+ * use this over createThrottledPromiseCreator2 when the argument set 
+ * is potentially infinite
+ */
 
+const MAXIMUM_TIMEOUT = 10 ** 3 * 60 * 60 * 24 // todo find exact number
+const createThrottledPromiseCreator3 = function (promiseCreator, minimumTimeSpace = timeDefault, separator = `-`) {
+    const previousResults = new Map();
+    const lastCall = new Map();
+    const cleanUpAfterFirstCallTime = Math.min(MAXIMUM_TIMEOUT, minimumTimeSpace * 10 ** 2);
+    const maximumTimeToRemember = cleanUpAfterFirstCallTime - minimumTimeSpace;
+    const setUpClean = function (argumentsAsStrings) {
+        return setTimeout(function () {
+            const now = Date.now();
+            if (now - lastCall.get(argumentsAsStrings) < maximumTimeToRemember) {
+                // was called recently clean Later
+                setUpClean(argumentsAsStrings);
+                return;
+            }
+            lastCall.delete(argumentsAsStrings);
+            previousResults.delete(argumentsAsStrings);
+        }, cleanUpAfterFirstCallTime);
+    };
+    return function (...args) {
+        const argumentsAsStrings = args.map(String).join(separator);
+        /*
+        without .map(String) works but undefined and null become empty strings
+        const argumentsAsStrings = args.join(separator);
+        */
+        if (!previousResults.has(argumentsAsStrings)) {
+            // not yet in cache
+            previousResults.set(argumentsAsStrings, createThrottledPromiseCreator(promiseCreator, minimumTimeSpace));
+            setUpClean(argumentsAsStrings);
+        }
+        // const previousCleanId =
+        lastCall.set(argumentsAsStrings, Date.now())
+        const throttledPromiseCreator = previousResults.get(argumentsAsStrings);
+        return throttledPromiseCreator(...args);
+    };
+};
 /** different than Promise.all, takes an array of functions that return a promise or value
 only executes promiseCreators sequentially
 resolves with an array of values or reject with the first error*/
