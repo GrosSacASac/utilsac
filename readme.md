@@ -19,6 +19,9 @@ import {
     throttledWithLast,
     chainPromiseNTimes,
     chainPromises,
+    forceThrottlePromiseCreator,
+    throttlePromiseCreator,
+    throttlePromiseCreatorSelfClean,
     somePromisesParallel,
     chainRequestAnimationFrame,
     decorateForceSequential,
@@ -138,8 +141,6 @@ window.x = sin(Math.PI)
 ```
 
 Use optional second argument with `module` to be able to use static imports
-
-
 
 
 ## About

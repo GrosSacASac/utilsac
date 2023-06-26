@@ -1,5 +1,11 @@
 # Changelog
 
+## 15.3.0
+
+* add forceThrottlePromiseCreator
+* add throttlePromiseCreator
+* add throttlePromiseCreatorSelfClean
+
 ## 15.2.0
 
 * add assignSelected
