@@ -95,7 +95,7 @@ const doNTimes = function (task, times) {
 
 /**
  Warning: does not care about arguments !
-Use throttlePromiseCreator to handle different arguments separatly
+Use throttlePromiseCreator instead to handle different arguments separatly
 decorates a promise creator
 throttles it in a way that calls after the first
 but before minimum time space
