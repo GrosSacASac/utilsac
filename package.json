@@ -41,6 +41,7 @@
   },
   "files": [
     "typeCast.js",
+    "typeCastNode.js",
     "browserUtility.js",
     "utility.js",
     "deep.js",
