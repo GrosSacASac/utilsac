@@ -116,6 +116,13 @@ import {
 } from "https://unpkg.com/utilsac/typeCast.js";
 ```
 
+## typeCastNode.js
+
+```js
+import {
+    blobPromiseFromStream,
+} from "utilsac/typeCastNode.js";
+```
 
 ## browserUtility.js
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 15.4.0
+
+* add typeCastNode.js for nodejs specific casts
+* add blobPromiseFromStream
+
 ## 15.3.0
 
 * add forceThrottlePromiseCreator
