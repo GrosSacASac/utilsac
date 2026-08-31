@@ -66,6 +66,7 @@ import {
     deepEqual,
     deepEqualAdded,
     deepDifference,
+    isObject,
 } from "utilsac/deep.js";
 
 // deno

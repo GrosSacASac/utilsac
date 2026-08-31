@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.5.0
+
+* deep.js exports isObject
+
 ## 15.4.0
 
 * add typeCastNode.js for nodejs specific casts

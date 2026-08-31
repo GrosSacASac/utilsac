@@ -6,6 +6,7 @@ export {
     deepEqual,
     deepEqualAdded,
     deepDifference,
+    isObject,
 };
 
 
