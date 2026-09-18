@@ -107,13 +107,12 @@ import {
 
 // deno
 import {
-    deepCopy,
-    deepCopyAdded,
-    deepAssign,
-    deepAssignAdded,
-    deepEqual,
-    deepEqualAdded,
-    deepDifference,
+    stringFromArrayBuffer,
+    arrayBufferFromBlob,
+    stringFromBlob,
+    stringFromArray,
+    setFromArray,
+    mapFromObject,
 } from "https://unpkg.com/utilsac/typeCast.js";
 ```
 
